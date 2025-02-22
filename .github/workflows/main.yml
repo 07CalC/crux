@@ -39,7 +39,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build and push docker image
-        id: build and push image
+        id: build-and-push-image
         run: |
           ls -la
           docker build -t ${{secrets.DOCKERHUB_USERNAME}}/crux:latest .

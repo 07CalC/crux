@@ -23,7 +23,6 @@ jobs:
           bun install
 
       - name: Lint
-        uses: oven-sh/setup-bun@v2
         run: |
           echo "Linting..."
           bun lint

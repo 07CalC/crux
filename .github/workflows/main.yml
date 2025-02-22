@@ -6,7 +6,6 @@ on:
 jobs:
   build:
     name: Build and push to Docker Hub
-    needs: lintTest
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

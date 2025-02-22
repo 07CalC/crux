@@ -34,6 +34,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
+            sudo su
             docker rmi ghcr.io/07calc/crux:latest -f
             docker pull ghcr.io/07calc/crux:latest
             docker rm -f crux

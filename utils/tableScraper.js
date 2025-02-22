@@ -1,4 +1,4 @@
-// Usage: go to jossa official prev years orcr select the year and round number
+// Usage: go to jossa/csab official prev years orcr select the year and round number
 // then run this script in the console and copy the array returned
 // note the table is const here so you might have to refresh the page after scraping every round's data
 const table = document.querySelector("table");

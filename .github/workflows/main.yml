@@ -23,3 +23,18 @@ jobs:
           docker build -t ghcr.io/07calc/crux:latest .
           docker push ghcr.io/07calc/crux:latest
 
+  deploy:
+    name: Deploy to vps
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          script: |
+            docker rmi ghcr.io/07calc/crux:latest -f
+            docker pull ghcr.io/07calc/crux:latest
+            docker rm -f crux
+            docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest

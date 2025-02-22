@@ -44,5 +44,5 @@ jobs:
         run: |
           ls -la
           docker build -t ${{secrets.DOCKERHUB_USERNAME}}/crux:latest .
-          docker push ghcr.io/${{secrets.GHRC_USERNAME}}/crux:latest
+          docker push ghcr.io/07calc/crux:latest
 

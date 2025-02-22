@@ -8,21 +8,18 @@ jobs:
   lintTest: 
     name: Lint & Test
     runs-on: ubuntu-latest
-    steps: 
-      - name: Setup Bun
-        run: |
-          echo "Installing Bun..."
-          curl -fsSL https://bun.sh/install | bash
-
+    steps:
       - name: Clone Repository
         uses: actions/checkout@v2
 
       - name: Install Dependencies
+        uses: oven-sh/setup-bun@v2
         run: |
           echo "Installing Dependencies..."
           bun install
 
       - name: Lint
+        uses: oven-sh/setup-bun@v2
         run: |
           echo "Linting..."
           bun lint

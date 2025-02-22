@@ -7,7 +7,7 @@ on:
 jobs:
   lintTest: 
     name: Lint & Test
-    runs-on: ubuntu-latest
+    runs-on: oven/bun:latest
     steps: 
       - name: Clone Repository
         uses: actions/checkout@v2

@@ -37,12 +37,12 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ghcr.io
-          username: ${{ secrets.GHRC_USERNAME }}
+          username: 07CalC
           password: ${{ secrets.GHRC_PASSWORD }}
       - name: Build and push docker image
         id: build-and-push-image
         run: |
           ls -la
-          docker build -t ${{secrets.DOCKERHUB_USERNAME}}/crux:latest .
+          docker build -t ghcr.io/07calc/crux:latest .
           docker push ghcr.io/07calc/crux:latest
 

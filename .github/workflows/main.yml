@@ -7,8 +7,13 @@ on:
 jobs:
   lintTest: 
     name: Lint & Test
-    runs-on: oven/bun:latest
+    runs-on: ubuntu-latest
     steps: 
+      - name: Setup Bun
+        run: |
+          echo "Installing Bun..."
+          curl -fsSL https://bun.sh/install | bash
+
       - name: Clone Repository
         uses: actions/checkout@v2
 

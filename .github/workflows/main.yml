@@ -26,6 +26,7 @@ jobs:
   deploy:
     name: Deploy to vps
     runs-on: ubuntu-latest
+    needs: build
     steps: 
       - name: Deploy
         uses: appleboy/ssh-action@master
@@ -34,8 +35,7 @@ jobs:
           username: ${{ secrets.USERNAME }}
           password: ${{ secrets.PASSWORD }}
           script: |
-            sudo su
-            docker rmi ghcr.io/07calc/crux:latest -f
-            docker pull ghcr.io/07calc/crux:latest
-            docker rm -f crux
-            docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest
+            sudo docker rmi ghcr.io/07calc/crux:latest -f
+            sudo docker pull ghcr.io/07calc/crux:latest
+            sudo docker rm -f crux
+            sudo docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest

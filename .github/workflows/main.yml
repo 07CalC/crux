@@ -1,0 +1,23 @@
+name: ci/cd
+
+on: 
+  push:
+    branches: [main]
+
+jobs:
+  lintTest: 
+    name: Lint & Test
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Clone Repository
+        uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          echo "Installing Dependencies..."
+          bun install
+
+      - name: Lint
+        run: |
+          echo "Linting..."
+          bun lint

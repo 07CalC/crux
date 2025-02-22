@@ -3,7 +3,8 @@ name: ci/cd
 on: 
   push:
     branches: [main]
-
+  merge: 
+    branches: [main]
 jobs:
   lintTest: 
     name: Lint & Test
@@ -26,3 +27,28 @@ jobs:
         run: |
           echo "Linting..."
           bun lint
+
+  build:
+    name: Build and push to Docker Hub
+    needs: lintTest
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: login to docker hub
+        id: docker-hub
+        env: 
+          username: ${{secrets.DOCKERHUB_USERNAME}}
+          password: ${{secrets.DOCKERHUB_PASSWORD}}
+        run: |
+            docker login -u $username -p $password
+      - name: Build docker image
+        id: build-image
+        run: |
+          ls -la
+          docker build -t ${{secrets.DOCKERHUB_USERNAME}}/crux:latest .
+      - name: Push docker image
+        id: push-image
+        run: |
+          docker push ${{secrets.DOCKERHUB_USERNAME}}/crux:latest
+

@@ -1,11 +1,11 @@
-FROM oven/bun:latest
+FROM node:slim
 
 WORKDIR /app
 
 COPY . .
 
-RUN bun install
+RUN npm install
 
-RUN bun run build
+RUN npm run build
 
-CMD [ "bun", "start" ]
+CMD [ "npm", "start" ]

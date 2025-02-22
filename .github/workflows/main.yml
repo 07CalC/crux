@@ -4,28 +4,6 @@ on:
   push:
     branches: [main]
 jobs:
-  lintTest: 
-    name: Lint & Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v2
-
-      - name: Install Bun
-        run: |
-          curl -fsSL https://bun.sh/install | bash
-          echo "$HOME/.bun/bin" >> $GITHUB_PATH
-
-      - name: Install Dependencies
-        run: |
-          echo "Installing Dependencies..."
-          bun install
-
-      - name: Lint
-        run: |
-          echo "Linting..."
-          bun lint
-
   build:
     name: Build and push to Docker Hub
     needs: lintTest

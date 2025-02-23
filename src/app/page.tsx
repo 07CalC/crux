@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+// import { PrismaClient } from "@prisma/client";
 // import { data2023R1 } from "../../ORCR/2023-r1";
 
 export default async function Home() {
 
-  const prisma = new PrismaClient();
+  // const prisma = new PrismaClient();
   // const uniqueInst = [...new Set(data2023R1.map(item => item.institute))];
   // uniqueInst.map(async (institute) => {
   //   await prisma.college.create({

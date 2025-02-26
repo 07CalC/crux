@@ -1,21 +1,77 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+@keyframes flicker {
+  0% { opacity: 1; }
+  50% { opacity: 0.92; }
+  100% { opacity: 1; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  background: #090016; 
+  color: #d19eff; 
+  font-family: 'Courier New', monospace;
+  text-shadow: 0px 0px 8px rgba(170, 0, 255, 0.8);
+}
+
+.crt {
+  filter: contrast(1.2) brightness(0.8);
+}
+
+.crt-text {
+  color: #d19eff;
+  animation: flicker 1s infinite alternate ease-in-out;
+}
+
+.scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(rgba(188, 188, 188, 0.471) 50%, rgba(0, 0, 0, 0.2) 50%);
+  background-size: 100% 8px;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+
+.glow-border {
+  border: 2px solid rgba(170, 0, 255, 0.8);
+  box-shadow: 0px 0px 15px rgba(170, 0, 255, 0.8);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.neon-text {
+  text-shadow: 0 0 5px #b065ff, 
+               0 0 10px #a040ff, 
+               0 0 20px #9020ff, 
+               0 0 40px #8010ff; 
+  font-weight: bold;
+}
+
+.press-start {
+  font-family: "Press Start 2P", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.clicky-button {
+  margin: 4px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 0px #ffffff, 0 6px 10px #ffffff; 
+}
+
+.clicky-button:active {
+  transform: translateY(4px);
+  transition-duration: 50ms;
+  box-shadow: 0 0px 0 #4a00cc, 0 0px 0px rgba(0, 0, 0, 0.3);
 }

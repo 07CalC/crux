@@ -1,4 +1,4 @@
-[
+export const data2023csR1 = [
     {
       "institute": "Dr. B R Ambedkar National Institute of Technology, Jalandhar",
       "academicProgramName": "Bio Technology (4 Years, Bachelor of Technology)",

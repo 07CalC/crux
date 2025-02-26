@@ -1,18 +1,10 @@
 import { PrismaClient } from "@prisma/client";
-import { data2023R1 } from "./ORCR/2023-r1";
-
+import { data2023csR2 } from "./ORCR/2023-csab-r2";
 const prisma = new PrismaClient();
 
 async function exportData() {
-//   const uniqueInst = [...new Set(data2023R1.map((item) => item.institute))];
-//   uniqueInst.map(async (institute) => {
-//     await prisma.college.create({
-//       data: {
-//         name: institute,
-//       },
-//     });
-//   });
-    data2023R1.map(async (item) => {
+    // await prisma.orcr.deleteMany({where: {round: 2, year: 2023}});
+    data2023csR2.map(async (item) => {
       const institute = await prisma.college.findUnique({
         where: {
           name: item.institute,
@@ -22,8 +14,8 @@ async function exportData() {
         await prisma.orcr.createMany({
           data: {
             year: 2023,
-            round: 1,
-            type: "JOSSA",
+            round: 2,
+            type: "CSAB",
             exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
             collegeId: institute.id,
             institute: item.institute,
@@ -41,6 +33,7 @@ async function exportData() {
             name: item.institute,
           },
         });
+        console.log("Institute created: ", item.institute);
         const newInstitute = await prisma.college.findUnique({
           where: {
             name: item.institute,
@@ -50,8 +43,8 @@ async function exportData() {
           await prisma.orcr.createMany({
             data: {
               year: 2023,
-              round: 1,
-              type: "JOSSA",
+              round: 2,
+              type: "CSAB",
               exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
               collegeId: newInstitute.id,
               institute: item.institute,

@@ -1,4 +1,4 @@
-[
+export const data2023R6 = [
     {
       "institute": "Indian Institute of Technology Bhubaneswar",
       "academicProgramName": "Civil Engineering (4 Years, Bachelor of Technology)",
@@ -93283,14 +93283,5 @@
       "gender": "Gender-Neutral",
       "openRank": "7884",
       "closeRank": "8129"
-    },
-    {
-      "institute": "",
-      "academicProgramName": "",
-      "quota": "",
-      "seatType": "",
-      "gender": "",
-      "openRank": "",
-      "closeRank": ""
     }
   ]

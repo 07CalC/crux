@@ -97576,14 +97576,5 @@ export const data2023R1 = [
     "gender": "Gender-Neutral",
     "openRank": "4282",
     "closeRank": "5420"
-  },
-  {
-    "institute": "",
-    "academicProgramName": "",
-    "quota": "",
-    "seatType": "",
-    "gender": "",
-    "openRank": "",
-    "closeRank": ""
   }
 ]

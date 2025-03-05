@@ -15,9 +15,9 @@ model College {
   location        String?
   officialWebsite String?
   images          String[]
-  totalStudents   Int
-  maleStudents    Int
-  femaleStudents  Int
+  totalStudents   Int?
+  maleStudents    Int?
+  femaleStudents  Int?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
   orcrs           Orcr[]
@@ -32,11 +32,18 @@ enum OrcrType {
   OTHER
 }
 
+enum Exam {
+  MAINS
+  ADVANCED
+  BITSAT
+}
+
 model Orcr {
   id                  String   @id @default(uuid())
   year                Int
   round               Int
   type                OrcrType
+  exam                Exam
   collegeId           String
   college             College  @relation(fields: [collegeId], references: [id])
   institute           String

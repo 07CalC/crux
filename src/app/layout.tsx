@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -14,10 +16,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`antialiased crt relative w-full h-full h-screen font-mono`}
+        className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#232323] `}
       >
-        <div className="scanlines"></div>
+
+        {/* <div className="scanlines"></div> */}
+
+      <Navbar />
       {children}
+      <Footer />
       </body>
     </html>
   );

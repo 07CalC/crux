@@ -1,18 +1,19 @@
 import { PrismaClient } from '@prisma/client';
-import { Request } from 'next/server';
 import { NextResponse } from 'next/server';
 
-export default async function POST(req: Request){
+
+export async function POST(req: Request){
     const data = await req.json();
     const { year, round, exam, type } = data;
     const prisma = new PrismaClient();
     const orcr = await prisma.orcr.findMany({
         where: {
-            year: year,
-            round: round,
+            year: parseInt(year),
+            round: parseInt(round),
             exam: exam,
             type: type,
         }
     });
+    console.log(orcr[0]);
     return NextResponse.json(orcr);
 }

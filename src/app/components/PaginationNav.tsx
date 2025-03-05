@@ -26,9 +26,9 @@ export const PaginationNav = ({
           className="sm:p-3 p-2  border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-purple-500  text-black dark:text-gray-100"
           onChange={(e) => setColsShown(parseInt(e.target.value))}
         >
-          <option value="1">10</option>
-          <option value="2">50</option>
-          <option value="3">100</option>
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
         </select>
       </div>
       <div className="w-full flex gap-x-2">

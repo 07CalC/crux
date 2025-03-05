@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#232323] `}
+        className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
       >
 
         {/* <div className="scanlines"></div> */}

@@ -24,7 +24,7 @@ export const Table = ({ orcr }: { orcr: Orcr[] }) => {
   ]
 
   return (
-    <div className="overflow-x-auto border-2  border-black px-4 dark:border-white shadow-purple-500  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-gray-300 dark:bg-[#171616]">
+    <div className="overflow-x-auto border-2  border-black px-4 dark:border-white shadow-purple-500  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-gray-300 dark:bg-[#222222]">
       <table className="min-w-full border-collapse text-left font-thin">
         <thead>
           <tr className="min-w-max">

@@ -1,3 +1,4 @@
+import { Orcr } from "@/types/globalTypes";
 import { SlidersHorizontal } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
@@ -6,8 +7,8 @@ import { useState } from "react";
 
 
 type props = {
-    view: { [key: string]: boolean },
-    setView: React.Dispatch<{ [key: string]: boolean }>
+    view: { name: string; key: keyof Orcr; show: boolean }[]
+    setView: React.Dispatch<{ name: string; key: keyof Orcr; show: boolean }[]>
 }
 
 export const ViewToggle = ({ view, setView }: props) => {
@@ -28,17 +29,17 @@ export const ViewToggle = ({ view, setView }: props) => {
             animate={{ height: "auto", opacity: 1, y: 0 }}
             exit={{ height: 0, opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="absolute right-0 sm:right-4 z-10 mt-4">
-          <div className="flex flex-col gap-4 p-4 w-full bg-gray-400 dark:bg-gray-700 border-black border-2 dark:border-white rounded-lg">
-            {Object.entries(view).map(([key, value]) => (
-              <div key={key} className="flex items-center">
+        className="absolute right-0 sm:right-4 z-10 mt-6">
+          <div className="grid grid-cols-2 gap-4 p-4 w-full bg-gray-400 dark:bg-[#323232] border-black border-2 dark:border-white rounded-lg">
+            {view.map((item, index) => (
+              <div onClick={() => setView(view.map((v, i) => i === index ? { ...v, show: !v.show } : v))} key={index} className="flex items-center">
                 <input
                   type="checkbox"
                   className="mr-2 h-6 w-6 bg-purple-500 accent-purple-500"
-                  checked={value}
-                  onChange={() => setView({ ...view, [key]: !value })}
+                  checked={item.show}
+                  onChange={() => setView(view.map((v, i) => i === index ? { ...v, show: !v.show } : v))}
                 />
-                <label className="text-black dark:text-white">{key}</label>
+                <label className="text-black dark:text-white">{item.name}</label>
               </div>    
             ))}
           </div>

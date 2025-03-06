@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -14,7 +14,7 @@ model College {
   coverImage      String?
   location        String?
   officialWebsite String?
-  images          String[]
+  images          Json?
   totalStudents   Int?
   maleStudents    Int?
   femaleStudents  Int?

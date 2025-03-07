@@ -5,9 +5,9 @@ import Filters from "../components/Filters";
 import { RequiredFilters } from "../components/RequiredFilters";
 import { ViewToggle } from "../components/ViewToggle";
 import { PaginationNav } from "../components/PaginationNav";
-import { advanced2023JossaRound1 } from "../../../ORCR/bruh";
 import type { Orcr } from "@/types/globalTypes";
 import { Loading } from "../components/Loading";
+import { NotFound } from "../components/NotFound";
 
 export default function Orcr() {
   const [fetchedOrcrData, setFetchedOrcrData] = useState<Orcr[]>([]);
@@ -48,16 +48,6 @@ export default function Orcr() {
 
   const fetchOrcrData = async () => {
     setLoading(true);
-    if (
-      requiredFilters.exam == "ADVANCED" &&
-      requiredFilters.year == 2023 &&
-      requiredFilters.round == 1 &&
-      requiredFilters.type == "JOSSA"
-    ) {
-      setFetchedOrcrData(advanced2023JossaRound1);
-      setLoading(false);
-      return;
-    }
     try {
       const res = await fetch("/api/getOrcr", {
         method: "POST",
@@ -144,7 +134,7 @@ export default function Orcr() {
   }, [filteredData, currPage, colsShown]);
 
   return (
-    <div className="flex flex-col items-center w-full p-4 gap-y-6">
+    <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full min-h-screen">
       <RequiredFilters
         requiredFilters={requiredFilters}
         setRequiredFilters={setRequiredFilters}
@@ -167,7 +157,7 @@ export default function Orcr() {
         <ViewToggle view={view} setView={setView} />
       </div>
       {loading && <Loading />}
-      {!loading && (
+      {!loading && paginatedData.length !== 0 && (
         <>
           <Table orcr={paginatedData} view={view} />
           <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
@@ -180,6 +170,9 @@ export default function Orcr() {
             />
           </div>
         </>
+      )}
+      {!loading && paginatedData.length === 0 && (
+        <NotFound />
       )}
     </div>
   );

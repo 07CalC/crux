@@ -1,18 +1,26 @@
 // import { PrismaClient } from "@prisma/client";
-// import { data2023csR2 } from "./ORCR/2023-csab-r2";
+// import { data2023R1 } from "./ORCR/2023-r1"
+// import { data2023R2 } from "./ORCR/2023-r2"
+// import { data2023R3 } from "./ORCR/2023-r3"
+// import { data2023R4 } from "./ORCR/2023-r4"
+// import { data2023R5 } from "./ORCR/2023-r5"
+// import { data2023R6 } from "./ORCR/2023-r6"
+// import { data2023csR1 } from "./ORCR/2023-csab-r1"
+// import { data2023csR2 } from "./ORCR/2023-csab-r2"
+
 // const prisma = new PrismaClient();
 
-// // const uniqueInstitutes = new Set(data2023R2.map((item) => item.institute));
-// // uniqueInstitutes.forEach(async (institute) => {
-// //     await prisma.college.create({
-// //         data: {
-// //             name: institute,
-// //         },
-// //     });
-// //     console.log("Institute created: ", institute);
-// // }
-// // );
 // async function exportData() {
+//     // const uniqueInstitutes = new Set(data2023R1.map((item) => item.institute));
+//     // uniqueInstitutes.forEach(async (institute) => {
+//     //     await prisma.college.create({
+//     //         data: {
+//     //             name: institute,
+//     //         },
+//     //     });
+//     //     console.log("Institute created: ", institute);
+//     // }
+//     // );
 //     // await prisma.orcr.deleteMany({where: {round: 2, year: 2023}});
 //     data2023csR2.map(async (item) => {
 //       const institute = await prisma.college.findUnique({

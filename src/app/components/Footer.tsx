@@ -4,7 +4,7 @@
 
 export const Footer = () => {
     return (
-        <footer className="bg-background text-foreground py-4 text-center">
+        <footer className="bg-background bottom-0  text-foreground py-4 text-center">
         <p>
             &copy; {new Date().getFullYear()}{" "}
             <a

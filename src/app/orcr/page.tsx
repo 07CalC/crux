@@ -141,7 +141,7 @@ export default function Orcr() {
   }, [filteredData, currPage, colsShown]);
 
   return (
-    <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full min-h-screen">
+    <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
       <RequiredFilters
         requiredFilters={requiredFilters}
         setRequiredFilters={setRequiredFilters}

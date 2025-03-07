@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`transition-colors h-full min-h-screen duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
+        className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
       >
       <NextTopLoader showSpinner={false} color="#FFFFFF" height={5}/>
       <Navbar />

@@ -89,13 +89,20 @@ export default function Orcr() {
   }, [fetchedOrcrData]);
 
   const filteredData = useMemo(() => {
-    return fetchedOrcrData.filter((orcr) =>
-      orcr.institute.toLowerCase().includes(filters.searchKeyword.toLowerCase())
-      && orcr.academicProgramName.toLowerCase().includes(filters.academicProgramName.toLowerCase())
-      && orcr.quota.toLowerCase().includes(filters.quota.toLowerCase())
-      && orcr.seatType.toLowerCase().includes(filters.seatType.toLowerCase())
-      && orcr.institute.toLowerCase().includes(filters.institute.toLowerCase())
-      && orcr.gender.toLowerCase().includes(filters.gender.toLowerCase())
+    return fetchedOrcrData.filter(
+      (orcr) =>
+        orcr.institute
+          .toLowerCase()
+          .includes(filters.searchKeyword.toLowerCase()) &&
+        orcr.academicProgramName
+          .toLowerCase()
+          .includes(filters.academicProgramName.toLowerCase()) &&
+        orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
+        orcr.seatType.toLowerCase().includes(filters.seatType.toLowerCase()) &&
+        orcr.institute
+          .toLowerCase()
+          .includes(filters.institute.toLowerCase()) &&
+        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase())
     );
   }, [fetchedOrcrData, filters]);
 
@@ -171,9 +178,7 @@ export default function Orcr() {
           </div>
         </>
       )}
-      {!loading && paginatedData.length === 0 && (
-        <NotFound />
-      )}
+      {!loading && paginatedData.length === 0 && <NotFound />}
     </div>
   );
 }

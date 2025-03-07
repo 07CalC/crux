@@ -27,7 +27,7 @@ export const ViewToggle = ({ view, setView }: props) => {
         <motion.div
         initial={{ height: 0, opacity: 0, y: -10 }}
             animate={{ height: "auto", opacity: 1, y: 0 }}
-            exit={{ height: 0, opacity: 0, y: -10 }}
+            exit={{ height: 0, opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
         className="absolute right-0 sm:right-4 z-10 mt-6">
           <div className="grid grid-cols-2 gap-4 p-4 w-full bg-gray-400 dark:bg-[#323232] border-black border-2 dark:border-white rounded-lg">

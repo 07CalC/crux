@@ -52,7 +52,7 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
           <motion.div
             initial={{ height: 0, opacity: 0, y: -10 }}
             animate={{ height: "auto", opacity: 1, y: 0 }}
-            exit={{ height: 0, opacity: 0, y: -10 }}
+            exit={{ height: 0, opacity: 0, y: 10 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="absolute left-0 right-0 sm:right-4 sm:left-4 z-10 mt-6"
           >

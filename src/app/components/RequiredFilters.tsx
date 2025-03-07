@@ -10,7 +10,7 @@ type props = {
 export const RequiredFilters = ({ requiredFilters, setRequiredFilters }: props) => {
     const filters = [
         {exam: ["ADVANCED", "MAINS"]},
-        {year: [2023, 2024]},
+        {year: [2023]},
         {type: requiredFilters.exam === "MAINS" ? ["JOSSA", "CSAB"] : ["JOSSA"]},
         {round: requiredFilters.type === "JOSSA" ? [1, 2, 3, 4, 5, 6] : [1, 2]},
     ]

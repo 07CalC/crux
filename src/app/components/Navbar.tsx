@@ -13,24 +13,24 @@ export const Navbar = () => {
           crux
         </p>
       </div>
-      <div className="sm:flex items-center hidden">
+      <div className="sm:flex items-center hidden gap-x-8">
         <Link
-          href="/"
-          className="mr-4 text-black dark:text-white hover:text-gray-400"
+          href="/orcr"
+          className="mr-4 text-2xl text-black  hover:text-gray-300"
         >
-          Home
+          Orcr
         </Link>
         <Link
-          href="/about"
-          className="mr-4 text-black dark:text-white hover:text-gray-300"
+          href="/nirf"
+          className="mr-4 text-2xl text-black  hover:text-gray-300"
         >
-          About
+          Nirf
         </Link>
         <Link
-          href="/contact"
-          className="mr-4 text-black dark:text-white hover:text-gray-300"
+          href="/explore"
+          className="mr-4 text-2xl text-black  hover:text-gray-300"
         >
-          Contact
+          Explore
         </Link>
       </div>
       <div className="flex items-center">

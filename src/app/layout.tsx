@@ -2,10 +2,19 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import NextTopLoader from 'nextjs-toploader';
 
 export const metadata: Metadata = {
   title: "Crux",
   description: "Crux is a platform for students to get all the information they need for their college admissions.",
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "/logo.png",
+  }
+  ],
 };
 
 export default function RootLayout({
@@ -16,8 +25,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
+        className={`transition-colors h-full min-h-screen duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
       >
+      <NextTopLoader color="#FFFFFF" height={5}/>
       <Navbar />
       {children}
       <Footer />

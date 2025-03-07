@@ -19,6 +19,7 @@ export async function POST(req: Request){
             headers: {
               "Content-Encoding": "gzip",
               "Content-Type": "application/json",
+              "Cache-Control": "public, max-age=3153600, immutable",
             },
           });
         }

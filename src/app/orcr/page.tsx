@@ -76,18 +76,7 @@ export default function Orcr() {
     fetchOrcrData();
   }, [requiredFilters]);
 
-  useEffect(() => {
-    setFilters({
-      searchKeyword: "",
-      institute: "",
-      academicProgramName: "",
-      quota: "",
-      seatType: "",
-      gender: "",
-      rank: 0,
-    });
-  }, [fetchedOrcrData]);
-
+  
   const filteredData = useMemo(() => {
     return fetchedOrcrData.filter(
       (orcr) =>

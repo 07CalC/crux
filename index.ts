@@ -7,11 +7,20 @@
 // import { data2023R6 } from "./ORCR/2023-r6"
 // import { data2023csR1 } from "./ORCR/2023-csab-r1"
 // import { data2023csR2 } from "./ORCR/2023-csab-r2"
+// import { data2024R1 } from "./ORCR/2024-r1"
+// import { data2024R2 } from "./ORCR/2024-r2"
+// import { data2024R3 } from "./ORCR/2024-r3"
+// import { data2024R4 } from "./ORCR/2024-r4"
+// import { data2024R5 } from "./ORCR/2024-r5"
+// import { data2024csR1 } from "./ORCR/2024-csab-r1"
+// import { data2024csR2 } from "./ORCR/2024-csab-r2"
 
 // const prisma = new PrismaClient();
-
+// let count = 0;
 // async function exportData() {
-//     // const uniqueInstitutes = new Set(data2023R1.map((item) => item.institute));
+//     // const uniqueInstitutes1 = new Set(data2023R1.map((item) => item.institute));
+//     // const uniqueInstitutes2 = new Set(data2024R1.map((item) => item.institute));
+//     // console.log(uniqueInstitutes2.size);
 //     // uniqueInstitutes.forEach(async (institute) => {
 //     //     await prisma.college.create({
 //     //         data: {
@@ -21,8 +30,10 @@
 //     //     console.log("Institute created: ", institute);
 //     // }
 //     // );
-//     // await prisma.orcr.deleteMany({where: {round: 2, year: 2023}});
-//     data2023csR2.map(async (item) => {
+//     // await prisma.orcr.deleteMany({where: {round: 1, year: 2024}});
+    
+//     // await prisma.orcr.deleteMany({where: {round: 1, year: 2024}});
+//     data2024csR2.map(async (item) => {
 //       const institute = await prisma.college.findUnique({
 //         where: {
 //           name: item.institute,
@@ -31,7 +42,7 @@
 //       if (institute?.id) {
 //         await prisma.orcr.createMany({
 //           data: {
-//             year: 2023,
+//             year: 2024,
 //             round: 2,
 //             type: "CSAB",
 //             exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
@@ -49,7 +60,6 @@
 //         await prisma.college.create({
 //           data: {
 //             name: item.institute,
-//             images: [] // Default empty array for required images field
 //           },
 //         });
 //         console.log("Institute created: ", item.institute);
@@ -61,7 +71,7 @@
 //         if (newInstitute?.id) {
 //           await prisma.orcr.createMany({
 //             data: {
-//               year: 2023,
+//               year: 2024,
 //               round: 2,
 //               type: "CSAB",
 //               exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
@@ -87,4 +97,4 @@
 //   .catch((e) => {
 //     console.error(e);
 //     prisma.$disconnect();
-//     });
+// });

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import NextTopLoader from 'nextjs-toploader';
+import MobileSidebar from "./components/MobileSidebar";
 
 export const metadata: Metadata = {
   title: "Crux",
@@ -29,6 +30,7 @@ export default function RootLayout({
       >
       <NextTopLoader showSpinner={false} color="#FFFFFF" height={5}/>
       <Navbar />
+      <MobileSidebar />
       {children}
       <Footer />
       </body>

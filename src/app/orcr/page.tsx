@@ -49,7 +49,7 @@ export default function Orcr() {
   const fetchOrcrData = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/getOrcr", {
+      const res = await fetch("/api/v1/getOrcr", {
         method: "POST",
         body: JSON.stringify({
           exam: requiredFilters.exam,
@@ -66,17 +66,6 @@ export default function Orcr() {
     setLoading(false);
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 10);
-  }, [currPage, colsShown]);
-
-  useEffect(() => {
-    fetchOrcrData();
-  }, [requiredFilters]);
-
-  
   const filteredData = useMemo(() => {
     return fetchedOrcrData.filter(
       (orcr) =>
@@ -91,7 +80,8 @@ export default function Orcr() {
         orcr.institute
           .toLowerCase()
           .includes(filters.institute.toLowerCase()) &&
-        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase())
+        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
+        orcr.closeRank >= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 
@@ -128,6 +118,16 @@ export default function Orcr() {
   const paginatedData = useMemo(() => {
     return filteredData.slice((currPage - 1) * colsShown, currPage * colsShown);
   }, [filteredData, currPage, colsShown]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }, 10);
+  }, [currPage, colsShown]);
+
+  useEffect(() => {
+    fetchOrcrData();
+  }, [requiredFilters]);
 
   return (
     <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
@@ -167,7 +167,7 @@ export default function Orcr() {
           </div>
         </>
       )}
-      {!loading && paginatedData.length === 0 && <NotFound />}
+      {!loading && paginatedData.length === 0 && <NotFound text="No data found"/>}
     </div>
   );
 }

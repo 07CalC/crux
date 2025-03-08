@@ -27,7 +27,7 @@ type props = {
 export default function Filters({ filters, setFilters, filterOptions }: props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFilters((prev) => ({
       ...prev,
@@ -85,6 +85,18 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
                   </div>
                 );
               })}
+              <div className="flex flex-col gap-2">
+                <label className="text-black dark:text-white">Rank</label>
+              <input 
+                className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold  border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                type="number"
+                name="rank"
+                value={filters.rank}
+                onChange={handleChange}
+                placeholder="Rank"
+              />
+              </div>
+              <div></div>
               <div className="flex flex-col gap-2 justify-end items-end">
                 <button
                   className="rounded-xl text-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 border-2 border-black shadow-black dark:shadow-white bg-purple-500 p-2"

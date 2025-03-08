@@ -17,7 +17,7 @@ const officialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-300  bottom-0 max-h-screen h-full md:min-h-96 flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start dark:bg-[#222222] p-5 md:p-10 border-t-4 mt-16 border-black dark:border-gray-100">
+    <footer className="bg-gray-300  bottom-0 max-h-screen h-full md:min-h-96 flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start dark:bg-[#222222] pt-5 px-5 md:p-10 border-t-4 mt-16 border-black dark:border-gray-100">
       <div className="grid md:flex w-full justify-between items-start gap-y-4">
       <div className="flex p-5 h-full flex-col gap-y-4 w-full md:w-1/3 justify-center items-center md:items-start">
       <div className="flex gap-x-4 items-center justify-center md:justify-start">
@@ -71,7 +71,7 @@ export const Footer = () => {
         ))}
       </div>
       </div>
-      <div className="grid gap-y-2 md:flex w-full px-5 py-3 border-t border-gray-600 dark:border-gray-100 justify-center md:justify-between items-center gap-x-4">
+      <div className="grid gap-y-2 md:flex w-full px-5 pt-2 border-t border-gray-600 dark:border-gray-100 justify-center md:justify-between items-center gap-x-4">
         <p className="text-yellow-700 dark:text-yellow-500 text-sm md:text-xl text-center">
           Found helpful?{" "}
           <a

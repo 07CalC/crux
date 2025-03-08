@@ -27,8 +27,8 @@ export default function Orcr() {
     [key: string]: string | number;
   }>({
     exam: "ADVANCED",
-    year: 2023,
-    round: 1,
+    year: 2024,
+    round: 5,
     type: "JOSSA",
   });
   const [view, setView] = useState<

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 
@@ -20,11 +21,11 @@ export const Footer = () => {
       <div className="grid md:flex w-full justify-between items-start gap-y-4">
       <div className="flex p-5 h-full flex-col gap-y-4 w-full md:w-1/3 justify-center items-center md:items-start">
       <div className="flex gap-x-4 items-center justify-center md:justify-start">
-        <img
+        <Image
           src="/logo.png"
           alt="Logo"
-          width={100}
-          height={100}
+          width={1000}
+          height={1000}
           className="w-1/4 sm:w-1/5"
         />
         <p className="text-black glitchy-text font-semibold text-5xl sm:text-8xl dark:text-white">
@@ -71,9 +72,6 @@ export const Footer = () => {
       </div>
       </div>
       <div className="grid gap-y-2 md:flex w-full px-5 py-3 border-t border-gray-600 dark:border-gray-100 justify-center md:justify-between items-center gap-x-4">
-        <p className="text-gray-500 dark:text-gray-400 text-sm md:text-xl text-center">
-          © 2025 CRUX. All rights reserved.
-        </p>
         <p className="text-yellow-700 dark:text-yellow-500 text-sm md:text-xl text-center">
           Found helpful?{" "}
           <a

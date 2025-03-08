@@ -30,7 +30,7 @@ export const Table = ({
             <tr
               onClick={() => window.open(`/college/${item.id}`)}
               key={index}
-              className="hover:bg-gray-500 hover:dark:bg-gray-700 text-black dark:text-white  cursor-pointer hover:text-white"
+              className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white  cursor-pointer hover:text-white"
             >
               {/* <Link href={'/college/' + item.id} > */}
               {view.map(

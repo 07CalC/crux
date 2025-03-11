@@ -15,6 +15,8 @@
 // import { data2024csR1 } from "./ORCR/2024-csab-r1"
 // import { data2024csR2 } from "./ORCR/2024-csab-r2"
 
+import { PrismaClient } from "@prisma/client";
+
 // const prisma = new PrismaClient();
 // let count = 0;
 // async function exportData() {
@@ -98,3 +100,32 @@
 //     console.error(e);
 //     prisma.$disconnect();
 // });
+
+// const prisma = new PrismaClient()
+
+// async function main() {
+//     const clgName = 'Indian Institute of Technology Madras'
+//     const totalStudents = 3440
+//     const femaleStudents = 701
+//     const maleStudents = totalStudents - femaleStudents
+//     const college = await prisma.college.findUnique({
+//         where: {
+//             name: clgName,
+//         },
+//     });
+//     console.log(college)
+//     if(college){
+//         await prisma.college.update({
+//             where: {
+//                 id: college.id,
+//             },
+//             data: {
+//                 totalStudents: totalStudents,
+//                 femaleStudents: femaleStudents,
+//                 maleStudents: maleStudents,
+//             },
+//         });
+//     }
+// }
+
+// main()

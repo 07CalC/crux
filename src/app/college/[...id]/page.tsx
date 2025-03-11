@@ -37,6 +37,7 @@ export default async function College({
     return(
         <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">
             <p className="text-black font-semibold text-3xl sm:text-4xl dark:text-white">{college?.name}</p>
+            <p>{college?.location}</p>
             <ComingSoon />
         </div>
     )

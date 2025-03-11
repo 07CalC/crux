@@ -8,8 +8,8 @@ export default async function Explore() {
     return (
         <div className="grid sm:grid-cols-3 grid-cols-1 px-5 py-10 w-full h-full gap-8 justify-center items-center">
             {colleges.map((college) => (
-                <div className="flex flex-col h-full w-full rounded-xl gap-y-2 text-start bg-gray-300 dark:bg-[#222222] shadow-lg border border-black dark:border-gray-300">
-                    <Link href={`/college/${college.id}`} key={college.id} className="flex flex-col h-2/3 w-full gap-y-4">
+                <div key={college.id} className="flex flex-col h-full w-full rounded-xl gap-y-2 text-start bg-gray-300 dark:bg-[#222222] shadow-lg border border-black dark:border-gray-300">
+                    <Link href={`/college/${college.id}`} className="flex flex-col h-2/3 w-full gap-y-4">
                     <img src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"} alt={"Cover Image"} className="w-full h-full rounded-t-xl" />
                     <p className="text-black mx-4 font-semibold text-start text-xl sm:text-2xl dark:text-white">{college.name}</p>
                    </Link>

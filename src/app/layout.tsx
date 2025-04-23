@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+    <script defer src="https://cloud.umami.is/script.js" data-website-id="2f7b543e-b3f3-4ec3-96e1-01f8905c6c9c"></script>
+    </head>
       <body
         className={`transition-colors duration-500 ease-in-out w-full pt-24 font-mono bg-gray-100 dark:bg-[#292929] `}
       >

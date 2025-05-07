@@ -83,7 +83,7 @@ export const Footer = () => {
             Give it a ⭐
           </a>
         </p>
-        <a href="https://github.com/07calc" target="_blank" rel="noreferrer" className="text-xl text-center text-purple-700 dark:text-purple-400">
+        <a href="https://calc.is-a.dev" target="_blank" rel="noreferrer" className="text-xl text-center text-purple-700 dark:text-purple-400">
           Made with ❤️ by <strong className="underline">CalC</strong>
         </a>
       </div>

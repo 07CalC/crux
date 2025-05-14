@@ -15,18 +15,18 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-24 bg-gradient-to-br from-purple-800 via-purple-500 to-purple-800">
+      <section className="w-full py-16 md:py-24 bg-gradient-to-br from-purple-400 via-purple-800 to-purple-400">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="flex-1 text-center md:text-left">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
+              <h1 className="text-4xl flex flex-col md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-tight">
                 Discover Your{" "}
                 <span className="text-purple-950 glitchy-text neon-text">
                   Perfect
                 </span>{" "}
                 College Journey
               </h1>
-              <p className="text-lg md:text-xl text-purple-100 mb-8 max-w-2xl">
+              <p className="text-lg md:text-2xl text-purple-100 mb-8 max-w-2xl">
                 Explore comprehensive information about colleges across India.
                 Make informed decisions with accurate data, rankings, and
                 authentic student reviews.
@@ -34,37 +34,40 @@ export default async function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
                   href="/explore"
-                  className="rounded-xl text-lg self-start items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-100 px-6 py-3 font-medium"
+                  className="rounded-xl hover:scale-110 text-lg self-start items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-100 px-6 py-3 font-medium"
                 >
                   Explore Colleges <FaSearch className="ml-2" />
                 </Link>
               </div>
             </div>
             <div className="flex-1 relative">
-              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl transform rotate-3 border-2 border-black dark:border-white">
-                <div className="aspect-video relative overflow-hidden rounded-lg border-2 border-black dark:border-gray-600">
-                  <Image
-                    src="/iiita.jpeg"
-                    alt="College campus"
-                    width={1000}
-                    height={1000}
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </div>
-              <div className="absolute -bottom-16 md:-bottom-4 -left-4 text-white bg-purple-300 dark:bg-purple-800 p-4 rounded-lg shadow-lg border-2 border-black dark:border-white transform rotate-6 md:-rotate-6">
-                <p className="text-lg font-bold">160+ Colleges</p>
-                <p className="text-sm">Comprehensive database</p>
-              </div>
+        <div className="rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500 rotate-1">
+          <Image
+            src="/iiita.jpeg"
+            alt="College campus"
+            width={1000}
+            height={600}
+            className="object-cover rounded-3xl border-4 border-white"
+            priority
+          />
+        </div>
 
-              {/* Add this new element - caption pointing to image */}
-              <div className="absolute -top-10 md:-top-2 -right-2 flex items-center">
-                <div className="bg-purple-500 text-xl text-white px-4 py-2 rounded-lg shadow-lg border-2 border-black dark:border-white transform md:rotate-12 font-bold">
-                  IIIT Allahabad btw
-                </div>
-              </div>
-            </div>
+        {/* Floating Badge */}
+        <div className="absolute -bottom-16 md:-bottom-5 -left-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 px-6 py-4 rounded-xl shadow-md rotate-6">
+          <p className="text-lg font-bold">160+ Colleges</p>
+          <p className="text-sm text-purple-100">Comprehensive database</p>
+        </div>
+
+        {/* Caption Tag */}
+        <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
+          <Link
+            href="https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+            className="bg-purple-500 text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
+          >
+            IIIT Allahabad btw
+          </Link>
+        </div>
+      </div>
           </div>
         </div>
       </section>
@@ -86,7 +89,7 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
+            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
               <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
                 <FaSearch size={24} />
               </div>
@@ -99,7 +102,7 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
+            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
               <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
                 <FaChartBar size={24} />
               </div>
@@ -112,7 +115,7 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
+            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
               <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
                 <FaComments size={24} />
               </div>
@@ -133,13 +136,136 @@ export default async function Home() {
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 order-2 md:order-1">
-              <Image
-                src={"/orcr.png"}
-                alt="Cutoff data"
-                width={1000}
-                height={1000}
-                className="object-cover rounded-lg"
-              />
+              <div className="overflow-x-auto border-2  border-black px-4 dark:border-white shadow-purple-500  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-gray-300 dark:bg-[#222222]">
+                <table className="min-w-full border-collapse text-left font-thin">
+                  <thead>
+                    <tr className="min-w-max">
+                      <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
+                        <span>Institute</span>
+                      </th>
+                      <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
+                        <span>Program</span>
+                      </th>
+                      <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
+                        <span>Gender</span>
+                      </th>
+                      <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
+                        <span>Open</span>
+                      </th>
+                      <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
+                        <span>Close</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody className="min-w-max">
+                  <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        IT
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Neutral
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        950
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        5870
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        IT
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Female
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        2818
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        11259
+                      </td>
+                    </tr>
+                    
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        IT-BI
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Neutral
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        3281
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        6192
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        IT-BI
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Female
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        8616
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        11529
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        ECE
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Neutral
+                      </td>
+                      
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        5249
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        9200
+                      </td>
+                    </tr>
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        ECE
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        Female
+                      </td>
+                      
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        10761
+                      </td>
+                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
+                        14522
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div className="flex-1 order-1 md:order-2 text-center md:text-left">
@@ -200,7 +326,7 @@ export default async function Home() {
                     Anonymous
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    IIIT Allahabad
+                    Indian Insititute of Information Technology, Allahabad
                   </p>
                 </div>
               </div>

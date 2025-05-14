@@ -20,6 +20,8 @@ model College {
   femaleStudents  Int?
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
+  nirf            Int?
+  moderated       Boolean     @default(false)
   orcrs           Orcr[]
   reviews         Review[]
   placements      placement[]

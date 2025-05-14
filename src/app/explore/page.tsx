@@ -121,6 +121,9 @@ export default async function Explore({ searchParams }: PageProps) {
                   <p className="text-black dark:text-white font-bold text-sm md:text-xl">
                     {college.nirf ? `NIRF: ${college.nirf}` : ""}
                   </p>
+                  <p className="text-black dark:text-white font-bold text-sm md:text-xl">
+                    Bonks: {college.bongs}
+                  </p>
                   <a
                     href={college.officialWebsite || "#"}
                     target="_blank"

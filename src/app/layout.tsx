@@ -4,6 +4,7 @@ import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
 import NextTopLoader from 'nextjs-toploader';
 import MobileSidebar from "./components/MobileSidebar";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   title: "Crux",
@@ -33,6 +34,7 @@ export default function RootLayout({
       <MobileSidebar />
       {children}
       <Footer />
+      <ToastContainer />
       </body>
     </html>
   );

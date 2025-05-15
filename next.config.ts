@@ -14,6 +14,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cgu-odisha.ac.in" },
     ],
   },
+  output: "standalone"
 };
 
 export default nextConfig;

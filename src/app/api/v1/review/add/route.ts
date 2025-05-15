@@ -23,6 +23,6 @@ export async function POST(req: Request){
             rating: rating
         }
     });
-    revalidatePath(`/college/${clgId}`);
+    revalidatePath(`/explore/${clgId}`);
     return new NextResponse(JSON.stringify({ message: "Review added successfully" }), { status: 200 });
 }

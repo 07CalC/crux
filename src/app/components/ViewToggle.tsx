@@ -2,7 +2,7 @@ import { Orcr } from "@/types/globalTypes";
 import { SlidersHorizontal } from "lucide-react";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 
 
@@ -13,8 +13,25 @@ type props = {
 
 export const ViewToggle = ({ view, setView }: props) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const viewRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleClickOutside(event: MouseEvent) {
+            if (viewRef.current && !viewRef.current.contains(event.target as Node)) {
+                setIsOpen(false);
+            }
+        }
+
+        if (isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    })
     return (
-        <div className="rounded-xl w-full max-w-screen h-full flex-1">
+        <div className="rounded-xl w-full max-w-screen h-full flex-1" ref={viewRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-xl sm:text-lg self-start gap-x-2 items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2"

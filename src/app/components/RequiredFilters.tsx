@@ -3,21 +3,25 @@
 type props = {
     requiredFilters: { [key: string]: string | number };
     setRequiredFilters: React.Dispatch<{ [key: string]: string | number }>;
+    filters: Array<{ [key: string]: string[] | number[]}>
 }
 
 
 
-export const RequiredFilters = ({ requiredFilters, setRequiredFilters }: props) => {
-    const filters = [
-        {exam: ["ADVANCED", "MAINS"]},
-        {year: [2023, 2024]},
-        {type: requiredFilters.exam === "MAINS" ? ["JOSSA", "CSAB"] : ["JOSSA"]},
-        {round: requiredFilters.type === "JOSSA" ? requiredFilters.year === 2023 ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5] : [1, 2]},
-    ]
+export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters }: props) => {
+    // const filters = [
+    //     {exam: ["ADVANCED", "MAINS"]},
+    //     {year: [2023, 2024]},
+    //     {type: requiredFilters.exam === "MAINS" ? ["JOSSA", "CSAB"] : ["JOSSA"]},
+    //     {round: requiredFilters.type === "JOSSA" ? requiredFilters.year === 2023 ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5] : [1, 2]},
+    // ]
     return (
         <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
             {filters.map((filter, index) => (
                 <div key={index}>
+                    <label className="text-lg font-semibold text-black dark:text-gray-100">
+                        {Object.keys(filter)[0]}
+                    </label>
                     <select
                         name={Object.keys(filter)[0]}
                         value={requiredFilters[Object.keys(filter)[0]]}

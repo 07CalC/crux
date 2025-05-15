@@ -28,11 +28,11 @@ export const Table = ({
         <tbody className="min-w-max">
           {orcr.map((item: Orcr, index: number) => (
             <tr
-              onClick={() => window.open(`/college/${item.collegeId}`)}
+              onClick={() => window.open(`/explore/${item.collegeId}`)}
               key={index}
               className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white  cursor-pointer hover:text-white"
             >
-              {/* <Link href={'/college/' + item.id} > */}
+              {/* <Link href={'/explore/' + item.id} > */}
               {view.map(
                 (header, index) =>
                   header.show && (

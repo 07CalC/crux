@@ -9,6 +9,7 @@ const CACHE_DIR = path.join(process.cwd(), 'cachedOrcr');
 export async function POST(req: Request){
     console.log("\ngetOrcr Route hit")
     const data = await req.json();
+    console.log("data received: ", data)
     const { year, round, exam, type } = data;
     console.log("req for ", year, round, exam, type)
     const file = path.join(CACHE_DIR, `${year}-${round}-${exam}-${type}.json`);

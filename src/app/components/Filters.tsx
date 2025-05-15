@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp, Filter } from "lucide-react";
 import * as motion from "motion/react-client";
 import { AnimatePresence } from "motion/react";
@@ -26,6 +26,7 @@ type props = {
 
 export default function Filters({ filters, setFilters, filterOptions }: props) {
   const [isOpen, setIsOpen] = useState(false);
+  const filterRef = useRef<HTMLDivElement>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement> | React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -35,8 +36,24 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
     }));
   };
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (filterRef.current && !filterRef.current.contains(event.target as Node)) {
+        setIsOpen(false);
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="rounded-xl w-full max-w-screen flex-1">
+    <div className="rounded-xl w-full max-w-screen flex-1" ref={filterRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="rounded-xl sm:text-lg items-center gap-x-2 justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2"
@@ -87,14 +104,14 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
               })}
               <div className="flex flex-col gap-2">
                 <label className="text-black dark:text-white">Rank</label>
-              <input 
-                className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold  border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
-                type="number"
-                name="rank"
-                value={filters.rank}
-                onChange={handleChange}
-                placeholder="Rank"
-              />
+                <input 
+                  className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                  type="number"
+                  name="rank"
+                  value={filters.rank}
+                  onChange={handleChange}
+                  placeholder="Rank"
+                />
               </div>
               <div></div>
               <div className="flex flex-col gap-2 justify-end items-end">

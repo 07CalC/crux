@@ -91,7 +91,7 @@ export default async function Explore({ searchParams }: PageProps) {
               className="flex flex-col h-full rounded-xl overflow-hidden bg-gray-300 dark:bg-[#222222] shadow-lg border border-black dark:border-gray-300 hover:shadow-xl transition-all duration-300"
             >
               <Link
-                href={`/college/${college.id}`}
+                href={`/explore/${college.id}`}
                 className="flex flex-col h-64 relative group"
                 scroll={true}
               >
@@ -108,7 +108,7 @@ export default async function Explore({ searchParams }: PageProps) {
                 />
               </Link>
               <div className="p-4 flex flex-col flex-grow">
-                <Link href={`/college/${college.id}`} scroll={true}>
+                <Link href={`/explore/${college.id}`} scroll={true}>
                   <h2 className="text-black font-semibold text-xl sm:text-2xl mb-2 dark:text-white hover:text-purple-700 dark:hover:text-purple-300 transition-colors">
                     {college.name}
                   </h2>

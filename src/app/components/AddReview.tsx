@@ -106,7 +106,7 @@ export const AddReview = ({clgId}: {clgId: string}) => {
                                         className={`text-2xl ${
                                             ratingValue <= (hover || review.rating)
                                                 ? "text-yellow-400" 
-                                                : "text-gray-300 dark:text-gray-600"
+                                                : "text-gray-400 dark:text-gray-600"
                                         }`}
                                         onClick={() => setReview({...review, rating: ratingValue})}
                                         onMouseEnter={() => setHover(ratingValue)}

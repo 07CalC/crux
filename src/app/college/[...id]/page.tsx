@@ -76,7 +76,7 @@ export default async function College({
     return(
         <div className="w-full min-h-screen flex flex-col">
             <div className="w-full h-[60vh] relative">
-                <img 
+                <img
                     src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"} 
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"
@@ -85,16 +85,16 @@ export default async function College({
             </div>
 
             <div className="w-full px-4 md:px-8 mt-6">
-                <div className="mb-8 text-left mx-auto justify-between flex flex-col md:flex-row gap-y-3
-                 items-center">
+                <div className="mb-8 text-left mx-auto items-start justify-between flex flex-col md:flex-row gap-y-3
+                 ">
                     <div className="flex flex-col gap-y-3">
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white">{college?.name}</h1>
                     <p className="text-purple-700 dark:text-purple-300 text-lg md:text-2xl mt-2">{college?.location}</p>
-                    <Bonk  clgId={college?.id || ""} bonksCount={college?.bongs || 0}/>
+                    <Bonk clgId={college?.id || ""} bonksCount={college?.bongs || 0}/>
                     </div>
                     <div className="flex gap-x-4">
                     
-                    <a href={college?.officialWebsite || "#"} target="_blank" rel="noreferrer" className={`gap-x-3 rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2`}>
+                    <a href={college?.officialWebsite || "#"} target="_blank" rel="noreferrer" className={`gap-x-3 self-start rounded-xl sm:text-lg items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2`}>
                         Official Website <LuExternalLink />
                     </a>
                     </div>

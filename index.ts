@@ -131,3 +131,37 @@ import { PrismaClient } from "@prisma/client";
 // main()
 
 
+const main = async () => {
+    const prisma = new PrismaClient();
+    const colleges = await prisma.college.findMany({
+        select: {
+            name: true,
+            coverImage: true,
+        }
+    })
+    
+    let domains: any = []
+    
+    for (const college of colleges) {
+        if(college.coverImage?.startsWith("https://")) {
+            console.log(college.name)
+            try {
+                // Extract domain from URL
+                const url = new URL(college.coverImage);
+                const domain = url.hostname;
+                
+                // Add domain to array if it's not already included
+                if (!domains.includes(domain)) {
+                    domains.push(domain);
+                }
+            } catch (error) {
+                console.error(`Error parsing URL for ${college.name}: ${college.coverImage}`);
+            }
+        }
+    }
+    
+    console.log("Domains found:", domains);
+    console.log(`Total unique domains: ${domains.length}`);
+}
+
+main();

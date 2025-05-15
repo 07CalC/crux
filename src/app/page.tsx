@@ -1,9 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FaSearch, FaChartBar, FaComments } from "react-icons/fa";
-import { IoRocketOutline, IoStatsChart } from "react-icons/io5";
+import { IoRocketOutline, IoStatsChart, IoWarning } from "react-icons/io5";
 import { MdCompare, MdOutlineSchool } from "react-icons/md";
 import { Metadata } from "next";
+import { GiSpikedBat } from "react-icons/gi";
 
 export const metadata: Metadata = {
   title: "Crux | Discover & Explore Colleges in India",
@@ -15,7 +16,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Hero Section */}
-      <section className="w-full py-16 md:py-24 bg-gradient-to-br from-purple-400 via-purple-800 to-purple-400">
+      <section className="w-full py-16 backdrop-blur-md md:py-24 bg-gradient-to-br from-purple-400/80 via-purple-800/80 to-purple-400/80">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center justify-between gap-12">
             <div className="flex-1 text-center md:text-left">
@@ -41,33 +42,35 @@ export default async function Home() {
               </div>
             </div>
             <div className="flex-1 relative">
-        <div className="rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.5)] transform hover:scale-105 transition-transform duration-500 rotate-1">
-          <Image
-            src="/iiita.jpeg"
-            alt="College campus"
-            width={1000}
-            height={600}
-            className="object-cover rounded-3xl border-4 border-white"
-            priority
-          />
-        </div>
+              <div className="rounded-3xl overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.5)] transform hover:rotate-3 hover:scale-105 transition-transform duration-500 rotate-1">
+                <Image
+                  src="/iiita.jpeg"
+                  alt="College campus"
+                  width={1000}
+                  height={600}
+                  className="object-cover rounded-3xl border-4 border-white"
+                  priority
+                />
+              </div>
 
-        {/* Floating Badge */}
-        <div className="absolute -bottom-16 md:-bottom-5 -left-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 px-6 py-4 rounded-xl shadow-md rotate-6">
-          <p className="text-lg font-bold">160+ Colleges</p>
-          <p className="text-sm text-purple-100">Comprehensive database</p>
-        </div>
+              {/* Floating Badge */}
+              <div className="absolute -bottom-16 md:-bottom-5 -left-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 px-6 py-4 rounded-xl shadow-md rotate-6">
+                <p className="text-lg font-bold">160+ Colleges</p>
+                <p className="text-sm text-purple-100">
+                  Comprehensive database
+                </p>
+              </div>
 
-        {/* Caption Tag */}
-        <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
-          <Link
-            href="https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-            className="bg-purple-500 text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
-          >
-            IIIT Allahabad btw
-          </Link>
-        </div>
-      </div>
+              {/* Caption Tag */}
+              <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
+                <Link
+                  href="https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                  className="bg-purple-500 text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
+                >
+                  IIIT Allahabad btw
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -158,9 +161,15 @@ export default async function Home() {
                     </tr>
                   </thead>
                   <tbody className="min-w-max">
-                  <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
+                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         IT
@@ -177,7 +186,13 @@ export default async function Home() {
                     </tr>
                     <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         IT
@@ -192,10 +207,16 @@ export default async function Home() {
                         11259
                       </td>
                     </tr>
-                    
+
                     <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         IT-BI
@@ -212,7 +233,13 @@ export default async function Home() {
                     </tr>
                     <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         IT-BI
@@ -229,7 +256,13 @@ export default async function Home() {
                     </tr>
                     <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         ECE
@@ -237,7 +270,7 @@ export default async function Home() {
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         Neutral
                       </td>
-                      
+
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         5249
                       </td>
@@ -247,7 +280,13 @@ export default async function Home() {
                     </tr>
                     <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                      <Link href={"https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"}>IIITA</Link>
+                        <Link
+                          href={
+                            "https://crux.ix.tc/college/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                          }
+                        >
+                          IIITA
+                        </Link>
                       </td>
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         ECE
@@ -255,7 +294,7 @@ export default async function Home() {
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         Female
                       </td>
-                      
+
                       <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
                         10761
                       </td>
@@ -445,7 +484,7 @@ export default async function Home() {
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 text-center md:text-left">
               <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-                Bonk Your Favorite College
+                Bonk Your College
               </h2>
               <p className="text-lg text-gray-600 dark:text-gray-300 mb-8">
                 Express your support and help other students discover great
@@ -455,20 +494,7 @@ export default async function Home() {
               <div className="space-y-4">
                 <div className="flex items-center bg-gray-100 dark:bg-gray-800 p-4 rounded-lg">
                   <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mr-4">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"
-                      />
-                    </svg>
+                    <GiSpikedBat className="text-white text-3xl" />
                   </div>
                   <div>
                     <p className="font-semibold text-black dark:text-white">
@@ -552,14 +578,7 @@ export default async function Home() {
                           2,543 Bonks
                         </span>
                         <button className="p-2 bg-purple-500 rounded-full hover:bg-purple-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-white"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                          </svg>
+                          <GiSpikedBat className="text-white text-2xl" />
                         </button>
                       </div>
                     </div>
@@ -573,14 +592,7 @@ export default async function Home() {
                           2,187 Bonks
                         </span>
                         <button className="p-2 bg-purple-500 rounded-full hover:bg-purple-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-white"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                          </svg>
+                          <GiSpikedBat className="text-white text-2xl" />
                         </button>
                       </div>
                     </div>
@@ -594,14 +606,7 @@ export default async function Home() {
                           1,845 Bonks
                         </span>
                         <button className="p-2 bg-purple-500 rounded-full hover:bg-purple-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-white"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                          </svg>
+                          <GiSpikedBat className="text-white text-2xl" />
                         </button>
                       </div>
                     </div>
@@ -615,14 +620,7 @@ export default async function Home() {
                           1,623 Bonks
                         </span>
                         <button className="p-2 bg-purple-500 rounded-full hover:bg-purple-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-white"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                          </svg>
+                          <GiSpikedBat className="text-white text-2xl" />
                         </button>
                       </div>
                     </div>
@@ -636,14 +634,7 @@ export default async function Home() {
                           1,512 Bonks
                         </span>
                         <button className="p-2 bg-purple-500 rounded-full hover:bg-purple-600 transition-colors">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            className="h-5 w-5 text-white"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                          >
-                            <path d="M2 10.5a1.5 1.5 0 113 0v6a1.5 1.5 0 01-3 0v-6zM6 10.333v5.43a2 2 0 001.106 1.79l.05.025A4 4 0 008.943 18h5.416a2 2 0 001.962-1.608l1.2-6A2 2 0 0015.56 8H12V4a2 2 0 00-2-2 1 1 0 00-1 1v.667a4 4 0 01-.8 2.4L6.8 7.933a4 4 0 00-.8 2.4z" />
-                          </svg>
+                          <GiSpikedBat className="text-white text-2xl" />
                         </button>
                       </div>
                     </div>
@@ -728,13 +719,13 @@ export default async function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 href="/explore"
-                className="rounded-xl text-lg items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-400 px-6 py-3 font-medium"
+                className="rounded-xl text-lg items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black dark:shadow-white bg-purple-400 px-6 py-3 font-medium"
               >
                 Explore Colleges <FaSearch className="ml-2" />
               </Link>
               <Link
                 href="/orcr"
-                className="rounded-xl text-lg items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-300 px-6 py-3 font-medium"
+                className="rounded-xl text-lg items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black dark:shadow-white bg-purple-300 px-6 py-3 font-medium"
               >
                 View Cutoffs <IoStatsChart className="ml-2" />
               </Link>
@@ -777,6 +768,26 @@ export default async function Home() {
               </p>
               <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
                 Anonymous Reviews
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Warning Section - Glassmorphic */}
+      <section className="w-full px-4 md:px-20">
+        <div className="mb-8 bg-white/10 backdrop-blur-md border border-white/30 p-5 rounded-xl shadow-lg relative overflow-hidden w-full">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 z-0"></div>
+          <div className="flex items-center relative z-10">
+            <IoWarning className="text-yellow-400 text-4xl md:text-8xl mr-4 animate-pulse" />
+            <div>
+              <h3 className="text-lg md:text-2xl font-bold text-black dark:text-white mb-1">
+                Under Development
+              </h3>
+              <p className="dark:text-white/80 text-black/80 md:text-xl">
+                Heads up! This site is a work in progress. You may encounter
+                bugs or incomplete features as we continue to build and improve.
+                Thanks for your patience!
               </p>
             </div>
           </div>

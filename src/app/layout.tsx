@@ -5,6 +5,7 @@ import { Footer } from "./components/Footer";
 import NextTopLoader from 'nextjs-toploader';
 import MobileSidebar from "./components/MobileSidebar";
 import { ToastContainer } from "react-toastify";
+import { ScrollToTop } from "./components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Crux",
@@ -25,9 +26,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <body
-        className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#292929] `}
+        className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
       >
       <NextTopLoader showSpinner={false} color="#FFFFFF" height={5}/>
       <Navbar />
@@ -35,6 +36,7 @@ export default function RootLayout({
       {children}
       <Footer />
       <ToastContainer />
+      <ScrollToTop />
       </body>
     </html>
   );

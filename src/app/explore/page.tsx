@@ -3,7 +3,6 @@ import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { Metadata } from "next";
-import { ScrollToTop } from "../components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "Explore Colleges | Crux",
@@ -98,6 +97,7 @@ export default async function Explore({ searchParams }: PageProps) {
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 <img
+                  
                   loading="lazy"
                   src={
                     college?.coverImage ||
@@ -134,7 +134,7 @@ export default async function Explore({ searchParams }: PageProps) {
                         : "hover:bg-purple-600"
                     }`}
                   >
-                    Official Website <LuExternalLink />
+                     <LuExternalLink />
                   </a>
                 </div>
               </div>
@@ -158,7 +158,7 @@ export default async function Explore({ searchParams }: PageProps) {
 
       <div id="top" className="absolute top-0 left-0" />
 
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       
     </div>
   );

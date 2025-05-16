@@ -3,6 +3,7 @@ import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { Metadata } from "next";
+import { NotFound } from "../components/NotFound";
 
 export const metadata: Metadata = {
   title: "Explore Colleges | Crux",
@@ -142,12 +143,10 @@ export default async function Explore({ searchParams }: PageProps) {
           ))
         ) : (
           <div className="col-span-full text-center py-12">
-            <p className="text-2xl text-gray-500 dark:text-gray-400">
-              No colleges found matching your search.
-            </p>
+            <NotFound text="No colleges found" />
             <Link
               href="/explore"
-              className="mt-4 inline-block text-purple-500 hover:text-purple-700"
+              className=" inline-block text-purple-500 hover:text-purple-700"
               scroll={true}
             >
               Clear filters and show all colleges
@@ -158,8 +157,6 @@ export default async function Explore({ searchParams }: PageProps) {
 
       <div id="top" className="absolute top-0 left-0" />
 
-      {/* <ScrollToTop /> */}
-      
     </div>
   );
 }

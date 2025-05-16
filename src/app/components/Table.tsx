@@ -17,7 +17,7 @@ export const Table = ({
                 header.show && (
                   <th
                     key={index}
-                    className="text-lg text-center sm:text-2xl text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-4 py-2"
+                    className="text-lg text-start sm:text-2xl text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-4 py-2"
                   >
                     <span>{header.name}</span>
                   </th>
@@ -38,7 +38,7 @@ export const Table = ({
                   header.show && (
                     <td
                       key={index}
-                      className="text-md sm:text-xl text-center border-t border-black font-thin dark:border-white px-4 py-2"
+                      className="text-md sm:text-xl text-start border-t border-black font-thin dark:border-white px-4 py-2"
                     >
                       {item[header.key].toString()}
                     </td>

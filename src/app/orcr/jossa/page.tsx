@@ -80,7 +80,7 @@ export default function Jossa() {
             .toLowerCase()
             .includes(filters.academicProgramName.toLowerCase()) &&
           orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
-          orcr.seatType.toLowerCase().includes(filters.seatType.toLowerCase()) &&
+          (filters.seatType === "" || orcr.seatType === filters.seatType) &&
           orcr.institute
             .toLowerCase()
             .includes(filters.institute.toLowerCase()) &&

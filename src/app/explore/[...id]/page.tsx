@@ -1,5 +1,7 @@
 import { AddReview } from "@/app/components/AddReview";
 import { Bonk } from "@/app/components/Bonk";
+import { ClgOrcr } from "@/app/components/ClgOrcr";
+import { NotFound } from "@/app/components/NotFound";
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import { IoWarning } from "react-icons/io5";
@@ -61,6 +63,15 @@ export default async function College({
             id: id[0],
         },
     });
+
+    if (!college) {
+        return (
+            <div className="flex flex-col py-40 w-full h-full gap-y-4 justify-center items-center">
+                <NotFound text="What you are looking for does not exist in our database"/>
+        </div>
+        );
+    }
+
     const reviews = await prisma.review.findMany({
         where: {
             collegeId: college?.id,
@@ -74,7 +85,7 @@ export default async function College({
     }
     
     return(
-        <div className="w-full min-h-screen flex flex-col">
+        <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
                 <img
                     src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"} 
@@ -149,9 +160,12 @@ export default async function College({
                     </div>
                 </div>
 
+                <h2 className="text-3xl md:text-4xl lg:text-5xl mt-20 font-bold text-black dark:text-white mb-6">Cutoffs</h2>
+                <ClgOrcr clgId={college?.id || ""} clgType={college?.collegeType || "GFTI"}/>
+
                 {/* Reviews Section */}
                 <div className="mt-10 mb-10 w-full gap-y-5 flex flex-col">
-                    <h2 className="text-3xl font-bold text-black dark:text-white mb-6">Student Reviews</h2>
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6">Student Reviews</h2>
                     <AddReview clgId={college?.id || ""} />
                     {reviews.length > 0 ? (
                         <>

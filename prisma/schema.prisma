@@ -22,9 +22,17 @@ model College {
   updatedAt       DateTime    @updatedAt
   nirf            Int?
   moderated       Boolean     @default(false)
+  collegeType     CollegeType?
   orcrs           Orcr[]
   reviews         Review[]
   placements      placement[]
+}
+
+enum CollegeType {
+  IIT
+  GFTI
+  BITS
+  JAC
 }
 
 enum OrcrType {

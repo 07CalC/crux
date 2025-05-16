@@ -147,11 +147,31 @@ export const ClgOrcr = ({
     fetchOrcr();
   }, [requiredFilters]);
 
+  const handleRequiredFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    
+    if (name === 'type' && value === 'CSAB') {
+      if (Number(requiredFilters.round) > 2) {
+        setRequiredFilters({
+          ...requiredFilters,
+          [name]: value,
+          round: 2 
+        });
+        return;
+      }
+    }
+    
+    setRequiredFilters({
+      ...requiredFilters,
+      [name]: value
+    });
+  };
+
   if (!loading && fetchedOrcr.length === 0)
     return <NotFound text="No data found" />;
 
   return (
-    <div className="w-full mt-10 h-full flex flex-col items-center justify-center border-2 border-purple-500 bg-purple-500/40 rounded-lg shadow-lg p-4">
+    <div className="w-full mt-10 h-full flex flex-col items-center justify-center border-2 border-purple-500 bg-purple-200 dark:bg-purple-900/40 rounded-lg shadow-lg p-4">
       <div className="w-full mb-6">
         <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {requiredFiltersOptions.map((option, index) => {
@@ -164,12 +184,7 @@ export const ClgOrcr = ({
                 <select
                   name={key}
                   value={requiredFilters[key]}
-                  onChange={(e) =>
-                    setRequiredFilters({
-                      ...requiredFilters,
-                      [key]: e.target.value,
-                    })
-                  }
+                  onChange={handleRequiredFilterChange}
                   className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
                 >
                   {(option[key as keyof typeof option] as (string | number)[]).map((value, index) => (
@@ -212,7 +227,6 @@ export const ClgOrcr = ({
             </select>
           </div>
 
-          {/* Seat Type filter */}
           <div>
             <label className="text-lg font-semibold text-black dark:text-gray-100">
               Seat Type
@@ -238,7 +252,6 @@ export const ClgOrcr = ({
             </select>
           </div>
 
-          {/* Gender filter */}
           <div>
             <label className="text-lg font-semibold text-black dark:text-gray-100">
               Gender
@@ -264,7 +277,6 @@ export const ClgOrcr = ({
             </select>
           </div>
 
-          {/* Rank filter */}
           <div>
             <label className="text-lg font-semibold text-black dark:text-gray-100">
               Rank
@@ -320,7 +332,6 @@ export const ClgOrcr = ({
 
       )}
       
-      {/* Loading indicator or results would go here */}
       {loading && (
         <p className="text-center text-black dark:text-white">Loading...</p>
       )}

@@ -14,19 +14,19 @@ export const Navbar = () => {
       <div className="sm:flex items-center hidden gap-x-8">
         <Link
           href="/orcr"
-          className="mr-4 text-2xl font-bold text-black  hover:text-gray-300"
+          className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
         >
           Orcr
         </Link>
         <Link
           href="/nirf"
-          className="mr-4 text-2xl font-bold text-black  hover:text-gray-300"
+          className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
         >
           Nirf
         </Link>
         <Link
           href="/explore"
-          className="mr-4 text-2xl font-bold text-black  hover:text-gray-300"
+          className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
         >
           Explore
         </Link>

@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "www.iiitnr.ac.in" },
       { protocol: "https", hostname: "jadavpuruniversity.in" },
       { protocol: "https", hostname: "cgu-odisha.ac.in" },
+      { protocol: "https", hostname: "res.cloudinary.com" },
     ],
   },
 };

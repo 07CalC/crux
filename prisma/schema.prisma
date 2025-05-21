@@ -14,7 +14,7 @@ model College {
   coverImage      String?
   location        String?
   officialWebsite String?
-  images          Json?
+  images          CollegeImage[]
   totalStudents   Int?
   maleStudents    Int?
   femaleStudents  Int?
@@ -88,4 +88,12 @@ model placement {
   higherEducation Int
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model CollegeImage {
+  id       String   @id @default(uuid())
+  collegeId String
+  college   College  @relation(fields: [collegeId], references: [id])
+  url     String
+  createdAt DateTime @default(now())
 }

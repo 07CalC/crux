@@ -2,6 +2,7 @@ import { AddReview } from "@/app/components/AddReview";
 import { Bonk } from "@/app/components/Bonk";
 import { ClgOrcr } from "@/app/components/ClgOrcr";
 import { NotFound } from "@/app/components/NotFound";
+import { UploadImage } from "@/app/components/UploadImage";
 import { PrismaClient } from "@prisma/client";
 import Image from "next/image";
 import { IoWarning } from "react-icons/io5";
@@ -51,6 +52,8 @@ export async function generateMetadata({
     }
 }
 
+
+
 export default async function College({
   params,
 }: {
@@ -71,19 +74,28 @@ export default async function College({
         </div>
         );
     }
-
-    const reviews = await prisma.review.findMany({
-        where: {
-            collegeId: college?.id,
-        },
-    });
     let genderRatio = "N/A";
     if (college?.maleStudents && college?.femaleStudents && college.maleStudents + college.femaleStudents > 0) {
         const malePercent = Math.round((college.maleStudents / (college.maleStudents + college.femaleStudents)) * 100);
         const femalePercent = 100 - malePercent;
         genderRatio = `${malePercent}:${femalePercent}`;
     }
+
+    const reviews = await prisma.review.findMany({
+        where: {
+            collegeId: college?.id,
+        },
+    });
     
+    const gallery: string[] = await prisma.collegeImage.findMany({
+        where: {
+            collegeId: college?.id,
+        },
+        select: {
+            url: true,
+        },
+    }).then((images) => images.map((image) => image.url));
+
     return(
         <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
@@ -218,6 +230,56 @@ export default async function College({
                     )}
                 </div>
 
+                {/* Image Gallery Section */}
+                <div className="mt-10 mb-10 w-full">
+                    <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6">Campus Gallery</h2>
+                    
+                    <div className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-md">
+                        <div className="flex items-center gap-x-3">
+                            <IoWarning className="text-yellow-600 text-2xl flex-shrink-0" />
+                            <div className="text-yellow-700">
+                                <p className="font-semibold">Community-Contributed Content</p>
+                                <p className="text-sm mt-1">
+                                    These images are uploaded by community members. While we encourage sharing campus photos, 
+                                    please maintain decency and only upload appropriate content. Any inappropriate uploads will be removed (maybe).
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <UploadImage clgId={college.id || ""} />
+                    {gallery && gallery.length > 0 ? (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {gallery.map((image, index) => (
+                                <div key={index} className="relative group overflow-hidden rounded-lg border-2 border-purple-500">
+                                    <Image
+                                        src={image}
+                                        alt={`${college.name} campus image ${index + 1}`}
+                                        width={400}
+                                        height={300}
+                                        className="w-full h-[250px] object-cover transition-transform duration-300 group-hover:scale-110"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+                                        <p className="text-white p-4 text-lg font-semibold">
+                                            Campus View {index + 1}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="bg-gray-300 dark:bg-[#222222] p-8 rounded-lg shadow-md text-center">
+                            <div className="flex flex-col items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <h3 className="text-xl font-bold text-black dark:text-white mb-2">No Images Available</h3>
+                                <p className="text-gray-500 dark:text-gray-400">Be the first to add images</p>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
                 <div className="mt-10 w-full relative border border-purple-500 bg-purple-500/10 p-6 rounded-lg shadow-md flex flex-col justify-center items-center">
                     <p className="text-3xl font-bold text-black dark:text-white text-center mb-4">More details about {college?.name} coming soon</p>
                     <div className="flex flex-col items-center">
@@ -236,6 +298,7 @@ export default async function College({
                             className="w-full max-w-sm object-contain relative z-10" 
                         />
                     </div>
+                    
                 </div>
             </div>
         </div>

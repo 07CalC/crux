@@ -45,5 +45,6 @@ next-env.d.ts
 
 cachedOrcr
 
+orcr/
 ORCR/
 dev.db

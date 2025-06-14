@@ -7,10 +7,14 @@ import zlib from "zlib";
 const CACHE_DIR = path.join(process.cwd(), 'cachedOrcr');
 
 export async function POST(req: Request){
+    
     console.log("\ngetOrcr Route hit")
     const data = await req.json();
     console.log("data received: ", data)
     const { year, round, exam, type } = data;
+    if ( year === 2025 && round > 1){
+      return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
+    }
     console.log("req for ", year, round, exam, type)
     const file = path.join(CACHE_DIR, `${year}-${round}-${exam}-${type}.json`);
     if(fs.existsSync(file)){

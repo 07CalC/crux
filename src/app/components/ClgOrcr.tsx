@@ -47,13 +47,13 @@ export const ClgOrcr = ({
     if (clgType === "IIT") {
       return [
         { type: ["JOSSA"] },
-        { year: [2023, 2024] },
-        { round: [1, 2, 3, 4, 5] },
+        { year: [2023, 2024, 2025] },
+        { round: requiredFilters.year === 2025 ? [1] : requiredFilters.year === 2024 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6]},
       ];
     } else if (clgType === "GFTI") {
       return [
         { type: ["JOSSA", "CSAB"] },
-        { year: [2023, 2024] },
+        { year: [2023, 2024, 2025] },
         { round: requiredFilters.type === "JOSSA" ? [1, 2, 3, 4, 5] : [1, 2] },
       ];
     } else if (clgType === "BITS") {

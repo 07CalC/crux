@@ -21,12 +21,13 @@ type PageProps = {
 };
 
 export default async function Explore({ searchParams }: PageProps) {
-  const query = (await searchParams).query || "";
+  const query = (await searchParams).query?.trim() || "";
 
   const prisma = new PrismaClient();
   const colleges = await prisma.college.findMany({
     where: {
-      OR: [{ name: { contains: query } }],
+      OR: [{ name: { contains: query as string, mode: "insensitive" } }],
+
     },
   });
 
@@ -98,7 +99,7 @@ export default async function Explore({ searchParams }: PageProps) {
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
                 <img
-                  
+
                   loading="lazy"
                   src={
                     college?.coverImage ||
@@ -129,13 +130,12 @@ export default async function Explore({ searchParams }: PageProps) {
                     href={college.officialWebsite || "#"}
                     target="_blank"
                     rel="noreferrer"
-                    className={`rounded-xl text-sm md:text-lg flex items-center gap-2 text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-3 py-2 ${
-                      !college.officialWebsite
-                        ? "opacity-50 cursor-not-allowed"
-                        : "hover:bg-purple-600"
-                    }`}
+                    className={`rounded-xl text-sm md:text-lg flex items-center gap-2 text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-3 py-2 ${!college.officialWebsite
+                      ? "opacity-50 cursor-not-allowed"
+                      : "hover:bg-purple-600"
+                      }`}
                   >
-                     <LuExternalLink />
+                    <LuExternalLink />
                   </a>
                 </div>
               </div>

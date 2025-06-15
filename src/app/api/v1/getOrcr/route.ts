@@ -42,7 +42,9 @@ export async function POST(req: Request) {
     const jsonString = JSON.stringify(orcr);
     const compressedOrcr = zlib.gzipSync(Buffer.from(jsonString));
 
-    fs.writeFileSync(file, compressedOrcr);
+    if (process.env.NODE_ENV !== 'production') {
+        fs.writeFileSync(file, compressedOrcr);
+    }
     console.log("new file written, returned cached response\n")
     return new NextResponse(compressedOrcr, {
         headers: {

@@ -34,9 +34,14 @@ export default function Jossa() {
     year: 2025,
     round: 1,
   });
+  const roundByYears: Record<number, number[]> = {
+    2023: [1, 2, 3, 4, 5, 6],
+    2024: [1, 2, 3, 4, 5],
+    2025: [1]
+  };
   const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: ["ADVANCED", "MAINS"] }, { year: [2023, 2024, 2025] }, { round: requiredFilters.year === 2023 ? [1, 2, 3, 4, 5, 6] : requiredFilters.year === 2025 ? [1] : [1, 2, 3, 4, 5] }
-  ], [requiredFilters])
+    { exam: ["ADVANCED", "MAINS"] }, { year: [2023, 2024, 2025] }, { round: roundByYears[requiredFilters.year as number] as number[] }
+  ], [requiredFilters, roundByYears])
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
   >([

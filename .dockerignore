@@ -1,0 +1,8 @@
+
+.git
+node_modules
+bun.lock.bak
+*.log
+.vscode
+__tests__
+.next

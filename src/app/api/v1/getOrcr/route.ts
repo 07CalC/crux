@@ -6,28 +6,27 @@ import zlib from "zlib";
 
 const CACHE_DIR = path.join(process.cwd(), 'cachedOrcr');
 
-export async function POST(req: Request){
-    
+export async function POST(req: Request) {
     console.log("\ngetOrcr Route hit")
     const data = await req.json();
     console.log("data received: ", data)
     const { year, round, exam, type } = data;
-    if ( year === 2025 && round > 1){
-      return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
+    if (year === 2025 && round > 1) {
+        return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
     }
     console.log("req for ", year, round, exam, type)
     const file = path.join(CACHE_DIR, `${year}-${round}-${exam}-${type}.json`);
-    if(fs.existsSync(file)){
+    if (fs.existsSync(file)) {
         const data = fs.readFileSync(file);
         console.log("cached response found, returned cached response\n")
         return new NextResponse(data, {
             headers: {
-              "Content-Encoding": "gzip",
-              "Content-Type": "application/json",
-              "Cache-Control": "public, max-age=3153600, immutable",
+                "Content-Encoding": "gzip",
+                "Content-Type": "application/json",
+                "Cache-Control": "public, max-age=3153600, immutable",
             },
-          });
-        }
+        });
+    }
     const prisma = new PrismaClient();
     const orcr = await prisma.orcr.findMany({
         where: {
@@ -38,7 +37,7 @@ export async function POST(req: Request){
         }
     });
     if (!orcr) return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
-    if(!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR);
+    if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR);
 
     const jsonString = JSON.stringify(orcr);
     const compressedOrcr = zlib.gzipSync(Buffer.from(jsonString));
@@ -47,8 +46,8 @@ export async function POST(req: Request){
     console.log("new file written, returned cached response\n")
     return new NextResponse(compressedOrcr, {
         headers: {
-          "Content-Encoding": "gzip",
-          "Content-Type": "application/json",
+            "Content-Encoding": "gzip",
+            "Content-Type": "application/json",
         },
-      });
+    });
 }

@@ -10,9 +10,9 @@ import { LuExternalLink } from "react-icons/lu";
 
 export async function generateMetadata({
     params,
-  }: {
+}: {
     params: Promise<{ id: string }>;
-  }) {
+}) {
     const { id } = await params
     const prisma = new PrismaClient();
     const college = await prisma.college.findUnique({
@@ -24,7 +24,7 @@ export async function generateMetadata({
         title: college?.name,
         description: `Find all the information about ${college?.name} here.`,
         openGraph: {
-            title: college,
+            title: college?.name,
             description: `Find all the information about ${college?.name} here.`,
             url: `https://crux.ix.tc/explore/${id[0]}`,
             siteName: "Crux",
@@ -47,17 +47,17 @@ export async function generateMetadata({
             title: college?.name,
             description: `Find all the information about ${college?.name} here.`,
             images: [`${college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"}`],
-          },
-        
+        },
+
     }
 }
 
 
 
 export default async function College({
-  params,
+    params,
 }: {
-  params: Promise<{ id: string }>;
+    params: Promise<{ id: string }>;
 }) {
     const { id } = await params
     const prisma = new PrismaClient();
@@ -70,8 +70,8 @@ export default async function College({
     if (!college) {
         return (
             <div className="flex flex-col py-40 w-full h-full gap-y-4 justify-center items-center">
-                <NotFound text="What you are looking for does not exist in our database"/>
-        </div>
+                <NotFound text="What you are looking for does not exist in our database" />
+            </div>
         );
     }
     let genderRatio = "N/A";
@@ -86,7 +86,7 @@ export default async function College({
             collegeId: college?.id,
         },
     });
-    
+
     const gallery: string[] = await prisma.collegeImage.findMany({
         where: {
             collegeId: college?.id,
@@ -96,11 +96,13 @@ export default async function College({
         },
     }).then((images) => images.map((image) => image.url));
 
-    return(
+    return (
         <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
-                <img
-                    src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"} 
+                <Image
+                    height={2000}
+                    width={2000}
+                    src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"}
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"
                 />
@@ -111,15 +113,15 @@ export default async function College({
                 <div className="mb-8 text-left mx-auto items-start justify-between flex flex-col md:flex-row gap-y-3
                  ">
                     <div className="flex flex-col gap-y-3">
-                    <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white">{college?.name}</h1>
-                    <p className="text-purple-700 dark:text-purple-300 text-lg md:text-2xl mt-2">{college?.location}</p>
-                    <Bonk clgId={college?.id || ""} bonksCount={college?.bongs || 0}/>
+                        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white">{college?.name}</h1>
+                        <p className="text-purple-700 dark:text-purple-300 text-lg md:text-2xl mt-2">{college?.location}</p>
+                        <Bonk clgId={college?.id || ""} bonksCount={college?.bongs || 0} />
                     </div>
                     <div className="flex gap-x-4">
-                    
-                    <a href={college?.officialWebsite || "#"} target="_blank" rel="noreferrer" className={`gap-x-3 self-start rounded-xl sm:text-lg items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2`}>
-                        Official Website <LuExternalLink />
-                    </a>
+
+                        <a href={college?.officialWebsite || "#"} target="_blank" rel="noreferrer" className={`gap-x-3 self-start rounded-xl sm:text-lg items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2`}>
+                            Official Website <LuExternalLink />
+                        </a>
                     </div>
                 </div>
 
@@ -140,23 +142,23 @@ export default async function College({
                             <h3 className="text-lg font-semibold text-gray-500 dark:text-gray-400">Total Students</h3>
                             <p className="text-3xl font-bold text-black dark:text-white">{college?.totalStudents?.toLocaleString() || "N/A"}</p>
                         </div>
-                        
+
                         <div className="bg-gray-300 dark:bg-[#222222] p-6 rounded-lg shadow-md">
                             <h3 className="text-lg font-semibold text-gray-500 dark:text-gray-400">Gender Ratio (M:F)</h3>
                             <p className="text-3xl font-bold text-black dark:text-white">{genderRatio}</p>
                         </div>
-                        
+
                         <div className="bg-gray-300 dark:bg-[#222222] p-6 rounded-lg shadow-md">
                             <h3 className="text-lg font-semibold text-gray-500 dark:text-gray-400">Male Students</h3>
                             <p className="text-3xl font-bold text-black dark:text-white">{college?.maleStudents?.toLocaleString() || "N/A"}</p>
                         </div>
-                        
+
                         <div className="bg-gray-300 dark:bg-[#222222] p-6 rounded-lg shadow-md">
                             <h3 className="text-lg font-semibold text-gray-500 dark:text-gray-400">Female Students</h3>
                             <p className="text-3xl font-bold text-black dark:text-white">{college?.femaleStudents?.toLocaleString() || "N/A"}</p>
                         </div>
                     </div>
-                    
+
                     <div className="lg:col-span-1 flex">
                         {college?.nirf ? (
                             <div className="w-full bg-purple-300 dark:bg-purple-900 p-6 rounded-lg shadow-md flex flex-col justify-center items-center">
@@ -173,7 +175,7 @@ export default async function College({
                 </div>
 
                 <h2 className="text-3xl md:text-4xl lg:text-5xl mt-20 font-bold text-black dark:text-white mb-6">Cutoffs</h2>
-                <ClgOrcr clgId={college?.id || ""} clgType={college?.collegeType || "GFTI"}/>
+                <ClgOrcr clgId={college?.id || ""} clgType={college?.collegeType || "GFTI"} />
 
                 {/* Reviews Section */}
                 <div className="mt-10 mb-10 w-full gap-y-5 flex flex-col">
@@ -193,9 +195,9 @@ export default async function College({
                                                 <p className="text-sm text-gray-500 dark:text-gray-400">{new Date(review.createdAt).toLocaleDateString()}</p>
                                             </div>
                                         </div>
-                                        
+
                                         <p className="text-black dark:text-white mb-4">{review.comment}</p>
-                                        
+
                                         <div className="flex items-center">
                                             <div className="flex items-center text-yellow-400 mr-2">
                                                 {[...Array(5)].map((_, i) => (
@@ -209,7 +211,7 @@ export default async function College({
                                     </div>
                                 ))}
                             </div>
-                            
+
                             <div className="mt-6 text-center">
                                 <p className="text-gray-500 dark:text-gray-400">
                                     Showing {reviews.length} {reviews.length === 1 ? "review" : "reviews"} for {college?.name}
@@ -224,7 +226,7 @@ export default async function College({
                                 </svg>
                                 <h3 className="text-xl font-bold text-black dark:text-white mb-2">No Reviews Yet</h3>
                                 <p className="text-gray-500 dark:text-gray-400 mb-6">Be the first to share your experience at {college?.name}</p>
-                                
+
                             </div>
                         </div>
                     )}
@@ -233,14 +235,14 @@ export default async function College({
                 {/* Image Gallery Section */}
                 <div className="mt-10 mb-10 w-full">
                     <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white mb-6">Campus Gallery</h2>
-                    
+
                     <div className="mb-6 bg-yellow-100 border-l-4 border-yellow-500 p-4 rounded-md">
                         <div className="flex items-center gap-x-3">
                             <IoWarning className="text-yellow-600 text-2xl flex-shrink-0" />
                             <div className="text-yellow-700">
                                 <p className="font-semibold">Community-Contributed Content</p>
                                 <p className="text-sm mt-1">
-                                    These images are uploaded by community members. While we encourage sharing campus photos, 
+                                    These images are uploaded by community members. While we encourage sharing campus photos,
                                     please maintain decency and only upload appropriate content. Any inappropriate uploads will be removed (maybe).
                                 </p>
                             </div>
@@ -289,16 +291,16 @@ export default async function College({
                             </div>
                             <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-purple-500 mx-auto"></div>
                         </div>
-                        
-                        <Image 
-                            src="/racoon.jpg" 
-                            alt="coming soon" 
-                            width={400} 
-                            height={400} 
-                            className="w-full max-w-sm object-contain relative z-10" 
+
+                        <Image
+                            src="/racoon.jpg"
+                            alt="coming soon"
+                            width={400}
+                            height={400}
+                            className="w-full max-w-sm object-contain relative z-10"
                         />
                     </div>
-                    
+
                 </div>
             </div>
         </div>

@@ -39,16 +39,22 @@ export const ClgOrcr = ({
     [key: string]: string | number;
   }>({
     type: counsellingType[clgType!][0],
-    year: 2024,
+    year: 2025,
     round: 1,
   });
+
+  const jossaRoundByYear: Record<number, number[]> = {
+    2023: [1, 2, 3, 4, 5, 6],
+    2024: [1, 2, 3, 4, 5],
+    2025: [1],
+  }
 
   const requiredFiltersOptions = useMemo(() => {
     if (clgType === "IIT") {
       return [
         { type: ["JOSSA"] },
         { year: [2023, 2024, 2025] },
-        { round: requiredFilters.year === 2025 ? [1] : requiredFilters.year === 2024 ? [1, 2, 3, 4, 5] : [1, 2, 3, 4, 5, 6]},
+        { round: jossaRoundByYear[requiredFilters.year as number] },
       ];
     } else if (clgType === "GFTI") {
       return [
@@ -65,7 +71,7 @@ export const ClgOrcr = ({
     } else {
       return [{ type: ["JAC"] }, { year: [2023, 2024] }, { round: [1, 2, 3] }];
     }
-  }, [clgType, requiredFilters.type]);
+  }, [clgType, requiredFilters, jossaRoundByYear]);
 
   const filterOptions: [
     { academicProgramName: string[] },
@@ -149,18 +155,18 @@ export const ClgOrcr = ({
 
   const handleRequiredFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
-    
+
     if (name === 'type' && value === 'CSAB') {
       if (Number(requiredFilters.round) > 2) {
         setRequiredFilters({
           ...requiredFilters,
           [name]: value,
-          round: 2 
+          round: 2
         });
         return;
       }
     }
-    
+
     setRequiredFilters({
       ...requiredFilters,
       [name]: value
@@ -318,20 +324,20 @@ export const ClgOrcr = ({
       {loading && <Loading />}
       {!loading && paginatedData.length > 0 && (
         <>
-        <Table orcr={paginatedData} view={view} />
-        <div className="flex mt-5 justify-center sm:justify-end items-center space-x-4 w-full ">
-          <PaginationNav
-            currPage={currPage}
-            setCurrPage={setCurrPage}
-            totalPages={totalPages}
-            colsShown={colsShown}
-            setColsShown={setColsShown}
-          />
-        </div>
+          <Table orcr={paginatedData} view={view} />
+          <div className="flex mt-5 justify-center sm:justify-end items-center space-x-4 w-full ">
+            <PaginationNav
+              currPage={currPage}
+              setCurrPage={setCurrPage}
+              totalPages={totalPages}
+              colsShown={colsShown}
+              setColsShown={setColsShown}
+            />
+          </div>
         </>
 
       )}
-      
+
       {loading && (
         <p className="text-center text-black dark:text-white">Loading...</p>
       )}

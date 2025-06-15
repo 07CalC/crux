@@ -55,7 +55,7 @@ export default async function Home() {
 
               {/* Floating Badge */}
               <div className="absolute -bottom-16 md:-bottom-5 -left-4 bg-white/10 backdrop-blur-md text-white border-2 border-white/30 px-6 py-4 rounded-xl shadow-md rotate-6">
-                <p className="text-lg font-bold">160+ Colleges</p>
+                <p className="text-lg font-bold">170+ Colleges</p>
                 <p className="text-sm text-purple-100">
                   Comprehensive database
                 </p>
@@ -64,7 +64,7 @@ export default async function Home() {
               {/* Caption Tag */}
               <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
                 <Link
-                  href="https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                  href="/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
                   className="bg-purple-500 text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
                 >
                   IIIT Allahabad btw
@@ -737,10 +737,10 @@ export default async function Home() {
       {/* Stats Section */}
       <section className="w-full py-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
             <div>
               <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                160+
+                170+
               </p>
               <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
                 Colleges
@@ -756,20 +756,13 @@ export default async function Home() {
             </div>
             <div>
               <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                2+
+                3+
               </p>
               <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
                 Years of Cutoff Data
               </p>
             </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                20+
-              </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
-                Anonymous Reviews
-              </p>
-            </div>
+
           </div>
         </div>
       </section>

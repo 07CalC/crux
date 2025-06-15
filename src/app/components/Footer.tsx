@@ -68,14 +68,14 @@ export const Footer = () => {
           ))}
         </div>
       </div>
-      <div className="grid gap-y-2 md:flex w-full px-5 pt-2 border-t border-gray-600 dark:border-gray-100 justify-center md:justify-between items-center gap-x-4">
+      <div className="grid gap-y-2 md:flex w-full px-5 pt-2 border-t border-gray-600 dark:border-gray-100 justify-center md:justify-center items-center gap-x-4 md:gap-x-16">
         <p className="text-yellow-700 dark:text-yellow-500 text-sm md:text-xl text-center">
           Found helpful?{" "}
           <a
             href="https://github.com/07calc/crux/"
             target="_blank"
             rel="noreferrer"
-            className="underline"
+            className="underline font-bold text-2xl"
           >
             Give it a ⭐
           </a>
@@ -86,7 +86,7 @@ export const Footer = () => {
           rel="noreferrer"
           className="text-xl text-center text-purple-700 dark:text-purple-400"
         >
-          Made with ❤️ by <strong className="underline">CalC</strong>
+          Made with ❤️ by <strong className="underline font-bold text-2xl">CalC</strong>
         </a>
       </div>
     </footer>

@@ -11,6 +11,9 @@ export async function POST(req: Request) {
     const data = await req.json();
     console.log("data received: ", data)
     const { year, round, exam, type } = data;
+    if (!year || !round || !exam || !type) {
+        return new NextResponse(JSON.stringify({ error: "Year, round, exam and type are required" }), { status: 400 });
+    }
     if (year === 2025 && round > 1) {
         return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
     }

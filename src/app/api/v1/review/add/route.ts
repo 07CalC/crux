@@ -4,9 +4,17 @@ import { NextResponse } from "next/server";
 
 
 
-export async function POST(req: Request){
+export async function POST(req: Request) {
+    const userAgent = req.headers.get("user-agent");
+    const browserRegex = /(Mozilla|Chrome|Gecko|Firefox|AppleWebKit|Opera|Safari)/i;
+    if (!browserRegex.test(userAgent || "")) {
+        return new NextResponse(JSON.stringify({ message: "Invalid request and fuck you" }), { status: 400 });
+    }
     const data = await req.json();
     const { clgId, comment, rating } = data;
+    if (!clgId || !comment || !rating) {
+        return new NextResponse(JSON.stringify({ error: "clgId, comment, rating are required" }), { status: 400 });
+    }
     const prisma = new PrismaClient();
     const college = await prisma.college.findUnique({
         where: {

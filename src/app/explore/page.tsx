@@ -27,8 +27,10 @@ export default async function Explore({ searchParams }: PageProps) {
   const colleges = await prisma.college.findMany({
     where: {
       OR: [{ name: { contains: query as string, mode: "insensitive" } }],
-
     },
+    orderBy: {
+      bongs: "desc"
+    }
   });
 
   const hasFilters = query;

@@ -7,7 +7,10 @@ export const Navbar = () => {
     <nav className="flex transition-colors ease-in-out items-center fixed top-0 z-50 shadow-sm shadow-black  dark:shadow-white w-full h-20 border-b-2 border-black dark:border-gray-100 justify-between sm:px-28 p-4 bg-purple-500  text-white">
       <SidebarButton />
       <div className="flex items-center">
-        <Link href="/" className="text-5xl font-bold text-black glitchy-text font-sans">
+        <Link
+          href="/"
+          className="text-5xl font-bold text-black glitchy-text font-sans"
+        >
           crux
         </Link>
       </div>

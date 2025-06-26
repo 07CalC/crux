@@ -15,7 +15,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # ✅ Run Prisma generate here
-RUN npx prisma generate --no-engine
+RUN npx prisma generate 
 
 # Build your Next.js app
 RUN npm run build

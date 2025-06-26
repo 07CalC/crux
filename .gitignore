@@ -49,3 +49,4 @@ orcr/
 ORCR/
 dev.db
 recipes.lua
+scripts/backup.json

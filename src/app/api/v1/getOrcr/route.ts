@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from "fs-extra";
 import zlib from "zlib";
+import { mostRecentJossaOrcr } from '@/constants';
 
 const CACHE_DIR = path.join(process.cwd(), 'cachedOrcr');
 
@@ -14,8 +15,8 @@ export async function POST(req: Request) {
     if (!year || !round || !exam || !type) {
         return new NextResponse(JSON.stringify({ error: "Year, round, exam and type are required" }), { status: 400 });
     }
-    if (year === 2025 && round > 1) {
-        return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
+    if (type == "JOSSA" && year >= mostRecentJossaOrcr.year && round > mostRecentJossaOrcr.round) {
+        return new NextResponse(JSON.stringify([]), { status: 400 })
     }
     console.log("req for ", year, round, exam, type)
     const file = path.join(CACHE_DIR, `${year}-${round}-${exam}-${type}.json`);

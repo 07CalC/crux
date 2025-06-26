@@ -1,5 +1,4 @@
 "use client";
-
 import { Orcr } from "@/types/globalTypes";
 import { useState, useMemo, useEffect } from "react";
 import { Table } from "./Table";
@@ -7,6 +6,7 @@ import { PaginationNav } from "./PaginationNav";
 import { NotFound } from "./NotFound";
 import { ViewToggle } from "./ViewToggle";
 import { Loading } from "./Loading";
+import { availableCsabYears, availableJossaYears, csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
 
 export const ClgOrcr = ({
   clgId,
@@ -40,28 +40,32 @@ export const ClgOrcr = ({
   }>({
     type: counsellingType[clgType!][0],
     year: 2025,
-    round: 1,
+    round: 2,
   });
 
-  const jossaRoundByYear: Record<number, number[]> = {
-    2023: [1, 2, 3, 4, 5, 6],
-    2024: [1, 2, 3, 4, 5],
-    2025: [1],
+  const availableYears: Record<string, number[]> = {
+    JOSSA: availableJossaYears,
+    CSAB: availableCsabYears,
   }
-
+  const availableRounds: Record<string, Record<number, number[]>> = {
+    JOSSA: jossaRoundByYearsGlobal,
+    CSAB: csabRoundByYearsGlobal,
+  }
   const requiredFiltersOptions = useMemo(() => {
+    const year = requiredFilters.year as number;
+    const type = requiredFilters.type as string;
     if (clgType === "IIT") {
       return [
         { type: ["JOSSA"] },
-        { year: [2023, 2024, 2025] },
-        { round: jossaRoundByYear[requiredFilters.year as number] },
+        { year: availableJossaYears },
+        { round: jossaRoundByYearsGlobal[year] },
       ];
     } else if (clgType === "GFTI") {
       return [
         { type: ["JOSSA", "CSAB"] },
-        { year: [2023, 2024, 2025] },
-        { round: requiredFilters.type === "JOSSA" ? [1, 2, 3, 4, 5] : [1, 2] },
-      ];
+        { year: availableYears[type as string] },
+        { round: availableRounds[type as string][year] }
+      ]
     } else if (clgType === "BITS") {
       return [
         { type: ["BITSAT"] },
@@ -71,7 +75,7 @@ export const ClgOrcr = ({
     } else {
       return [{ type: ["JAC"] }, { year: [2023, 2024] }, { round: [1, 2, 3] }];
     }
-  }, [clgType, requiredFilters, jossaRoundByYear]);
+  }, [clgType, requiredFilters.year, requiredFilters.type]);
 
   const filterOptions: [
     { academicProgramName: string[] },
@@ -156,20 +160,42 @@ export const ClgOrcr = ({
   const handleRequiredFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { name, value } = e.target;
 
-    if (name === 'type' && value === 'CSAB') {
-      if (Number(requiredFilters.round) > 2) {
-        setRequiredFilters({
-          ...requiredFilters,
-          [name]: value,
-          round: 2
-        });
-        return;
+    let newType = requiredFilters.type;
+    let newYear = Number(requiredFilters.year);
+    let newRound = Number(requiredFilters.round);
+
+    if (name === "type") {
+      newType = value;
+
+      const validYearsForType = availableYears[newType];
+      if (!validYearsForType.includes(newYear)) {
+        newYear = validYearsForType[validYearsForType.length - 1];
       }
+
+      const validRounds = availableRounds[newType]?.[newYear] || [];
+      if (!validRounds.includes(newRound)) {
+        newRound = validRounds[validRounds.length - 1];
+      }
+    }
+
+    if (name === "year") {
+      newYear = Number(value);
+
+      const validRounds = availableRounds[newType]?.[newYear] || [];
+      if (!validRounds.includes(newRound)) {
+        newRound = validRounds[validRounds.length - 1];
+      }
+    }
+
+    if (name === "round") {
+      newRound = Number(value);
     }
 
     setRequiredFilters({
       ...requiredFilters,
-      [name]: value
+      type: newType,
+      year: newYear,
+      round: newRound,
     });
   };
 

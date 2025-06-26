@@ -9,6 +9,7 @@ import { ViewToggle } from "@/app/components/ViewToggle";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
+import { availableCsabYears, csabRoundByYearsGlobal, mostRecentCsabOrcr } from "@/constants";
 
 export default function Csab() {
   const [fetchedOrcrData, setFetchedOrcrData] = useState<Orcr[]>([]);
@@ -27,15 +28,12 @@ export default function Csab() {
   const [requiredFilters, setRequiredFilters] = useState<{
     [key: string]: string | number;
   }>({
-    year: 2024,
-    round: 2,
+    year: mostRecentCsabOrcr.year,
+    round: mostRecentCsabOrcr.round,
   });
-  const roundByYears: Record<number, number[]> = {
-    2023: [1, 2],
-    2024: [1, 2],
-  }
+  const roundByYears: Record<number, number[]> = csabRoundByYearsGlobal
   const requiredFiltersOptions: [{ year: number[] }, { round: number[] }] = useMemo(() => [
-    { year: [2023, 2024] }, { round: roundByYears[requiredFilters.year as number] as number[] }
+    { year: availableCsabYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
   ], [requiredFilters])
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
@@ -80,8 +78,6 @@ export default function Csab() {
           .toLowerCase()
           .includes(filters.academicProgramName.toLowerCase()) &&
         orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
-        // If seatType filter is empty, don't filter by seatType
-        // Otherwise, check for exact match
         (filters.seatType === "" || orcr.seatType === filters.seatType) &&
         orcr.institute
           .toLowerCase()
@@ -140,6 +136,7 @@ export default function Csab() {
         requiredFilters={requiredFilters}
         setRequiredFilters={setRequiredFilters}
         filters={requiredFiltersOptions}
+        counsellingType="CSAB"
       />
       <div className="w-full max-w-screen sm:px-4 flex justify-between gap-x-3 sm:gap-x-8 items-center">
         <Filters

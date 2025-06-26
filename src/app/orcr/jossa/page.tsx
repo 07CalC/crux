@@ -9,6 +9,7 @@ import { ViewToggle } from "@/app/components/ViewToggle";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
+import { AVAILABLE_EXAMS, availableJossaYears, jossaRoundByYearsGlobal, mostRecentJossaOrcr } from "@/constants";
 
 
 
@@ -27,20 +28,15 @@ export default function Jossa() {
     gender: "",
     rank: 0,
   });
-  const [requiredFilters, setRequiredFilters] = useState<{
-    [key: string]: string | number;
-  }>({
+  type requiredFiltersType = Record<string, string | number>;
+  const [requiredFilters, setRequiredFilters] = useState<requiredFiltersType>({
     exam: "ADVANCED",
-    year: 2025,
-    round: 1,
+    year: mostRecentJossaOrcr.year,
+    round: mostRecentJossaOrcr.round,
   });
-  const roundByYears: Record<number, number[]> = {
-    2023: [1, 2, 3, 4, 5, 6],
-    2024: [1, 2, 3, 4, 5],
-    2025: [1]
-  };
+  const roundByYears: Record<number, number[]> = jossaRoundByYearsGlobal;
   const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: ["ADVANCED", "MAINS"] }, { year: [2023, 2024, 2025] }, { round: roundByYears[requiredFilters.year as number] as number[] }
+    { exam: AVAILABLE_EXAMS }, { year: availableJossaYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
   ], [requiredFilters, roundByYears])
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
@@ -75,6 +71,7 @@ export default function Jossa() {
     }
     setLoading(false);
   };
+  console.log("Fetched Data: ", fetchedOrcrData);
   const filteredData = useMemo(() => {
     return fetchedOrcrData.filter(
       (orcr) =>
@@ -143,6 +140,7 @@ export default function Jossa() {
         requiredFilters={requiredFilters}
         setRequiredFilters={setRequiredFilters}
         filters={requiredFiltersOptions}
+        counsellingType="JOSSA"
       />
       <div className="w-full max-w-screen sm:px-4 flex justify-between gap-x-3 sm:gap-x-8 items-center">
         <Filters

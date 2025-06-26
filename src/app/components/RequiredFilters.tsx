@@ -1,20 +1,36 @@
+import { csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
+import React, { useEffect } from "react";
 
 
 type props = {
     requiredFilters: { [key: string]: string | number };
-    setRequiredFilters: React.Dispatch<{ [key: string]: string | number }>;
-    filters: Array<{ [key: string]: string[] | number[]}>
+    setRequiredFilters: React.Dispatch<React.SetStateAction<Record<string, string | number>>>;
+    filters: Array<{ [key: string]: string[] | number[] }>
+    counsellingType: "JOSSA" | "CSAB";
 }
 
 
 
-export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters }: props) => {
-    // const filters = [
-    //     {exam: ["ADVANCED", "MAINS"]},
-    //     {year: [2023, 2024]},
-    //     {type: requiredFilters.exam === "MAINS" ? ["JOSSA", "CSAB"] : ["JOSSA"]},
-    //     {round: requiredFilters.type === "JOSSA" ? requiredFilters.year === 2023 ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 4, 5] : [1, 2]},
-    // ]
+export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, counsellingType }: props) => {
+    const availableRoundsAll = {
+        JOSSA: jossaRoundByYearsGlobal,
+        CSAB: csabRoundByYearsGlobal
+    }
+    const roundByYears = availableRoundsAll[counsellingType];
+    useEffect(() => {
+        const selectedYear = requiredFilters.year as number;
+        const selectedRound = requiredFilters.round as number;
+
+        if (selectedYear && roundByYears[selectedYear as number]) {
+            const availableRounds = roundByYears[selectedYear as number];
+            if (!availableRounds.includes(selectedRound)) {
+                setRequiredFilters(prev => ({
+                    ...prev,
+                    round: availableRounds[availableRounds.length - 1]
+                }))
+            }
+        }
+    }, [requiredFilters.year, setRequiredFilters]);
     return (
         <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
             {filters.map((filter, index) => (
@@ -37,5 +53,5 @@ export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters }
                 </div>
             ))}
         </div>
-    );  
-  };
+    );
+};

@@ -63,6 +63,7 @@ export default function BITSAT() {
       const data = await res.json();
       setFetchedOrcrData(data);
     } catch (error) {
+      console.log(error)
     }
     setLoading(false);
   };

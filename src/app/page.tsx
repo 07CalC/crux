@@ -346,7 +346,7 @@ export default async function Home() {
                   CSAB Trends
                 </span>
                 <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                  BITS Pilani (Coming Soon)
+                  BITSAT
                 </span>
                 <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
                   JAC Delhi (Coming Soon)
@@ -786,7 +786,7 @@ export default async function Home() {
                   <MdOutlineSchool size={24} />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">
-                  BITS & JAC Delhi Cutoffs
+                  JAC Delhi Cutoffs
                 </h3>
                 <p className="text-purple-100">
                   Extended coverage for BITS Pilani and JAC Delhi counseling

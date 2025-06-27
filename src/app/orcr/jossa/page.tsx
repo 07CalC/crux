@@ -67,6 +67,7 @@ export default function Jossa() {
       const data = await res.json();
       setFetchedOrcrData(data);
     } catch (error) {
+      console.log(error);
     }
     setLoading(false);
   };

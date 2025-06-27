@@ -40,8 +40,9 @@ CREATE TABLE "Orcr" (
     "quota" TEXT NOT NULL,
     "seatType" TEXT NOT NULL,
     "gender" TEXT NOT NULL,
-    "openRank" INTEGER NOT NULL,
-    "closeRank" INTEGER NOT NULL,
+    "openRank" INTEGER,
+    "closeRank" INTEGER,
+    "marks" INTEGER,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 

@@ -83,7 +83,7 @@ export default function Csab() {
           .toLowerCase()
           .includes(filters.institute.toLowerCase()) &&
         orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank >= filters.rank
+        orcr.closeRank && orcr.closeRank >= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 

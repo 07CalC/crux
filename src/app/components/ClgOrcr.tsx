@@ -6,7 +6,7 @@ import { PaginationNav } from "./PaginationNav";
 import { NotFound } from "./NotFound";
 import { ViewToggle } from "./ViewToggle";
 import { Loading } from "./Loading";
-import { availableCsabYears, availableJossaYears, csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
+import { availableBitsatYears, availableCsabYears, availableJossaYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
 
 export const ClgOrcr = ({
   clgId,
@@ -23,9 +23,10 @@ export const ClgOrcr = ({
     academicProgramName: "",
     seatType: "",
     gender: "",
-    rank: 0,
+    rank: clgType === "BITS" ? 390 : 0,
   });
 
+  console.log(filters)
   const counsellingType = {
     IIT: ["JOSSA"],
     GFTI: ["JOSSA", "CSAB"],
@@ -39,15 +40,15 @@ export const ClgOrcr = ({
     [key: string]: string | number;
   }>({
     type: counsellingType[clgType!][0],
-    year: 2025,
-    round: 2,
+    year: 2024,
+    round: 1,
   });
 
-  const availableYears: Record<string, number[]> = {
+  const availableYears: Record<string, number[]> = clgType === "BITS" ? { BITSAT: availableBitsatYears } : {
     JOSSA: availableJossaYears,
     CSAB: availableCsabYears,
   }
-  const availableRounds: Record<string, Record<number, number[]>> = {
+  const availableRounds: Record<string, Record<number, number[]>> = clgType === "BITS" ? { BITSAT: bitsatRoundByYearsGlobal } : {
     JOSSA: jossaRoundByYearsGlobal,
     CSAB: csabRoundByYearsGlobal,
   }
@@ -69,8 +70,8 @@ export const ClgOrcr = ({
     } else if (clgType === "BITS") {
       return [
         { type: ["BITSAT"] },
-        { year: [2023, 2024] },
-        { iteration: [1, 2, 3, 4, 5] },
+        { year: availableBitsatYears },
+        { round: [1] },
       ];
     } else {
       return [{ type: ["JAC"] }, { year: [2023, 2024] }, { round: [1, 2, 3] }];
@@ -97,30 +98,55 @@ export const ClgOrcr = ({
 
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
-  >([
-    { name: "Year", key: "year", show: false },
-    { name: "Round", key: "round", show: false },
-    { name: "Type", key: "type", show: false },
-    { name: "Institute", key: "institute", show: false },
-    { name: "Academic Program", key: "academicProgramName", show: true },
-    { name: "Gender", key: "gender", show: true },
-    { name: "Quota", key: "quota", show: true },
-    { name: "Seat Type", key: "seatType", show: true },
-    { name: "Open Rank", key: "openRank", show: true },
-    { name: "Close Rank", key: "closeRank", show: true },
-  ]);
+  >([]);
+
+  useEffect(() => {
+    const baseView: { name: string; key: keyof Orcr; show: boolean }[] = [
+      { name: "Year", key: "year", show: false },
+      { name: "Round", key: "round", show: false },
+      { name: "Type", key: "type", show: false },
+      { name: "Institute", key: "institute", show: false },
+      { name: "Academic Program", key: "academicProgramName", show: true },
+      { name: "Gender", key: "gender", show: true },
+      { name: "Quota", key: "quota", show: true },
+      { name: "Seat Type", key: "seatType", show: true },
+    ];
+
+    const extraFields: { name: string; key: keyof Orcr; show: boolean }[] =
+      clgType === "BITS"
+        ? [{ name: "Marks", key: "marks", show: true }]
+        : [
+          { name: "Open Rank", key: "openRank", show: true },
+          { name: "Close Rank", key: "closeRank", show: true },
+        ];
+
+    setView([...baseView, ...extraFields]);
+  }, [clgType]);
 
   const filteredData = useMemo(() => {
-    return fetchedOrcr.filter(
-      (orcr) =>
-        orcr.academicProgramName
-          .toLowerCase()
-          .includes(filters.academicProgramName.toLowerCase()) &&
-        (filters.seatType === "" || orcr.seatType === filters.seatType) &&
-        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank >= filters.rank
-    );
-  }, [fetchedOrcr, filters]);
+    return fetchedOrcr.filter((orcr) => {
+      const matchesProgram = orcr.academicProgramName
+        .toLowerCase()
+        .includes(filters.academicProgramName.toLowerCase());
+
+      const matchesSeatType =
+        filters.seatType === "" || orcr.seatType === filters.seatType;
+
+      const matchesGender = orcr.gender
+        .toLowerCase()
+        .includes(filters.gender.toLowerCase());
+
+      const matchesRank = clgType === "BITS"
+        ? filters.rank !== undefined &&
+        orcr.marks !== undefined &&
+        orcr.marks <= filters.rank
+        : filters.rank !== undefined &&
+        orcr.closeRank !== undefined &&
+        orcr.closeRank >= filters.rank;
+
+      return matchesProgram && matchesSeatType && matchesGender && matchesRank;
+    });
+  }, [fetchedOrcr, filters, clgType]);
 
   const totalPages = Math.ceil(filteredData.length / colsShown);
 
@@ -149,7 +175,7 @@ export const ClgOrcr = ({
       academicProgramName: "",
       seatType: "",
       gender: "",
-      rank: 0,
+      rank: clgType === "BITS" ? 390 : 0,
     });
   };
 
@@ -199,6 +225,7 @@ export const ClgOrcr = ({
     });
   };
 
+  console.log(filteredData)
   if (!loading && fetchedOrcr.length === 0)
     return <NotFound text="No data found" />;
 
@@ -311,7 +338,7 @@ export const ClgOrcr = ({
 
           <div>
             <label className="text-lg font-semibold text-black dark:text-gray-100">
-              Rank
+              {clgType === "BITS" ? "Marks" : "Rank"}
             </label>
             <input
               type="number"

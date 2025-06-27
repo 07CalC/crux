@@ -9,7 +9,7 @@ import { ViewToggle } from "@/app/components/ViewToggle";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
-import { AVAILABLE_EXAMS, availableJossaYears, jossaRoundByYearsGlobal, mostRecentJossaOrcr } from "@/constants";
+import { availableJossaYears, jossaRoundByYearsGlobal, mostRecentJossaOrcr } from "@/constants";
 
 
 
@@ -36,7 +36,7 @@ export default function Jossa() {
   });
   const roundByYears: Record<number, number[]> = jossaRoundByYearsGlobal;
   const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: AVAILABLE_EXAMS }, { year: availableJossaYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
+    { exam: ["ADVANCED", "MAINS"] }, { year: availableJossaYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
   ], [requiredFilters, roundByYears])
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
@@ -87,7 +87,7 @@ export default function Jossa() {
           .toLowerCase()
           .includes(filters.institute.toLowerCase()) &&
         orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank >= filters.rank
+        orcr.closeRank && orcr.closeRank >= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 

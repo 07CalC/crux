@@ -1,4 +1,4 @@
-import { csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
+import { bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
 import React, { useEffect } from "react";
 
 
@@ -6,7 +6,7 @@ type props = {
     requiredFilters: { [key: string]: string | number };
     setRequiredFilters: React.Dispatch<React.SetStateAction<Record<string, string | number>>>;
     filters: Array<{ [key: string]: string[] | number[] }>
-    counsellingType: "JOSSA" | "CSAB";
+    counsellingType: "JOSSA" | "CSAB" | "BITSAT";
 }
 
 
@@ -14,7 +14,8 @@ type props = {
 export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, counsellingType }: props) => {
     const availableRoundsAll = {
         JOSSA: jossaRoundByYearsGlobal,
-        CSAB: csabRoundByYearsGlobal
+        CSAB: csabRoundByYearsGlobal,
+        BITSAT: bitsatRoundByYearsGlobal
     }
     const roundByYears = availableRoundsAll[counsellingType];
     useEffect(() => {

@@ -24,7 +24,16 @@ export default async function Home() {
       link: "https://discord.com/invite/Ust8YpSCYf",
       members: "1.4k+ members",
     },
-    // Add more partners here
+    {
+      name: "JEENEETards",
+      icon: "https://cdn.discordapp.com/icons/741608866474754079/a_841b8a336d026b1e15916d09c739dbc9.webp?size=128",
+      cover: "https://cdn.discordapp.com/banners/741608866474754079/a_0a294d900394bc9b06254ba53d95f4b4.gif?size=512",
+      platform: "Discord server",
+      description:
+        `A vibrant community for JEE and NEET aspirants. Engage in discussions, share resources, and get support from peers.`,
+      link: "https://discord.gg/yQKbveTCEK",
+      members: "8.5k+ members",
+    }
   ];
   return (
     <div className="flex flex-col min-h-screen w-full">
@@ -677,21 +686,19 @@ export default async function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
               Community Partners
             </h2>
-            <p className="text-md text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+            <p className="text-md text-gray-600 dark:text-gray-300  mx-auto">
               Crux is built with input from real students and educators. These communities help us reach more aspirants and make better tools.
             </p>
           </div>
 
           <div
-            className={`grid ${partners.length === 1
-              ? "grid-cols-1 place-items-center"
-              : "sm:grid-cols-1 md:grid-cols-2 place-items-center"
-              } gap-6`}
+            className={`grid grid-cols-1 sm:grid-cols-2 items-center justify-center
+               gap-6`}
           >
             {partners.map((partner, index) => (
               <div
                 key={index}
-                className={`rounded-xl overflow-hidden border border-black dark:border-white bg-white dark:bg-[#1a1a1a] shadow-lg ${partners.length === 1 ? "w-full max-w-2xl" : "w-full max-w-md"
+                className={`rounded-xl overflow-hidden border border-black dark:border-white bg-white dark:bg-[#1a1a1a] shadow-lg ${partners.length === 1 ? "w-full max-w-2xl" : "w-full "
                   }`}
               >
                 {/* Cover Image */}

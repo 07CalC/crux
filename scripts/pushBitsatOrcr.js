@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { data2024Bitsat as bitsat } from "../orcr/2024bitsat.js"
+import { data2024Bitsat as bitsat } from "../ORCR/2024bitsat.js"
 const prisma = new PrismaClient();
 const CHUNK_SIZE = 500;
 

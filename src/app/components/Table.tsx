@@ -40,7 +40,8 @@ export const Table = ({
                       key={index}
                       className="text-md sm:text-xl font-medium text-start border-t border-black dark:border-white px-4 py-2"
                     >
-                      {item[header.key].toString()}
+                      {(item[header.key] ?? "").toString()}
+
                     </td>
                   )
               )}

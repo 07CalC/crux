@@ -26,7 +26,6 @@ export const ClgOrcr = ({
     rank: clgType === "BITS" ? 390 : 0,
   });
 
-  console.log(filters)
   const counsellingType = {
     IIT: ["JOSSA"],
     GFTI: ["JOSSA", "CSAB"],
@@ -34,7 +33,6 @@ export const ClgOrcr = ({
     JAC: ["JAC"],
   };
 
-  console.log("clgType", clgType);
 
   const [requiredFilters, setRequiredFilters] = useState<{
     [key: string]: string | number;
@@ -225,7 +223,6 @@ export const ClgOrcr = ({
     });
   };
 
-  console.log(filteredData)
   if (!loading && fetchedOrcr.length === 0)
     return <NotFound text="No data found" />;
 

@@ -9,12 +9,10 @@ import { ViewToggle } from "@/app/components/ViewToggle";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
-import { availableJossaYears, jossaRoundByYearsGlobal, mostRecentJossaOrcr } from "@/constants";
+import { availableBitsatYears, bitsatRoundByYearsGlobal, mostRecentBitsatOrcr } from "@/constants";
 
 
-
-
-export default function Jossa() {
+export default function BITSAT() {
   const [fetchedOrcrData, setFetchedOrcrData] = useState<Orcr[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
@@ -26,17 +24,16 @@ export default function Jossa() {
     quota: "",
     seatType: "",
     gender: "",
-    rank: 0,
+    rank: 390,
   });
   type requiredFiltersType = Record<string, string | number>;
   const [requiredFilters, setRequiredFilters] = useState<requiredFiltersType>({
-    exam: "ADVANCED",
-    year: mostRecentJossaOrcr.year,
-    round: mostRecentJossaOrcr.round,
+    year: mostRecentBitsatOrcr.year,
+    round: mostRecentBitsatOrcr.round,
   });
-  const roundByYears: Record<number, number[]> = jossaRoundByYearsGlobal;
-  const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: ["ADVANCED", "MAINS"] }, { year: availableJossaYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
+  const roundByYears: Record<number, number[]> = bitsatRoundByYearsGlobal;
+  const requiredFiltersOptions: [{ year: number[] }] = useMemo(() => [
+    { year: availableBitsatYears }
   ], [requiredFilters, roundByYears])
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
@@ -49,8 +46,7 @@ export default function Jossa() {
     { name: "Gender", key: "gender", show: true },
     { name: "Quota", key: "quota", show: false },
     { name: "Seat Type", key: "seatType", show: true },
-    { name: "Open Rank", key: "openRank", show: true },
-    { name: "Close Rank", key: "closeRank", show: true },
+    { name: "Marks", key: "marks", show: true }
   ]);
   const fetchOrcrData = async () => {
     setLoading(true);
@@ -58,10 +54,10 @@ export default function Jossa() {
       const res = await fetch("/api/v1/getOrcr", {
         method: "POST",
         body: JSON.stringify({
-          exam: requiredFilters.exam,
+          exam: "BITSAT",
           year: requiredFilters.year,
           round: requiredFilters.round,
-          type: "JOSSA",
+          type: "BITSAT",
         }),
       });
       const data = await res.json();
@@ -85,7 +81,7 @@ export default function Jossa() {
           .toLowerCase()
           .includes(filters.institute.toLowerCase()) &&
         orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank && orcr.closeRank >= filters.rank
+        orcr.marks && orcr.marks <= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 
@@ -138,7 +134,7 @@ export default function Jossa() {
         requiredFilters={requiredFilters}
         setRequiredFilters={setRequiredFilters}
         filters={requiredFiltersOptions}
-        counsellingType="JOSSA"
+        counsellingType="BITSAT"
       />
       <div className="w-full max-w-screen sm:px-4 flex justify-between gap-x-3 sm:gap-x-8 items-center">
         <Filters

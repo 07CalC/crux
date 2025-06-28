@@ -52,9 +52,7 @@ export default async function College({
     return (
         <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
-                <Image
-                    height={2000}
-                    width={2000}
+                <img
                     src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"}
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"

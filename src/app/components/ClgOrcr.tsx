@@ -6,7 +6,7 @@ import { PaginationNav } from "./PaginationNav";
 import { NotFound } from "./NotFound";
 import { ViewToggle } from "./ViewToggle";
 import { Loading } from "./Loading";
-import { availableBitsatYears, availableCsabYears, availableJossaYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal } from "@/constants";
+import { availableBitsatYears, availableCsabYears, availableJossaYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr } from "@/constants";
 
 export const ClgOrcr = ({
   clgId,
@@ -38,8 +38,8 @@ export const ClgOrcr = ({
     [key: string]: string | number;
   }>({
     type: counsellingType[clgType!][0],
-    year: 2024,
-    round: 1,
+    year: clgType === "BITS" ? availableBitsatYears[availableBitsatYears.length - 1] : availableJossaYears[availableJossaYears.length - 1],
+    round: clgType === "BITS" ? mostRecentBitsatOrcr.round : mostRecentJossaOrcr.round,
   });
 
   const availableYears: Record<string, number[]> = clgType === "BITS" ? { BITSAT: availableBitsatYears } : {

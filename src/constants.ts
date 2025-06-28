@@ -1,6 +1,4 @@
 
-
-
 export const AVAILABLE_EXAMS = ["ADVANCED", "MAINS", "BITSAT"];
 
 export const AVAILABLE_JOSSA_ORCRS = [

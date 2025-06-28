@@ -35,6 +35,24 @@ export default async function Home() {
       members: "8.5k+ members",
     }
   ];
+  const studentReviews = [
+    {
+      college: "IIIT Allahabad",
+      review: "Placements go brrrrrrr",
+      rating: 5,
+    },
+    {
+      college: "S.R.M ",
+      review: "Daaru Sutta Moj masti",
+      rating: 4,
+    },
+    {
+      college: "VIT",
+      review: "Gender Ratio 😍😍😍",
+      rating: 5,
+    },
+  ];
+
   return (
     <div className="flex flex-col min-h-screen w-full">
       {/* Hero Section */}
@@ -377,112 +395,39 @@ export default async function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-purple-200 dark:bg-purple-700 rounded-full flex items-center justify-center text-lg font-bold text-purple-700 dark:text-purple-200 mr-4">
-                  <FaComments />
+            {studentReviews.map((item, index) => (
+              <div
+                key={index}
+                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-purple-200 dark:bg-purple-700 rounded-full flex items-center justify-center mr-4">
+                    <FaComments className="text-xl text-purple-700 dark:text-purple-200" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-black dark:text-white">Anonymous</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {item.college}
+                    </p>
+                  </div>
                 </div>
-                <div>
-                  <p className="font-bold text-black dark:text-white">
-                    Anonymous
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Indian Insititute of Information Technology, Allahabad
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
-                &quot;Placements go brrrrrrr&quot;
-              </p>
-              <div className="flex items-center text-yellow-400">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-purple-200 dark:bg-purple-700 rounded-full flex items-center justify-center text-lg font-bold text-purple-700 dark:text-purple-200 mr-4">
-                  <FaComments />
-                </div>
-                <div>
-                  <p className="font-bold text-black dark:text-white">
-                    Anonymous
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    S.R.M Institute of Science and Technology
-                  </p>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">&quot;{item.review}&quot;</p>
+                <div className="flex items-center">
+                  {[...Array(5)].map((_, i) => (
+                    <svg
+                      key={i}
+                      xmlns="http://www.w3.org/2000/svg"
+                      className={`h-5 w-5 ${i < item.rating ? "text-yellow-400" : "text-gray-300 dark:text-gray-600"
+                        }`}
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
                 </div>
               </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
-                &quot;Daaru Sutta Moj masti&quot;
-              </p>
-              <div className="flex items-center text-yellow-400">
-                {[...Array(4)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"
-                    className="text-gray-300 dark:text-gray-600"
-                  />
-                </svg>
-              </div>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
-              <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-purple-200 dark:bg-purple-700 rounded-full flex items-center justify-center text-lg font-bold text-purple-700 dark:text-purple-200 mr-4">
-                  <FaComments />
-                </div>
-                <div>
-                  <p className="font-bold text-black dark:text-white">
-                    Anonymous
-                  </p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Vellore Institute of Technology
-                  </p>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-300 mb-4">
-                &quot;Gender Ratio 😍😍😍&quot;
-              </p>
-              <div className="flex items-center text-yellow-400">
-                {[...Array(5)].map((_, i) => (
-                  <svg
-                    key={i}
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                ))}
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="text-center mt-10">
@@ -737,7 +682,7 @@ export default async function Home() {
                       href={partner.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white shadow-black bg-purple-500 px-2"
+                      className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white shadow-black bg-purple-500 px-4 text-center py-1"
                     >
                       Join ↗
                     </a>

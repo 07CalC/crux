@@ -16,7 +16,7 @@ You may:
 - ❌ Not republish it in modified form
 
 **Attribution required:**  
-Please credit Crux (https://crux.sh) when using or sharing.
+Please credit Crux (https://crux.ix.tc) when using or sharing.
 
 If you're interested in using this dataset in research, education, or commercial tools, contact us at [hello@vinm.me](mailto:hello@vinm.me) to discuss permissions or partnerships.
 

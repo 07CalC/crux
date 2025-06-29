@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaLocationArrow } from "react-icons/fa";
 import Link from "next/link";
-import { FaSearch, FaChartBar, FaComments } from "react-icons/fa";
+import { FaSearch, FaComments } from "react-icons/fa";
 import { IoRocketOutline, IoStatsChart, IoWarning } from "react-icons/io5";
 import { MdCompare, MdOutlineSchool } from "react-icons/md";
 import { Metadata } from "next";
@@ -148,7 +148,7 @@ export default async function Home() {
                 Under Development
               </h3>
               <p className="dark:text-white/80 text-black/80 md:text-xl">
-                Heads up! We're still working on this site, so you might notice some rough edges. Thanks for sticking with us while we make things better!
+                Heads up! We&apos;re still working on this site, so you might notice some rough edges. Thanks for sticking with us while we make things better!
               </p>
             </div>
           </div>

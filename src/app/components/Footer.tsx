@@ -11,11 +11,13 @@ const officialLinks = [
   { title: "Nirf", link: "https://www.nirfindia.org/" },
   { title: "JOSSA", link: "https://josaa.nic.in/" },
   { title: "CSAB", link: "https://csab.nic.in/" },
+  { title: "BITSAT", link: "https://www.bitsadmission.com/fd/BITSAT_cutoffs.html?06012025" },
+  { title: "JAC Delhi", link: "https://jacdelhi.admissions.nic.in/" }
 ];
 
 export const Footer = () => {
   return (
-    <footer className="bg-gray-300  bottom-0 max-h-screen h-full md:min-h-96 flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start dark:bg-[#222222] pt-5 px-5 md:p-10 border-t-4 mt-16 border-black dark:border-gray-100">
+    <footer className="bg-gray-300  bottom-0 max-h-screen h-full md:min-h-96 flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start dark:bg-[#222222] pt-5 px-5 p-5 border-t-4  border-black dark:border-gray-100">
       <div className="grid md:flex w-full justify-between items-start gap-y-4">
         <div className="flex p-5 h-full flex-col gap-y-4 w-full md:w-1/3 justify-center items-center md:items-start">
           <div className="flex gap-x-4 items-center justify-center md:justify-start">

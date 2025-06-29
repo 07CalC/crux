@@ -6,7 +6,6 @@ import NextTopLoader from 'nextjs-toploader';
 import MobileSidebar from "./components/MobileSidebar";
 import { ToastContainer } from "react-toastify";
 import { ScrollToTop } from "./components/ScrollToTop";
-// import { Breadcrumbs } from "./components/Breadcrumbs";
 
 export const metadata: Metadata = {
   title: "Crux",
@@ -17,7 +16,7 @@ export const metadata: Metadata = {
       type: "image/png",
       sizes: "32x32",
       url: "/logo.png",
-  }
+    }
   ],
 };
 
@@ -31,15 +30,15 @@ export default async function RootLayout({
       <body
         className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
       >
-      
-      <NextTopLoader showSpinner={false} color="#FFFFFF" height={5}/>
-      <Navbar />
-      <MobileSidebar />
-      {/* <Breadcrumbs /> */}
-      {children}
-      <Footer />
-      <ToastContainer />
-      <ScrollToTop />
+
+        <NextTopLoader showSpinner={false} color="#FFFFFF" height={5} />
+        <Navbar />
+        <MobileSidebar />
+        {/* <Breadcrumbs /> */}
+        {children}
+        <Footer />
+        <ToastContainer />
+        <ScrollToTop />
       </body>
     </html>
   );

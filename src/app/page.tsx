@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { FaLocationArrow } from "react-icons/fa";
 import Link from "next/link";
 import { FaSearch, FaChartBar, FaComments } from "react-icons/fa";
 import { IoRocketOutline, IoStatsChart, IoWarning } from "react-icons/io5";
@@ -15,14 +16,24 @@ export const metadata: Metadata = {
 export default async function Home() {
   const partners = [
     {
-      name: "iTeachChem",
-      icon: "/iteachchemicon.png",
-      cover: "/iteachchemcover.png",
+      name: "r/JEENEETards",
+      icon: "https://styles.redditmedia.com/t5_311ttu/styles/communityIcon_ckdptutfd44f1.png",
+      cover: "https://styles.redditmedia.com/t5_311ttu/styles/bannerBackgroundImage_nig86rsztgrc1.jpeg?width=2176&frame=1&auto=webp&s=1310eb256db16650637d326f287dfd417cb13022",
+      platform: "Reddit community",
+      description:
+        `A subreddit for JEE and NEET aspirants to share resources, ask questions, and support each other in their preparation journey.`,
+      link: "https://www.reddit.com/r/JEENEETards/",
+      members: "465k+ members",
+    },
+    {
+      name: "r/JEENEETards",
+      icon: "https://cdn.discordapp.com/icons/1117294391707570176/967dc402c5a98383b4cddd3f353f9fe2.webp?size=128",
+      cover: "https://cdn.discordapp.com/splashes/1117294391707570176/c8e4535d99f391d77e5f733c64c15ef0.jpg?size=600",
       platform: "Discord server",
       description:
-        `A trusted community for Chemistry in JEE & NEET. Resources, guidance, and solid problem-solving discussions.`,
-      link: "https://discord.com/invite/Ust8YpSCYf",
-      members: "1.4k+ members",
+        `A vibrant community for JEE and NEET aspirants. Engage in discussions, share resources, and get support from peers.`,
+      link: "https://discord.gg/hMUrVEp7e9",
+      members: "15k+ members",
     },
     {
       name: "JEENEETards",
@@ -33,28 +44,38 @@ export default async function Home() {
         `A vibrant community for JEE and NEET aspirants. Engage in discussions, share resources, and get support from peers.`,
       link: "https://discord.gg/yQKbveTCEK",
       members: "8.5k+ members",
-    }
+    },
+    {
+      name: "iTeachChem",
+      icon: "/iteachchemicon.png",
+      cover: "/iteachchemcover.png",
+      platform: "Discord server",
+      description:
+        `A trusted community for Chemistry in JEE & NEET. Resources, guidance, and solid problem-solving discussions.`,
+      link: "https://discord.com/invite/Ust8YpSCYf",
+      members: "1.4k+ members",
+    },
   ];
   const studentReviews = [
     {
       college: "IIIT Allahabad",
       review: "Placements go brrrrrrr",
-      rating: 5,
+      rating: 4,
     },
     {
-      college: "S.R.M ",
-      review: "Daaru Sutta Moj masti",
-      rating: 4,
+      college: "IIT Bombay",
+      review: "no review needed",
+      rating: 5,
     },
     {
       college: "VIT",
       review: "Gender Ratio 😍😍😍",
-      rating: 5,
+      rating: 3,
     },
   ];
 
   return (
-    <div className="flex flex-col min-h-screen w-full">
+    <div className="flex flex-col h-full w-full">
       {/* Hero Section */}
       <section className="w-full py-16 backdrop-blur-md md:py-24 bg-gradient-to-br from-purple-400/80 via-purple-800/80 to-purple-400/80">
         <div className="container mx-auto px-4 md:px-6">
@@ -75,7 +96,7 @@ export default async function Home() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
                   href="/explore"
-                  className="rounded-xl hover:scale-110 text-lg self-start items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-100 px-6 py-3 font-medium"
+                  className="rounded-xl text-lg self-start items-center justify-center flex text-black border-2 border-black transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-100 px-6 py-3 font-medium"
                 >
                   Explore Colleges <FaSearch className="ml-2" />
                 </Link>
@@ -105,7 +126,7 @@ export default async function Home() {
               <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
                 <Link
                   href="https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                  className="bg-purple-500 text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
+                  className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
                 >
                   IIIT Allahabad btw
                 </Link>
@@ -115,67 +136,59 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section
-        id="features"
-        className="w-full py-16 md:py-24 bg-gray-100 dark:bg-gray-900"
-      >
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
-              Why Choose Crux
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              Everything you need to make informed decisions about your academic
-              future
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
-              <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
-                <FaSearch size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-black dark:text-white">
-                Comprehensive Search
+      {/* Warning Section - Glassmorphic */}
+      <section className="w-full px-4 pt-16 md:px-20">
+        <div className=" bg-white/10 backdrop-blur-md border border-white/30 p-5 rounded-xl shadow-lg relative overflow-hidden w-full">
+          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-pink-500/30 z-0"></div>
+          <div className="flex items-center relative z-10">
+            <IoWarning className="text-yellow-400 text-4xl md:text-8xl mr-4 animate-pulse" />
+            <div>
+              <h3 className="text-lg md:text-2xl font-bold text-black dark:text-white mb-1">
+                Under Development
               </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Find colleges based on location, majors, rankings, and more with
-                our powerful search tools (not that powerful).
-              </p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
-              <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
-                <FaChartBar size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-black dark:text-white">
-                Accurate Data
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Access the latest statistics on student demographics, NIRF
-                rankings, and Cutoffs.
-              </p>
-            </div>
-
-            <div className="bg-white dark:bg-gray-800 hover:scale-105 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white hover:shadow-xl transition-all">
-              <div className="w-14 h-14 flex items-center justify-center bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300 rounded-full mb-4">
-                <FaComments size={24} />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-black dark:text-white">
-                Anonymous Reviews
-              </h3>
-              <p className="text-gray-600 dark:text-gray-300">
-                Read anonymous reviews and experiences from students directly on
-                each college&apos;s page.
+              <p className="dark:text-white/80 text-black/80 md:text-xl">
+                Heads up! We're still working on this site, so you might notice some rough edges. Thanks for sticking with us while we make things better!
               </p>
             </div>
           </div>
         </div>
       </section>
+      {/* Stats Section */}
+      <section className="w-full py-16">
+        <div className="container mx-auto px-4 md:px-6">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+            <div>
+              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
+                170+
+              </p>
+              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
+                Colleges
+              </p>
+            </div>
+            <div>
+              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
+                50+
+              </p>
+              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
+                Cities
+              </p>
+            </div>
+            <div>
+              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
+                3+
+              </p>
+              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
+                Years of Cutoff Data
+              </p>
+            </div>
+
+          </div>
+        </div>
+      </section>
 
       {/* Cutoff Section */}
-      <section className="w-full py-16 md:py-24 bg-white dark:bg-black">
+      <section className="w-full py-16 bg-white dark:bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 order-2 md:order-1">
@@ -382,7 +395,7 @@ export default async function Home() {
       </section>
 
       {/* Reviews Showcase Section */}
-      <section className="w-full py-16 md:py-24 bg-gray-100 dark:bg-gray-900">
+      <section className="w-full py-16  bg-gray-100 dark:bg-gray-900">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
@@ -446,7 +459,7 @@ export default async function Home() {
       </section>
 
       {/* Bonk Feature Section */}
-      <section className="w-full py-16 md:py-24 bg-white dark:bg-black">
+      <section className="w-full py-16  bg-white dark:bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 text-center md:text-left">
@@ -643,8 +656,21 @@ export default async function Home() {
             {partners.map((partner, index) => (
               <div
                 key={index}
-                className={`rounded-xl overflow-hidden border border-black dark:border-white bg-white dark:bg-[#1a1a1a] shadow-lg ${partners.length === 1 ? "w-full max-w-2xl" : "w-full "
-                  }`}
+                className={`
+  w-full
+  ${partners.length === 1 ? "max-w-2xl" : ""}
+  rounded-xl 
+  bg-white dark:bg-[#1a1a1a]
+  overflow-hidden 
+  transition-all 
+  ease-in-out 
+  duration-200 
+  shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
+  dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]
+  hover:-translate-y-1 
+  hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
+  dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
+`}
               >
                 {/* Cover Image */}
                 <div
@@ -682,9 +708,9 @@ export default async function Home() {
                       href={partner.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white shadow-black bg-purple-500 px-4 text-center py-1"
+                      className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[3px_3px_0px_0px] shadow-[3px_3px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 p-2 dark:shadow-white shadow-black bg-purple-500 px-2 text-center "
                     >
-                      Join ↗
+                      <FaLocationArrow />
                     </a>
                   </div>
                 </div>
@@ -695,7 +721,7 @@ export default async function Home() {
       </section>
 
       {/* Coming Soon Features */}
-      <section className="w-full py-16 md:py-20 bg-purple-600 relative overflow-hidden">
+      <section className="w-full py-16  bg-purple-600 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-full h-full">
           <div className="absolute right-0 bottom-0 transform translate-x-1/4 translate-y-1/4">
             <IoRocketOutline size={300} color="rgba(255,255,255,0.1)" />
@@ -734,7 +760,7 @@ export default async function Home() {
                   JAC Delhi Cutoffs
                 </h3>
                 <p className="text-purple-100">
-                  Extended coverage for BITS Pilani and JAC Delhi counseling
+                  Extended coverage for JAC Delhi counselling
                   data and cutoff trends.
                 </p>
               </div>
@@ -744,7 +770,7 @@ export default async function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-16 md:py-20 bg-white dark:bg-black">
+      <section className="w-full py-16  bg-white dark:bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
@@ -768,59 +794,6 @@ export default async function Home() {
               >
                 View Cutoffs <IoStatsChart className="ml-2" />
               </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="w-full py-16">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
-            <div>
-              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                170+
-              </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
-                Colleges
-              </p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                20+
-              </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
-                Cities
-              </p>
-            </div>
-            <div>
-              <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
-                3+
-              </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
-                Years of Cutoff Data
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* Warning Section - Glassmorphic */}
-      <section className="w-full px-4 md:px-20">
-        <div className="mb-8 bg-white/10 backdrop-blur-md border border-white/30 p-5 rounded-xl shadow-lg relative overflow-hidden w-full">
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-pink-500/20 z-0"></div>
-          <div className="flex items-center relative z-10">
-            <IoWarning className="text-yellow-400 text-4xl md:text-8xl mr-4 animate-pulse" />
-            <div>
-              <h3 className="text-lg md:text-2xl font-bold text-black dark:text-white mb-1">
-                Under Development
-              </h3>
-              <p className="dark:text-white/80 text-black/80 md:text-xl">
-                Heads up! This site is a work in progress. You may encounter
-                bugs or incomplete features as we continue to build and improve.
-                Thanks for your patience!
-              </p>
             </div>
           </div>
         </div>

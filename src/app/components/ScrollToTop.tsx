@@ -15,7 +15,6 @@ export const ScrollToTop = () => {
       onClick={handleScroll}
     >
       <IoIosArrowUp size={24} />
-      Top
     </div>
   );
 };

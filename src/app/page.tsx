@@ -17,7 +17,7 @@ export default async function Home() {
   const partners = [
     {
       name: "r/JEENEETards",
-      icon: "https://styles.redditmedia.com/t5_311ttu/styles/communityIcon_ckdptutfd44f1.png",
+      icon: "https://styles.redditmedia.com/t5_311ttu/styles/communityIcon_2adz9we330af1.png",
       cover: "https://styles.redditmedia.com/t5_311ttu/styles/bannerBackgroundImage_nig86rsztgrc1.jpeg?width=2176&frame=1&auto=webp&s=1310eb256db16650637d326f287dfd417cb13022",
       platform: "Reddit community",
       description:
@@ -73,7 +73,18 @@ export default async function Home() {
       rating: 3,
     },
   ];
-
+  const cutoffRows = [
+    { program: "IT", gender: "Neutral", open: 950, close: 5870 },
+    { program: "IT", gender: "Female", open: 2818, close: 11259 },
+    { program: "IT-BI", gender: "Neutral", open: 3281, close: 6192 },
+    { program: "IT-BI", gender: "Female", open: 8616, close: 11529 },
+    { program: "ECE", gender: "Neutral", open: 5249, close: 9200 },
+    { program: "ECE", gender: "Female", open: 10761, close: 14522 },
+  ];
+  const cutoffCommon = {
+    id: "c19b3fc1-f70c-48c5-997f-51dfcb3b4c79",
+    institute: "IIITA",
+  };
   return (
     <div className="flex flex-col h-full w-full">
       {/* Hero Section */}
@@ -157,12 +168,12 @@ export default async function Home() {
       {/* Stats Section */}
       <section className="w-full py-16">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8 text-center">
+          <div className="grid grid-cols-3 gap-8 text-center">
             <div>
               <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
                 170+
               </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
+              <p className="text-md md:text-lg mt-2 text-gray-600 dark:text-gray-300">
                 Colleges
               </p>
             </div>
@@ -170,7 +181,7 @@ export default async function Home() {
               <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
                 50+
               </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
+              <p className="text-md md:text-lg mt-2 text-gray-600 dark:text-gray-300">
                 Cities
               </p>
             </div>
@@ -178,8 +189,8 @@ export default async function Home() {
               <p className="text-4xl md:text-5xl font-bold text-purple-600 dark:text-purple-400">
                 3+
               </p>
-              <p className="text-lg mt-2 text-gray-600 dark:text-gray-300">
-                Years of Cutoff Data
+              <p className="text-md md:text-lg mt-2 text-gray-600 dark:text-gray-300">
+                Y/O Data
               </p>
             </div>
 
@@ -188,7 +199,7 @@ export default async function Home() {
       </section>
 
       {/* Cutoff Section */}
-      <section className="w-full py-16 bg-white dark:bg-black">
+      <section className="mx-2 md:mx-4 rounded-2xl py-16 px-4 sm:px-8 bg-white dark:bg-zinc-900 shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-white/10 backdrop-blur-sm">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 order-2 md:order-1">
@@ -214,147 +225,30 @@ export default async function Home() {
                     </tr>
                   </thead>
                   <tbody className="min-w-max">
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        IT
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Neutral
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        950
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        5870
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        IT
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Female
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        2818
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        11259
-                      </td>
-                    </tr>
-
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        IT-BI
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Neutral
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        3281
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        6192
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        IT-BI
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Female
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        8616
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        11529
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        ECE
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Neutral
-                      </td>
-
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        5249
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        9200
-                      </td>
-                    </tr>
-                    <tr className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white">
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        <Link
-                          href={
-                            "https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
-                          }
-                        >
-                          IIITA
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        ECE
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        Female
-                      </td>
-
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        10761
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-thin dark:border-white px-2 md:px-4 py-2">
-                        14522
-                      </td>
-                    </tr>
+                    {cutoffRows.map((row, idx) => (
+                      <tr
+                        key={idx}
+                        className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white"
+                      >
+                        <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
+                          <Link href={`/${cutoffCommon.id}`}>
+                            {cutoffCommon.institute}
+                          </Link>
+                        </td>
+                        <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
+                          {row.program}
+                        </td>
+                        <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
+                          {row.gender}
+                        </td>
+                        <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
+                          {row.open}
+                        </td>
+                        <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
+                          {row.close}
+                        </td>
+                      </tr>
+                    ))}
                   </tbody>
                 </table>
               </div>
@@ -395,7 +289,7 @@ export default async function Home() {
       </section>
 
       {/* Reviews Showcase Section */}
-      <section className="w-full py-16  bg-gray-100 dark:bg-gray-900">
+      <section className="w-full py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-4">
@@ -459,7 +353,7 @@ export default async function Home() {
       </section>
 
       {/* Bonk Feature Section */}
-      <section className="w-full py-16  bg-white dark:bg-black">
+      <section className="mx-2 md:mx-4 rounded-2xl py-16 px-4 sm:px-8 bg-white dark:bg-zinc-900 shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-white/10 backdrop-blur-sm">
         <div className="container mx-auto px-4 md:px-6">
           <div className="flex flex-col md:flex-row items-center gap-12">
             <div className="flex-1 text-center md:text-left">
@@ -770,7 +664,7 @@ export default async function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="w-full py-16  bg-white dark:bg-black">
+      <section className="w-full py-16">
         <div className="container mx-auto px-4 md:px-6">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">

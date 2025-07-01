@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 
@@ -17,7 +17,6 @@ export async function POST(req: Request) {
     if (!collegeId || !imageUrl) {
         return new Response("Missing collegeId or imageUrl", { status: 400 });
     }
-    const prisma = new PrismaClient();
 
     try {
         const collegeImage = await prisma.collegeImage.create({

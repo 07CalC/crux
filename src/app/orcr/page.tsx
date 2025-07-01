@@ -56,6 +56,7 @@ export default function Orcr() {
   dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
   p-4
   py-8
+  border-2 border-black dark:border-white
   ${!option.done ? "opacity-80 cursor-not-allowed" : ""}
 `}
             >

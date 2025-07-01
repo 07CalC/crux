@@ -1,9 +1,9 @@
-import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import path from 'path';
 import fs from "fs-extra";
 import zlib from "zlib";
 import { mostRecentJossaOrcr } from '@/constants';
+import { prisma } from '@/lib/prisma';
 
 const CACHE_DIR = path.join(process.cwd(), 'cachedOrcr');
 
@@ -31,7 +31,6 @@ export async function POST(req: Request) {
             },
         });
     }
-    const prisma = new PrismaClient();
     const orcr = await prisma.orcr.findMany({
         where: {
             year: parseInt(year),

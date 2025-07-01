@@ -1,7 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-
-
-
+import { prisma } from "@/lib/prisma";
 
 export async function generateMetadata({
   params,
@@ -9,7 +6,6 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params
-  const prisma = new PrismaClient();
   const college = await prisma.college.findUnique({
     where: {
       id: id[0],

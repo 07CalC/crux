@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
@@ -18,7 +18,6 @@ export async function POST(req: Request) {
     if (!clgId || !comment || !rating) {
         return new NextResponse(JSON.stringify({ error: "clgId, comment, rating are required" }), { status: 400 });
     }
-    const prisma = new PrismaClient();
     const college = await prisma.college.findUnique({
         where: {
             id: clgId

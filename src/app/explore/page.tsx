@@ -1,9 +1,9 @@
-import { PrismaClient } from "@prisma/client";
 import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { Metadata } from "next";
 import { NotFound } from "../components/NotFound";
+import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Explore Colleges | Crux",
@@ -23,13 +23,21 @@ type PageProps = {
 export default async function Explore({ searchParams }: PageProps) {
   const query = (await searchParams).query?.trim() || "";
 
-  const prisma = new PrismaClient();
   const colleges = await prisma.college.findMany({
     where: {
       OR: [{ name: { contains: query as string, mode: "insensitive" } }],
     },
     orderBy: {
       bongs: "desc"
+    },
+    select: {
+      id: true,
+      name: true,
+      location: true,
+      nirf: true,
+      bongs: true,
+      coverImage: true,
+      officialWebsite: true,
     }
   });
 

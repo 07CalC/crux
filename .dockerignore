@@ -5,3 +5,4 @@ bun.lock.bak
 .vscode
 __tests__
 .next
+node-modules/

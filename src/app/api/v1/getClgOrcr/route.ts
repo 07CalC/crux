@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 
@@ -12,7 +12,6 @@ export async function POST(req: Request) {
     if (!year || !round || !type || !clgId) {
         return new NextResponse(JSON.stringify({ error: "Year, round, type and college ID are required" }), { status: 400 });
     }
-    const prisma = new PrismaClient();
     const orcr = await prisma.orcr.findMany({
         where: {
             year: parseInt(year),

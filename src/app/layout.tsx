@@ -6,6 +6,8 @@ import NextTopLoader from 'nextjs-toploader';
 import MobileSidebar from "./components/MobileSidebar";
 import { ToastContainer } from "react-toastify";
 import { ScrollToTop } from "./components/ScrollToTop";
+import { Suspense } from "react";
+import { Loading } from "./components/Loading";
 
 export const metadata: Metadata = {
   title: "Crux",
@@ -34,8 +36,9 @@ export default async function RootLayout({
         <NextTopLoader showSpinner={false} color="#FFFFFF" height={5} />
         <Navbar />
         <MobileSidebar />
-        {/* <Breadcrumbs /> */}
-        {children}
+        <Suspense fallback={<Loading />}>
+          {children}
+        </Suspense>
         <Footer />
         <ToastContainer />
         <ScrollToTop />

@@ -3,7 +3,7 @@ import { Bonk } from "@/app/components/Bonk";
 import { ClgOrcr } from "@/app/components/ClgOrcr";
 import { NotFound } from "@/app/components/NotFound";
 import { UploadImage } from "@/app/components/UploadImage";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { IoWarning } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
@@ -13,12 +13,12 @@ export default async function College({
     params: Promise<{ id: string }>;
 }) {
     const { id } = await params
-    const prisma = new PrismaClient();
     const college = await prisma.college.findUnique({
         where: {
             id: id[0],
         },
     });
+    console.log(college)
 
     if (!college) {
         return (

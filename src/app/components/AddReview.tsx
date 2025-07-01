@@ -57,7 +57,7 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
     };
 
     return (
-        <div id="add-review" className="bg-gray-300 dark:bg-[#222222] p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
+        <div id="add-review" className="bg-white dark:bg-[#1a1a1a] p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
             <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Share Your Experience</h2>
 
             {isReviewed ? (
@@ -103,8 +103,8 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
                                         type="button"
                                         key={index}
                                         className={`text-2xl ${ratingValue <= (hover || review.rating)
-                                                ? "text-yellow-400"
-                                                : "text-gray-400 dark:text-gray-600"
+                                            ? "text-yellow-400"
+                                            : "text-gray-400 dark:text-gray-600"
                                             }`}
                                         onClick={() => setReview({ ...review, rating: ratingValue })}
                                         onMouseEnter={() => setHover(ratingValue)}
@@ -126,8 +126,8 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
                             onClick={handleSubmit}
                             disabled={isSubmitting || review.comment.trim().length < 10}
                             className={`rounded-xl text-lg items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] hover:shadow-[2px_2px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-4 py-2 ${(isSubmitting || review.comment.trim().length < 10)
-                                    ? "opacity-50 cursor-not-allowed"
-                                    : "hover:bg-purple-400"
+                                ? "opacity-50 cursor-not-allowed"
+                                : "hover:bg-purple-400"
                                 }`}
                         >
                             {isSubmitting ? "Submitting..." : "Submit Review"}

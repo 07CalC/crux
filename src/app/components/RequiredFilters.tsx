@@ -46,7 +46,7 @@ export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, 
                         className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-purple-500  text-black dark:text-gray-100"
                     >
                         {Object.values(filter)[0].map((value: string | number, index: number) => (
-                            <option className="bg-gray-300 dark:bg-[#282828] hover:bg-purple-500 active:bg-purple-500" key={index} value={value}>
+                            <option className="bg-white dark:bg-[#1a1a1a] hover:bg-purple-500 active:bg-purple-500" key={index} value={value}>
                                 {value}
                             </option>
                         ))}

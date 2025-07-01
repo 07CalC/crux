@@ -150,7 +150,7 @@ export default async function Home() {
 
       {/* Warning Section - Glassmorphic */}
       <section className="w-full px-4 pt-16 md:px-20">
-        <div className=" bg-white/10 backdrop-blur-md border border-white/30 p-5 rounded-xl shadow-lg relative overflow-hidden w-full">
+        <div className="bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-5 border border-white/30 p-5 rounded-xl shadow-lg relative overflow-hidden w-full">
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500/30 to-pink-500/30 z-0"></div>
           <div className="flex items-center relative z-10">
             <IoWarning className="text-yellow-400 text-4xl md:text-8xl mr-4 animate-pulse" />
@@ -305,7 +305,7 @@ export default async function Home() {
             {studentReviews.map((item, index) => (
               <div
                 key={index}
-                className="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white"
+                className="bg-white dark:bg-zinc-900 p-6 rounded-xl shadow-lg border-2 border-black dark:border-white"
               >
                 <div className="flex items-center mb-4">
                   <div className="w-12 h-12 bg-purple-200 dark:bg-purple-700 rounded-full flex items-center justify-center mr-4">
@@ -532,7 +532,7 @@ export default async function Home() {
 
 
       {/* Community Partners Section */}
-      <section className="w-full py-16 bg-[rgba(168,85,247,0.1)] dark:bg-[rgba(168,85,247,0.08)]">
+      <section className="w-full py-16 ">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">

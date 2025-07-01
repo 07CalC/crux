@@ -38,7 +38,10 @@ export default async function Explore({ searchParams }: PageProps) {
   return (
     <div className="md:px-10 px-2 mx-auto py-12 w-full relative">
       <div className="mb-10">
-        <form className="flex flex-col md:flex-row gap-4 bg-gray-300 dark:bg-[#222222] p-4 rounded-xl shadow-lg max-w-2xl">
+        <form className="flex flex-col md:flex-row gap-4 bg-white dark:bg-[#1a1a1a]   transition-all 
+  shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
+  dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+ p-4 rounded-xl max-w-2xl">
           <div className="flex-1">
             <div className="relative">
               <input
@@ -47,7 +50,7 @@ export default async function Explore({ searchParams }: PageProps) {
                 name="query"
                 defaultValue={query}
                 placeholder="Search by college name"
-                className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-gray-200 dark:bg-[#222222] text-black dark:text-gray-100"
               />
               <IoSearch
                 className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
@@ -92,7 +95,16 @@ export default async function Explore({ searchParams }: PageProps) {
           colleges.map((college) => (
             <div
               key={college.id}
-              className="flex flex-col h-full rounded-xl overflow-hidden bg-gray-300 dark:bg-[#222222] shadow-lg border border-black dark:border-gray-300 hover:shadow-xl transition-all duration-300"
+              className="flex flex-col h-full rounded-xl overflow-hidden bg-white dark:bg-[#1a1a1a] border border-black   
+  transition-all 
+  ease-in-out 
+  duration-200 
+  shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
+  dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]
+  hover:-translate-y-1 
+  hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
+  dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
+"
             >
               <Link
                 href={`/explore/${college.id}`}

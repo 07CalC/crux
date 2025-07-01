@@ -227,7 +227,7 @@ export const ClgOrcr = ({
     return <NotFound text="No data found" />;
 
   return (
-    <div className="w-full mt-10 h-full flex flex-col items-center justify-center border-2 border-purple-500 bg-purple-200 dark:bg-purple-900/40 rounded-lg shadow-lg p-4">
+    <div className="w-full mt-10 h-full flex flex-col items-center justify-center border-2 border-purple-500 bg-purple-400/40 dark:bg-purple-900/40 rounded-lg shadow-lg p-4">
       <div className="w-full mb-6">
         <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
           {requiredFiltersOptions.map((option, index) => {
@@ -241,13 +241,13 @@ export const ClgOrcr = ({
                   name={key}
                   value={requiredFilters[key]}
                   onChange={handleRequiredFilterChange}
-                  className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                  className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
                 >
                   {(option[key as keyof typeof option] as (string | number)[]).map((value, index) => (
                     <option
                       key={index}
                       value={value}
-                      className="bg-gray-300 dark:bg-[#282828]"
+                      className="bg-white dark:bg-[#1a1a1a]"
                     >
                       {value}
                     </option>
@@ -268,14 +268,14 @@ export const ClgOrcr = ({
               onChange={(e) =>
                 setFilters({ ...filters, academicProgramName: e.target.value })
               }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
             >
               <option value="">All</option>
               {filterOptions[0].academicProgramName.map((value, index) => (
                 <option
                   key={index}
                   value={value}
-                  className="bg-gray-300 dark:bg-[#282828]"
+                  className="bg-white dark:bg-[#1a1a1a]"
                 >
                   {value}
                 </option>
@@ -293,14 +293,14 @@ export const ClgOrcr = ({
               onChange={(e) =>
                 setFilters({ ...filters, seatType: e.target.value })
               }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
             >
               <option value="">All</option>
               {filterOptions[1].seatType.map((value, index) => (
                 <option
                   key={index}
                   value={value}
-                  className="bg-gray-300 dark:bg-[#282828]"
+                  className="bg-white dark:bg-[#1a1a1a]"
                 >
                   {value}
                 </option>
@@ -318,14 +318,14 @@ export const ClgOrcr = ({
               onChange={(e) =>
                 setFilters({ ...filters, gender: e.target.value })
               }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
             >
               <option value="">All</option>
               {filterOptions[2].gender.map((value, index) => (
                 <option
                   key={index}
                   value={value}
-                  className="bg-gray-300 dark:bg-[#282828]"
+                  className="bg-white dark:bg-[#1a1a1a]"
                 >
                   {value}
                 </option>
@@ -345,7 +345,7 @@ export const ClgOrcr = ({
                 setFilters({ ...filters, rank: parseInt(e.target.value) || 0 })
               }
               placeholder="Enter your rank"
-              className="p-2 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+              className="p-2 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
             />
           </div>
         </div>

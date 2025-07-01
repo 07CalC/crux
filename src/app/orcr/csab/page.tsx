@@ -151,7 +151,7 @@ export default function Csab() {
             setFilters({ ...filters, searchKeyword: e.target.value })
           }
           placeholder="Search by Institute"
-          className="p-2 bg-gray-300 border-2 dark:bg-[#222222] rounded-lg shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white focus:shadow-[0px_0px_0px_0px] focus:translate-y-1 focus:translate-x-1 focus:duration-100 transition-all ease-in-out text-black dark:text-white border-black dark:border-gray-100 w-full"
+          className="p-2 bg-white border-2 dark:bg-[#1a1a1a] rounded-lg shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white focus:shadow-[0px_0px_0px_0px] focus:translate-y-1 focus:translate-x-1 focus:duration-100 transition-all ease-in-out text-black dark:text-white border-black dark:border-gray-100 w-full"
         />
         <ViewToggle view={view} setView={setView} />
       </div>

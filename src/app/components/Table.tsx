@@ -8,7 +8,9 @@ export const Table = ({
   view: { name: string; key: keyof Orcr; show: boolean }[];
 }) => {
   return (
-    <div className="overflow-x-auto border-2  border-black px-4 dark:border-white shadow-purple-500  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-gray-300 dark:bg-[#222222]">
+    <div className="overflow-x-auto border  border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
+  dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
+ px-4 dark:border-white  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-white dark:bg-[#1a1a1a]">
       <table className="min-w-full border-collapse text-left font-thin">
         <thead>
           <tr className="min-w-max">

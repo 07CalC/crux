@@ -46,7 +46,7 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
     if (isOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-    
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -88,7 +88,7 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
                       name={key}
                       value={filters[key] || ""}
                       onChange={handleChange}
-                      className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold  border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                      className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold  border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
                     >
                       <option value="">All</option>
                       {(filter as Record<typeof key, string[]>)[key].map(
@@ -104,8 +104,8 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
               })}
               <div className="flex flex-col gap-2">
                 <label className="text-black dark:text-white">Rank</label>
-                <input 
-                  className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-gray-300 dark:bg-[#222222] text-black dark:text-gray-100"
+                <input
+                  className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
                   type="number"
                   name="rank"
                   value={filters.rank}

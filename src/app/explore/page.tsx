@@ -112,6 +112,7 @@ export default async function Explore({ searchParams }: PageProps) {
   hover:-translate-y-1 
   hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
   dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
+active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 
 "
             >
               <Link

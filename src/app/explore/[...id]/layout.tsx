@@ -12,8 +12,8 @@ export async function generateMetadata({
     },
   });
   return {
-    title: college?.name,
-    description: `Find all the information about ${college?.name} here.`,
+    title: `${college?.name} | cr#x`,
+    description: `Find all the information about ${college?.name} here. | cr#x`,
     openGraph: {
       title: college?.name,
       description: `Find all the information about ${college?.name} here.`,

@@ -1,14 +1,9 @@
 import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
-import { Metadata } from "next";
 import { NotFound } from "../components/NotFound";
 import { prisma } from "@/lib/prisma";
 
-export const metadata: Metadata = {
-  title: "Explore Colleges | Crux",
-  description: "Search and discover colleges across India",
-};
 
 export const dynamic = "force-dynamic";
 

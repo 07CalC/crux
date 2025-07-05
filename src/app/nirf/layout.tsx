@@ -3,8 +3,8 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Nirf",
-    description: "Compare top Nirf colleges",
+  title: "Nirf (coming soon) | cr#x",
+  description: "Compare top Nirf colleges",
 }
 
 export default async function NirfLayout({

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { ThemeToggleButton } from "./ToggleThemeButton";
 import { SidebarButton } from "./MobileSidebar";
+import Image from "next/image";
 
 export const Navbar = () => {
   return (
@@ -9,9 +10,17 @@ export const Navbar = () => {
       <div className="flex items-center">
         <Link
           href="/"
-          className="text-5xl font-bold text-black glitchy-text font-sans"
+          className="text-4xl md:text-6xl flex font-bold items-center justify-center text-black glitchy-text font-sans"
         >
-          crux
+          CR
+          <Image
+            src="/logo.png"
+            alt="logo"
+            width={512}
+            height={512}
+            className="md:w-16 md:h-16 h-10 w-10"
+          />
+          X
         </Link>
       </div>
       <div className="sm:flex items-center hidden gap-x-8">

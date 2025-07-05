@@ -3,8 +3,8 @@ import { Metadata } from "next";
 
 
 export const metadata: Metadata = {
-    title: "Explore",
-    description: "Explore different engineering colleges",
+  title: "Explore | cr#x",
+  description: "Explore different engineering colleges | cr#x",
 }
 
 export default async function ExploreLayout({

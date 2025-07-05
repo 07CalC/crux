@@ -10,8 +10,9 @@ import { Suspense } from "react";
 import { Loading } from "./components/Loading";
 
 export const metadata: Metadata = {
-  title: "Crux",
-  description: "Crux is a platform for students to get all the information they need for their college admissions.",
+  title: "Cr#x | Discover & Explore Colleges in India",
+  description:
+    "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
   icons: [
     {
       rel: "icon",
@@ -29,6 +30,9 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="2f7b543e-b3f3-4ec3-96e1-01f8905c6c9c"></script>
+      </head>
       <body
         className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
       >

@@ -1,9 +1,11 @@
+
+
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Orcr | cr#x",
+  title: "BITSAT Cutoffs | cr#x",
   description:
-    "Check previous years opening and closing rank for JOSSA, CSAB and BITSAT | cr#x",
+    "Check previous years opening and closing rank for | cr#x",
 };
 
 export default async function OrcrLayout({

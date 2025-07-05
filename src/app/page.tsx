@@ -17,7 +17,7 @@ export default async function Home() {
   const partners = [
     {
       name: "r/JEENEETards",
-      icon: "https://styles.redditmedia.com/t5_311ttu/styles/communityIcon_2adz9we330af1.png",
+      icon: "https://styles.redditmedia.com/t5_311ttu/styles/communityIcon_9663d8r0i2af1.jpg?format=pjpg&s=245c34bb1c29b71e895b8ac8a02c53a0393aebd7",
       cover: "https://styles.redditmedia.com/t5_311ttu/styles/bannerBackgroundImage_nig86rsztgrc1.jpeg?width=2176&frame=1&auto=webp&s=1310eb256db16650637d326f287dfd417cb13022",
       platform: "Reddit community",
       description:

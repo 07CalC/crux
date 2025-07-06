@@ -21,7 +21,7 @@ export async function generateMetadata({
       siteName: "Crux",
       images: [
         {
-          url: college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s",
+          url: college?.coverImage ? `https://crux.ix.tc${college.coverImage}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s",
           width: 800,
           height: 600,
         },

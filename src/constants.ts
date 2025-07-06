@@ -4,7 +4,7 @@ export const AVAILABLE_EXAMS = ["ADVANCED", "MAINS", "BITSAT"];
 export const AVAILABLE_JOSSA_ORCRS = [
   { 2023: [1, 2, 3, 4, 5, 6] },
   { 2024: [1, 2, 3, 4, 5] },
-  { 2025: [1, 2] }
+  { 2025: [1, 2, 3, 4] }
 ]
 
 export const AVAILABLE_CSAB_ORCRS = [

@@ -22,7 +22,7 @@ export default async function Home() {
     },
     {
       name: "r/JEENEETards",
-      icon: "https://cdn.discordapp.com/icons/1117294391707570176/967dc402c5a98383b4cddd3f353f9fe2.webp?size=128",
+      icon: "https://cdn.discordapp.com/icons/1117294391707570176/a_924815811f9ed8c7712d2ee28fe0ca6e.webp?size=128",
       cover: "https://cdn.discordapp.com/splashes/1117294391707570176/c8e4535d99f391d77e5f733c64c15ef0.jpg?size=600",
       platform: "Discord server",
       description:

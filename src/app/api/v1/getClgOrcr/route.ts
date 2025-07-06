@@ -1,9 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-
-
-
 export async function POST(req: Request) {
     console.log("\ngetClgOrcr Route hit")
     const data = await req.json();

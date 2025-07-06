@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { data2025R2 as data2025R1 } from "../orcr/2025r2.js";
+import { data2025R4 as data2025R1 } from "../ORCR/2025r4.js";
 const prisma = new PrismaClient();
 
 const CHUNK_SIZE = 500; // Adjust depending on performance
@@ -14,18 +14,16 @@ function chunkArray(array, size) {
 
 async function exportData() {
 
-  // Step 2: Fetch all college IDs into a Map
   const colleges = await prisma.college.findMany({
     select: { id: true, name: true },
   });
   const collegeMap = new Map(colleges.map(c => [c.name, c.id]));
 
-  // Step 3: Prepare ORCR records
   const orcrData = data2025R1
     .filter(item => collegeMap.has(item.institute)) // skip unmatched
     .map(item => ({
       year: 2025,
-      round: 2,
+      round: 4,
       type: "JOSSA",
       exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
       collegeId: collegeMap.get(item.institute),

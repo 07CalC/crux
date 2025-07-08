@@ -56,7 +56,7 @@ export const Footer = () => {
           </div>
         </div>
         <div className="flex p-5 rounded-xl flex-col gap-y-4 w-full md:w-1/4 justify-start  h-full items-start">
-          <p className="text-black font-semibold text-xl md:text-3xl sm:text-4xl ">
+          <p className="text-black dark:text-white font-semibold text-2xl md:text-3xl sm:text-4xl ">
             Official Sources
           </p>
           <div className="grid grid-cols-2 gap-x-4 gap-y-2 w-full">

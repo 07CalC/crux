@@ -25,6 +25,16 @@ export default function Csab() {
     gender: "",
     rank: 0,
   });
+  const [sort, setSort] = useState<{
+    type: "rank";
+    openRank: "asc" | "desc" | null;
+    closeRank: "asc" | "desc" | null;
+  } | { type: "marks"; marks: "asc" | "desc" | null }>({
+    type: "rank",
+    openRank: null,
+    closeRank: null,
+  })
+
   const [requiredFilters, setRequiredFilters] = useState<{
     [key: string]: string | number;
   }>({
@@ -117,9 +127,24 @@ export default function Csab() {
     ];
   }, [fetchOrcrData]);
 
+  const sortedData = useMemo(() => {
+    return filteredData.sort((a, b) => {
+      if (sort.type === "rank" && sort.openRank) {
+        return sort.openRank === "asc"
+          ? a.openRank! - b.openRank!
+          : b.openRank! - a.openRank!;
+      } else if (sort.type === "rank" && sort.closeRank) {
+        return sort.closeRank === "asc"
+          ? a.closeRank! - b.closeRank!
+          : b.closeRank! - a.closeRank!;
+      }
+      return 0;
+    });
+  }, [filteredData, sort]);
+
   const paginatedData: Orcr[] = useMemo(() => {
-    return filteredData.slice((currPage - 1) * colsShown, currPage * colsShown);
-  }, [filteredData, currPage, colsShown]);
+    return sortedData.slice((currPage - 1) * colsShown, currPage * colsShown);
+  }, [sortedData, currPage, colsShown, sort]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -158,7 +183,7 @@ export default function Csab() {
       {loading && <Loading />}
       {!loading && paginatedData.length !== 0 && (
         <>
-          <Table orcr={paginatedData} view={view} />
+          <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
           <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
             <PaginationNav
               currPage={currPage}

@@ -14,6 +14,7 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [uploadCount, setUploadCount] = useState(0);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
   const MAX_UPLOADS = 5;
 
@@ -48,7 +49,7 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
     try {
       const uploadPreset = process.env.NEXT_PUBLIC_UPLOAD_PRESET;
       const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-      
+
       const formData = new FormData();
       formData.append("file", selectedFile);
       formData.append("upload_preset", uploadPreset as string);

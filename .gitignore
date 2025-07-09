@@ -51,3 +51,4 @@ dev.db
 recipes.lua
 scripts/backup.json
 postgres/
+laxci.yml

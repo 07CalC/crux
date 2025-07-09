@@ -17,6 +17,15 @@ export default function BITSAT() {
   const [loading, setLoading] = useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
   const [colsShown, setColsShown] = useState<number>(10);
+  const [sort, setSort] = useState<{
+    type: "rank";
+    openRank: "asc" | "desc" | null;
+    closeRank: "asc" | "desc" | null;
+  } | { type: "marks"; marks: "asc" | "desc" | null }>({
+    type: "marks",
+    marks: null,
+  })
+
   const [filters, setFilters] = useState({
     searchKeyword: "",
     institute: "",
@@ -116,9 +125,20 @@ export default function BITSAT() {
     ];
   }, [fetchedOrcrData]);
 
+  const sortedData = useMemo(() => {
+    if (sort.type === "marks" && sort.marks) {
+      return filteredData.sort((a, b) => {
+        return sort.marks === "asc"
+          ? (a.marks || 0) - (b.marks || 0)
+          : (b.marks || 0) - (a.marks || 0);
+      });
+    }
+    return filteredData
+  }, [filteredData, sort]);
+
   const paginatedData: Orcr[] = useMemo(() => {
-    return filteredData.slice((currPage - 1) * colsShown, currPage * colsShown);
-  }, [filteredData, currPage, colsShown]);
+    return sortedData.slice((currPage - 1) * colsShown, currPage * colsShown);
+  }, [sortedData, currPage, colsShown, sort]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -157,7 +177,7 @@ export default function BITSAT() {
       {loading && <Loading />}
       {!loading && paginatedData.length !== 0 && (
         <>
-          <Table orcr={paginatedData} view={view} />
+          <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
           <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
             <PaginationNav
               currPage={currPage}

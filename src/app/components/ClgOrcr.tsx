@@ -19,6 +19,16 @@ export const ClgOrcr = ({
   const [loading, setLoading] = useState(false);
   const [currPage, setCurrPage] = useState(1);
   const [colsShown, setColsShown] = useState(10);
+  const [sort, setSort] = useState<{
+    type: "rank";
+    openRank: "asc" | "desc" | null;
+    closeRank: "asc" | "desc" | null;
+  } | { type: "marks"; marks: "asc" | "desc" | null }>({
+    type: clgType === "BITS" ? "marks" : "rank",
+    openRank: null,
+    closeRank: null,
+    marks: null,
+  });
   const [filters, setFilters] = useState({
     academicProgramName: "",
     seatType: "",
@@ -148,9 +158,36 @@ export const ClgOrcr = ({
 
   const totalPages = Math.ceil(filteredData.length / colsShown);
 
+  const sortedData = useMemo(() => {
+    if (sort.type === "marks") {
+      return [...filteredData].sort((a, b) => {
+        if (a.marks === undefined || b.marks === undefined) return 0;
+        return sort.marks === "asc" ? a.marks - b.marks : b.marks - a.marks;
+      });
+    } else {
+      return [...filteredData].sort((a, b) => {
+        const openRankA = a.openRank ?? Infinity;
+        const openRankB = b.openRank ?? Infinity;
+        const closeRankA = a.closeRank ?? Infinity;
+        const closeRankB = b.closeRank ?? Infinity;
+
+        if (sort.openRank !== null) {
+          return sort.openRank === "asc"
+            ? openRankA - openRankB
+            : openRankB - openRankA;
+        } else if (sort.closeRank !== null) {
+          return sort.closeRank === "asc"
+            ? closeRankA - closeRankB
+            : closeRankB - closeRankA;
+        }
+        return 0;
+      });
+    }
+  }, [filteredData, sort]);
+
   const paginatedData: Orcr[] = useMemo(() => {
-    return filteredData.slice((currPage - 1) * colsShown, currPage * colsShown);
-  }, [filteredData, currPage, colsShown]);
+    return sortedData.slice((currPage - 1) * colsShown, currPage * colsShown);
+  }, [sortedData, currPage, colsShown, sort]);
 
   const fetchOrcr = async () => {
     setLoading(true);
@@ -374,7 +411,7 @@ export const ClgOrcr = ({
       {loading && <Loading />}
       {!loading && paginatedData.length > 0 && (
         <>
-          <Table orcr={paginatedData} view={view} />
+          <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
           <div className="flex mt-5 justify-center sm:justify-end items-center space-x-4 w-full ">
             <PaginationNav
               currPage={currPage}

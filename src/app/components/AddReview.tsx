@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaStar } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -13,12 +13,11 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
     });
     const [hover, setHover] = useState<number | null>(null);
 
-    useState(() => {
+    useEffect(() => {
         if (typeof window !== 'undefined') {
             setIsReviewed(localStorage.getItem(`review-${clgId}`) === "true");
         }
     });
-
     const handleSubmit = async () => {
         if (review.comment.trim().length < 10) {
             alert("Please write a review with at least 10 characters");

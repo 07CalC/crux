@@ -154,7 +154,6 @@ export default function Jossa() {
   useEffect(() => {
     fetchOrcrData();
   }, [requiredFilters]);
-  console.log(sort)
   return (
     <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
       <RequiredFilters
@@ -178,20 +177,6 @@ export default function Jossa() {
           placeholder="Search by Institute"
           className="p-2 bg-white border-2 dark:bg-[#1a1a1a] rounded-lg shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white focus:shadow-[0px_0px_0px_0px] focus:translate-y-1 focus:translate-x-1 focus:duration-100 transition-all ease-in-out text-black dark:text-white border-black dark:border-gray-100 w-full"
         />
-        <button
-          onClick={() => {
-            setSort({
-              type: "rank",
-              openRank: null,
-              closeRank: null,
-            })
-          }}
-          className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2"
-        >
-          <span className="text-black dark:text-white font-bold">
-            Reset
-          </span>
-        </button>
         <ViewToggle view={view} setView={setView} />
       </div>
       {loading && <Loading />}

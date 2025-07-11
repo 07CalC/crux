@@ -18,7 +18,6 @@ export default async function College({
             id: id[0],
         },
     });
-    console.log(college)
 
     if (!college) {
         return (

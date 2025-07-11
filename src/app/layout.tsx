@@ -37,7 +37,7 @@ export default async function RootLayout({
         className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
       >
 
-        <NextTopLoader showSpinner={false} color="#FFFFFF" height={5} />
+        <NextTopLoader showSpinner={false} color="#fefefe" height={7} />
         <Navbar />
         <MobileSidebar />
         <Suspense fallback={<Loading />}>

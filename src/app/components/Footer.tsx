@@ -17,7 +17,7 @@ const officialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-purple-500/30 to-pink-500/30 bottom-0  flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start pt-5 px-5 p-5 border-t-4  border-black dark:border-gray-100">
+    <footer className="bg-gradient-to-br from-purple-500/40 to-pink-500/40 bottom-0  flex flex-col gap-y-4 gap-x-8 w-full justify-between items-start pt-5 px-5 p-5 border-t-4  border-black dark:border-gray-100">
       <div className="grid md:flex w-full justify-between items-start gap-y-4">
         <div className="flex p-5 h-full flex-col gap-y-4 w-full md:w-1/3 justify-center items-center md:items-start text-center">
           <div className="flex gap-x-4 items-center justify-center md:justify-center">
@@ -74,27 +74,33 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="grid gap-y-2 md:flex w-full px-3 pt-2 border-t border-gray-600 dark:border-gray-100 justify-start md:justify-center items-center gap-x-4 md:gap-x-16">
-        <p className="text-yellow-700 dark:text-yellow-500 text-sm md:text-xl text-start md:text-center">
-          Found helpful?{" "}
-          <a
-            href="https://github.com/07calc/crux/"
-            target="_blank"
-            rel="noreferrer"
-            className="underline font-bold text-xl md:text-2xl"
-          >
-            Give it a ⭐
-          </a>
-        </p>
+      <div className="grid gap-y-2 md:flex w-full px-3 py-5 justify-center border-t border-b border-black dark:border-white md:justify-between items-center gap-x-4 md:gap-x-16"> <p className="text-yellow-700 dark:text-yellow-500 text-sm md:text-xl text-center"> Found helpful?{" "}
+        <a
+          href="https://github.com/07calc/crux/"
+          target="_blank"
+          rel="noreferrer"
+          className="underline font-bold text-xl md:text-2xl"
+        >
+          Give it a ⭐
+        </a>
+      </p>
         <a
           href="https://calc.is-a.dev"
           target="_blank"
           rel="noreferrer"
-          className="text-xl text-start md:text-center text-purple-700 dark:text-purple-400"
+          className="text-xl text-center text-purple-700 dark:text-purple-400"
         >
           Made with ❤️ by <strong className="underline font-bold text-2xl">CalC</strong>
         </a>
       </div>
+      <div className="text-center w-full text-9xl font-extrabold text-purple-500 
+              leading-none select-none 
+              md:text-[20rem]
+              [mask-image:linear-gradient(to_bottom,white,transparent)] 
+              ">
+        CRUX
+      </div>
+
     </footer>
   );
 };

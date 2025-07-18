@@ -1,9 +1,8 @@
 import { PrismaClient } from "@prisma/client";
-import { data2025R4 as data2025R1 } from "../ORCR/2025r4.js";
+import { data2025R6 as data2025R1 } from "../ORCR/2025r6.js";
 const prisma = new PrismaClient();
 
-const CHUNK_SIZE = 500; // Adjust depending on performance
-
+const CHUNK_SIZE = 500;
 function chunkArray(array, size) {
   const result = [];
   for (let i = 0; i < array.length; i += size) {
@@ -20,10 +19,9 @@ async function exportData() {
   const collegeMap = new Map(colleges.map(c => [c.name, c.id]));
 
   const orcrData = data2025R1
-    .filter(item => collegeMap.has(item.institute)) // skip unmatched
-    .map(item => ({
+    .filter(item => collegeMap.has(item.institute)).map(item => ({
       year: 2025,
-      round: 5,
+      round: 6,
       type: "JOSSA",
       exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
       collegeId: collegeMap.get(item.institute),
@@ -36,7 +34,6 @@ async function exportData() {
       closeRank: parseInt(item.closeRank),
     }));
 
-  // Step 4: Insert ORCR records in chunks
   const chunks = chunkArray(orcrData, CHUNK_SIZE);
 
   for (const chunk of chunks) {

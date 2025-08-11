@@ -131,7 +131,7 @@ export default async function Home() {
               {/* Caption Tag */}
               <div className="absolute -top-5 md:-top-4 -right-4 rotate-6 md:rotate-12">
                 <Link
-                  href="https://crux.ix.tc/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
+                  href="/explore/c19b3fc1-f70c-48c5-997f-51dfcb3b4c79"
                   className="bg-white dark:bg-[#1a1a1a] text-black dark:text-white text-base md:text-lg font-semibold px-4 py-2 rounded-xl border-2 border-white/20 shadow-lg hover:brightness-110 transition-all"
                 >
                   IIIT Allahabad btw

@@ -31,12 +31,6 @@ export const Navbar = () => {
           Orcr
         </Link>
         <Link
-          href="/nirf"
-          className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
-        >
-          Nirf
-        </Link>
-        <Link
           href="/explore"
           className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
         >

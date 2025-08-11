@@ -62,10 +62,6 @@ export default function MobileSidebar() {
 
                     <div className="w-full mt-2 flex flex-col gap-2">
                         <Link onClick={() => toggleSideBar()}
-                            href="/nirf" className=" text-xl font-semibold text-black dark:text-white mb-3">
-                            NIRF Rankings
-                        </Link>
-                        <Link onClick={() => toggleSideBar()}
                             href="/explore" className="text-xl font-semibold text-black dark:text-white mb-3">
                             Explore Colleges
                         </Link>

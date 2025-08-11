@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const quickLinks = [
   { title: "Orcr", link: "/orcr" },
-  { title: "Nirf", link: "/nirf" },
+  // { title: "Nirf", link: "/nirf" },
   { title: "Explore", link: "/explore" },
 ];
 

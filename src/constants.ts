@@ -9,7 +9,8 @@ export const AVAILABLE_JOSSA_ORCRS = [
 
 export const AVAILABLE_CSAB_ORCRS = [
   { 2023: [1, 2] },
-  { 2024: [1, 2] }
+  { 2024: [1, 2] },
+  { 2025: [1] }
 ]
 
 export const AVAILABLE_BITSAT_ORCRS = [

@@ -2,9 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    console.log("\ngetClgOrcr Route hit")
     const data = await req.json();
-    console.log("data received: ", data)
     const { year, round, type, clgId } = data
     if (!year || !round || !type || !clgId) {
         return new NextResponse(JSON.stringify({ error: "Year, round, type and college ID are required" }), { status: 400 });

@@ -17,11 +17,11 @@ export async function generateMetadata({
     openGraph: {
       title: college?.name,
       description: `Find all the information about ${college?.name} here.`,
-      url: `https://crux.ix.tc/explore/${id[0]}`,
+      url: `/explore/${id[0]}`,
       siteName: "Crux",
       images: [
         {
-          url: college?.coverImage ? `https://crux.ix.tc${college.coverImage}` : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s",
+          url: college?.coverImage ? `${college.coverImage}` : "/defaultCollegeImage.png",
           width: 800,
           height: 600,
         },
@@ -30,14 +30,14 @@ export async function generateMetadata({
     authors: [
       {
         name: "CalC",
-        url: "https://calc.is-a.dev",
+        url: "https://vinm.me",
       },
     ],
     twitter: {
       card: 'summary_large_image',
       title: college?.name,
       description: `Find all the information about ${college?.name} here.`,
-      images: [`${college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"}`],
+      images: [`${college?.coverImage || "/defaultCollegeImage.png"}`],
     },
 
   }

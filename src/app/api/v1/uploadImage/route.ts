@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 
 export async function POST(req: Request) {
@@ -17,6 +18,7 @@ export async function POST(req: Request) {
             }
         });
 
+        revalidatePath(`/explore/${collegeId}`);
         return new Response(JSON.stringify(collegeImage), { status: 200 });
     } catch (error) {
         console.error("Error updating college gallery:", error);

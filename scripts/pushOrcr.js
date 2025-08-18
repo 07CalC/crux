@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { data2025R1Csab as data2025R1 } from "../ORCR/2025r1CSAB.js"
+import { data2025R2Csab as data2025R1 } from "../ORCR/2025r2CSAB.js"
 const prisma = new PrismaClient();
 
 const CHUNK_SIZE = 500;
@@ -21,7 +21,7 @@ async function exportData() {
   const orcrData = data2025R1
     .filter(item => collegeMap.has(item.institute)).map(item => ({
       year: 2025,
-      round: 1,
+      round: 2,
       type: "CSAB",
       exam: item.institute.toLowerCase().includes("indian institute of technology") ? "ADVANCED" : "MAINS",
       collegeId: collegeMap.get(item.institute),

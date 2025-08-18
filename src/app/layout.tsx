@@ -21,6 +21,27 @@ export const metadata: Metadata = {
       url: "/logo.png",
     }
   ],
+  openGraph: {
+    title: "Cr#x | Discover & Explore Colleges in India",
+    description:
+      "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
+    url: "https://crux.hs.vc",
+    siteName: "Cr#x",
+    images: [
+      {
+        url: "/crux.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cr#x | Discover & Explore Colleges in India",
+    description:
+      "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
+    images: ["/crux.png"],
+  }
 };
 
 export default async function RootLayout({

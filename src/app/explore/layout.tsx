@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 
 
-
 export const metadata: Metadata = {
   title: "Explore | cr#x",
   description: "Explore different engineering colleges | cr#x",

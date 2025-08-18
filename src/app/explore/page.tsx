@@ -3,9 +3,11 @@ import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { NotFound } from "../components/NotFound";
 import { prisma } from "@/lib/prisma";
+import Image from "next/image";
 
 
 export const dynamic = "force-dynamic";
+// export const revalidate = 86400;
 
 type SearchParams = {
   query?: string;
@@ -116,12 +118,13 @@ active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1
                 scroll={true}
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                <img
-
+                <Image
+                  width={500}
+                  height={300}
                   loading="lazy"
                   src={
                     college?.coverImage ||
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"
+                    "/defaultCollegeImage.png"
                   }
                   alt={`${college.name} cover image`}
                   className="w-full h-full object-cover rounded-t-xl"

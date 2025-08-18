@@ -7,6 +7,21 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { IoWarning } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
+
+
+export const revalidate = 120;
+
+// export async function generateStaticParams() {
+//     const colleges = await prisma.college.findMany({
+//         select: {
+//             id: true,
+//         }
+//     })
+//     return colleges.map((college) => ({
+//         id: [college.id],
+//     }));
+// }
+
 export default async function College({
     params,
 }: {
@@ -52,7 +67,7 @@ export default async function College({
         <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
                 <img
-                    src={college?.coverImage || "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxaU9SIVC1AZUv0jJW0WtEs0IgZlw0iiFs-w&s"}
+                    src={college?.coverImage || "/collegeDefaultCoverImage.png"}
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"
                 />

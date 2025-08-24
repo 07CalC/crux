@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 
 
 export const Bonk = ({ clgId, bonksCount }: { clgId: string, bonksCount: number }) => {
-    const [isBonked, setIsBonked] = useState<boolean>(localStorage.getItem(`bonk-${clgId}`) ? true : false)
+    const [isBonked, setIsBonked] = useState<boolean>(() => {
+        if (typeof window === "undefined") return false;
+        return localStorage.getItem(`bonk-${clgId}`) ? true : false
+    })
     const [bonks, setBonks] = useState<number>(bonksCount)
     const handleBonk = async () => {
         if (isBonked) {

@@ -3,11 +3,11 @@ import Link from "next/link";
 import { IoSearch } from "react-icons/io5";
 import { NotFound } from "../components/NotFound";
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
 
 
-export const dynamic = "force-dynamic";
-// export const revalidate = 86400;
+export async function generateStaticParams() {
+  return [{},];
+}
 
 type SearchParams = {
   query?: string;
@@ -118,9 +118,7 @@ active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1
                 scroll={true}
               >
                 <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                <Image
-                  width={500}
-                  height={300}
+                <img
                   loading="lazy"
                   src={
                     college?.coverImage ||

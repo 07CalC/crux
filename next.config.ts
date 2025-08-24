@@ -15,6 +15,8 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "cgu-odisha.ac.in" },
       { protocol: "https", hostname: "res.cloudinary.com" },
       { protocol: "https", hostname: "online.vtu.ac.in" },
+      { protocol: "https", hostname: "cdn.discordapp.com" },
+      { protocol: "https", hostname: "styles.redditmedia.com" },
     ],
   },
 };

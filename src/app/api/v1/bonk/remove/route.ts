@@ -26,5 +26,6 @@ export async function POST(req: Request) {
         },
     });
     revalidatePath('/explore')
+    revalidatePath(`/college/${clgId}`)
     return new NextResponse(JSON.stringify({ message: "Unbonked successfully" }), { status: 200 });
 }

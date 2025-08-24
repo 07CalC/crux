@@ -570,7 +570,9 @@ export default async function Home() {
                 {/* Content */}
                 <div className="p-4">
                   <div className="flex items-center gap-3 mb-2">
-                    <img
+                    <Image
+                      width={48}
+                      height={48}
                       src={partner.icon}
                       alt={`${partner.name} Icon`}
                       className="h-12 w-12 rounded-full border border-gray-300"

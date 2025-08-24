@@ -9,18 +9,18 @@ import { IoWarning } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
 
 
-export const revalidate = 120;
+// export const revalidate = 60;
 
-// export async function generateStaticParams() {
-//     const colleges = await prisma.college.findMany({
-//         select: {
-//             id: true,
-//         }
-//     })
-//     return colleges.map((college) => ({
-//         id: [college.id],
-//     }));
-// }
+export async function generateStaticParams() {
+    const colleges = await prisma.college.findMany({
+        select: {
+            id: true,
+        }
+    })
+    return colleges.map((college) => ({
+        id: [college.id],
+    }));
+}
 
 export default async function College({
     params,
@@ -67,7 +67,7 @@ export default async function College({
         <div className="w-full min-h-screen flex flex-col gap-y-10">
             <div className="w-full h-[65vh] relative items-center justify-center flex">
                 <img
-                    src={college?.coverImage || "/collegeDefaultCoverImage.png"}
+                    src={college?.coverImage || "/defaultCollegeImage.png"}
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"
                 />

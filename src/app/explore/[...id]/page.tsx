@@ -9,7 +9,7 @@ import { IoWarning } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
 
 
-// export const revalidate = 60;
+export const revalidate = 60;
 
 export async function generateStaticParams() {
     const colleges = await prisma.college.findMany({

@@ -1,5 +1,4 @@
 'use client';
-
 import Filters from "@/app/components/Filters";
 import { Loading } from "@/app/components/Loading";
 import { NotFound } from "@/app/components/NotFound";
@@ -10,21 +9,31 @@ import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
 import { availableJossaYears, jossaRoundByYearsGlobal, mostRecentJossaOrcr } from "@/constants";
+import { useQuery } from "@tanstack/react-query";
+
+const fetchOrcrData = async (requiredFilters: Record<string, string | number>) => {
+  const res = await fetch("/api/v1/getOrcr", {
+    method: "POST",
+    body: JSON.stringify({
+      exam: requiredFilters.exam,
+      year: requiredFilters.year,
+      round: requiredFilters.round,
+      type: "JOSSA",
+    }),
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return await res.json() as Orcr[];
+};
 
 export default function Jossa() {
-  const [fetchedOrcrData, setFetchedOrcrData] = useState<Orcr[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
   const [colsShown, setColsShown] = useState<number>(10);
-  const [sort, setSort] = useState<{
-    type: "rank";
-    openRank: "asc" | "desc" | null;
-    closeRank: "asc" | "desc" | null;
-  } | { type: "marks"; marks: "asc" | "desc" | null }>({
-    type: "rank",
-    openRank: null,
-    closeRank: null,
-  })
+  const [sort, setSort] = useState<
+    { type: "rank"; openRank: "asc" | "desc" | null; closeRank: "asc" | "desc" | null; } | { type: "marks"; marks: "asc" | "desc" | null }
+  >({ type: "rank", openRank: null, closeRank: null });
+
   const [filters, setFilters] = useState({
     searchKeyword: "",
     institute: "",
@@ -34,16 +43,21 @@ export default function Jossa() {
     gender: "",
     rank: 0,
   });
+
   type requiredFiltersType = Record<string, string | number>;
   const [requiredFilters, setRequiredFilters] = useState<requiredFiltersType>({
     exam: "ADVANCED",
     year: mostRecentJossaOrcr.year,
     round: mostRecentJossaOrcr.round,
   });
+
   const roundByYears: Record<number, number[]> = jossaRoundByYearsGlobal;
   const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: ["ADVANCED", "MAINS"] }, { year: availableJossaYears }, { round: roundByYears[requiredFilters.year as number] as number[] }
-  ], [requiredFilters, roundByYears])
+    { exam: ["ADVANCED", "MAINS"] },
+    { year: availableJossaYears },
+    { round: roundByYears[requiredFilters.year as number] as number[] }
+  ], [requiredFilters, roundByYears]);
+
   const [view, setView] = useState<
     { name: string; key: keyof Orcr; show: boolean }[]
   >([
@@ -58,45 +72,34 @@ export default function Jossa() {
     { name: "Open Rank", key: "openRank", show: true },
     { name: "Close Rank", key: "closeRank", show: true },
   ]);
-  const fetchOrcrData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/v1/getOrcr", {
-        method: "POST",
-        body: JSON.stringify({
-          exam: requiredFilters.exam,
-          year: requiredFilters.year,
-          round: requiredFilters.round,
-          type: "JOSSA",
-        }),
-      });
-      const data = await res.json();
-      setFetchedOrcrData(data);
-    } catch (error) {
-      console.log(error);
-    }
-    setLoading(false);
-  };
+
+  const {
+    data: fetchedOrcrData,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['jossaOrcrData', requiredFilters],
+    queryFn: () => fetchOrcrData(requiredFilters),
+    staleTime: 1000 * 60 * 5,
+    enabled: !!requiredFilters.exam && !!requiredFilters.year && !!requiredFilters.round,
+  });
+
   const filteredData = useMemo(() => {
-    return fetchedOrcrData.filter(
-      (orcr) =>
-        orcr.institute
-          .toLowerCase()
-          .includes(filters.searchKeyword.toLowerCase()) &&
-        orcr.academicProgramName
-          .toLowerCase()
-          .includes(filters.academicProgramName.toLowerCase()) &&
-        orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
-        (filters.seatType === "" || orcr.seatType === filters.seatType) &&
-        orcr.institute
-          .toLowerCase()
-          .includes(filters.institute.toLowerCase()) &&
-        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank && orcr.closeRank >= filters.rank
+    if (!fetchedOrcrData) return [];
+    return fetchedOrcrData.filter(orcr =>
+      orcr.institute.toLowerCase().includes(filters.searchKeyword.toLowerCase()) &&
+      orcr.academicProgramName.toLowerCase().includes(filters.academicProgramName.toLowerCase()) &&
+      orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
+      (filters.seatType === "" || orcr.seatType === filters.seatType) &&
+      orcr.institute.toLowerCase().includes(filters.institute.toLowerCase()) &&
+      orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
+      orcr.closeRank && orcr.closeRank >= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 
-  const totalPages = Math.ceil(filteredData.length / colsShown);
+  const totalPages = useMemo(() => (
+    filteredData ? Math.max(1, Math.ceil(filteredData.length / colsShown)) : 1
+  ), [filteredData, colsShown]);
 
   const filterOptions: [
     { institute: string[] },
@@ -105,45 +108,43 @@ export default function Jossa() {
     { seatType: string[] },
     { gender: string[] }
   ] = useMemo(() => {
+    if (!fetchedOrcrData) return [
+      { institute: [] },
+      { academicProgramName: [] },
+      { quota: [] },
+      { seatType: [] },
+      { gender: [] },
+    ];
     return [
-      {
-        institute: [
-          ...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.institute)),
-        ],
-      },
-      {
-        academicProgramName: [
-          ...new Set(
-            fetchedOrcrData.map((orcr: Orcr) => orcr.academicProgramName)
-          ),
-        ],
-      },
+      { institute: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.institute))] },
+      { academicProgramName: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.academicProgramName))] },
       { quota: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.quota))] },
-      {
-        seatType: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.seatType))],
-      },
+      { seatType: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.seatType))] },
       { gender: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.gender))] },
     ];
   }, [fetchedOrcrData]);
 
   const sortedData = useMemo(() => {
-    return filteredData.sort((a, b) => {
+    if (!filteredData) return [];
+    return [...filteredData].sort((a, b) => {
       if (sort.type === "rank" && sort.openRank) {
         return sort.openRank === "asc"
-          ? a.openRank! - b.openRank!
-          : b.openRank! - a.openRank!;
+          ? (a.openRank ?? 0) - (b.openRank ?? 0)
+          : (b.openRank ?? 0) - (a.openRank ?? 0);
       } else if (sort.type === "rank" && sort.closeRank) {
         return sort.closeRank === "asc"
-          ? a.closeRank! - b.closeRank!
-          : b.closeRank! - a.closeRank!;
+          ? (a.closeRank ?? 0) - (b.closeRank ?? 0)
+          : (b.closeRank ?? 0) - (a.closeRank ?? 0);
       }
       return 0;
     });
   }, [filteredData, sort]);
 
   const paginatedData: Orcr[] = useMemo(() => {
-    return sortedData.slice((currPage - 1) * colsShown, currPage * colsShown);
-  }, [sortedData, currPage, colsShown, sort]);
+    if (!sortedData) return [];
+    const start = (currPage - 1) * colsShown;
+    return sortedData.slice(start, start + colsShown);
+  }, [sortedData, currPage, colsShown]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -151,9 +152,6 @@ export default function Jossa() {
     }, 10);
   }, [currPage, colsShown]);
 
-  useEffect(() => {
-    fetchOrcrData();
-  }, [requiredFilters]);
   return (
     <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
       <RequiredFilters
@@ -179,8 +177,9 @@ export default function Jossa() {
         />
         <ViewToggle view={view} setView={setView} />
       </div>
-      {loading && <Loading />}
-      {!loading && paginatedData.length !== 0 && (
+      {isLoading && <Loading />}
+      {error && <NotFound text={error.message || "Error loading data"} />}
+      {!isLoading && !error && paginatedData.length !== 0 && (
         <>
           <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
           <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
@@ -194,7 +193,7 @@ export default function Jossa() {
           </div>
         </>
       )}
-      {!loading && paginatedData.length === 0 && <NotFound text="No data found" />}
+      {!isLoading && !error && paginatedData.length === 0 && <NotFound text="No data found" />}
     </div>
-  )
+  );
 }

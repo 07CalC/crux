@@ -1,5 +1,4 @@
 'use client';
-
 import Filters from "@/app/components/Filters";
 import { Loading } from "@/app/components/Loading";
 import { NotFound } from "@/app/components/NotFound";
@@ -10,11 +9,25 @@ import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/app/components/Table";
 import { availableBitsatYears, bitsatRoundByYearsGlobal, mostRecentBitsatOrcr } from "@/constants";
+import { useQuery } from "@tanstack/react-query";
 
+const fetchOrcrData = async (requiredFilters: Record<string, string | number>) => {
+  const res = await fetch("/api/v1/getOrcr", {
+    method: "POST",
+    body: JSON.stringify({
+      exam: "BITSAT",
+      year: requiredFilters.year,
+      round: requiredFilters.round,
+      type: "BITSAT",
+    }),
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+  return res.json() as Promise<Orcr[]>;
+};
 
 export default function BITSAT() {
-  const [fetchedOrcrData, setFetchedOrcrData] = useState<Orcr[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
   const [currPage, setCurrPage] = useState<number>(1);
   const [colsShown, setColsShown] = useState<number>(10);
   const [sort, setSort] = useState<{
@@ -24,8 +37,7 @@ export default function BITSAT() {
   } | { type: "marks"; marks: "asc" | "desc" | null }>({
     type: "marks",
     marks: null,
-  })
-
+  });
   const [filters, setFilters] = useState({
     searchKeyword: "",
     institute: "",
@@ -35,18 +47,17 @@ export default function BITSAT() {
     gender: "",
     rank: 390,
   });
-  type requiredFiltersType = Record<string, string | number>;
-  const [requiredFilters, setRequiredFilters] = useState<requiredFiltersType>({
+  const [requiredFilters, setRequiredFilters] = useState<Record<string, string | number>>({
     year: mostRecentBitsatOrcr.year,
     round: mostRecentBitsatOrcr.round,
   });
+
   const roundByYears: Record<number, number[]> = bitsatRoundByYearsGlobal;
   const requiredFiltersOptions: [{ year: number[] }] = useMemo(() => [
     { year: availableBitsatYears }
-  ], [requiredFilters, roundByYears])
-  const [view, setView] = useState<
-    { name: string; key: keyof Orcr; show: boolean }[]
-  >([
+  ], [requiredFilters, roundByYears]);
+
+  const [view, setView] = useState<{ name: string; key: keyof Orcr; show: boolean }[]>([
     { name: "Year", key: "year", show: false },
     { name: "Round", key: "round", show: false },
     { name: "Type", key: "type", show: false },
@@ -55,47 +66,31 @@ export default function BITSAT() {
     { name: "Gender", key: "gender", show: true },
     { name: "Quota", key: "quota", show: false },
     { name: "Seat Type", key: "seatType", show: true },
-    { name: "Marks", key: "marks", show: true }
+    { name: "Marks", key: "marks", show: true },
   ]);
-  const fetchOrcrData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch("/api/v1/getOrcr", {
-        method: "POST",
-        body: JSON.stringify({
-          exam: "BITSAT",
-          year: requiredFilters.year,
-          round: requiredFilters.round,
-          type: "BITSAT",
-        }),
-      });
-      const data = await res.json();
-      setFetchedOrcrData(data);
-    } catch (error) {
-      console.log(error)
-    }
-    setLoading(false);
-  };
+
+  const { data: fetchedOrcrData, isLoading, error } = useQuery({
+    queryKey: ['bitsatOrcrData', requiredFilters],
+    queryFn: () => fetchOrcrData(requiredFilters),
+    staleTime: 1000 * 60 * 5,
+    enabled: !!requiredFilters.year && !!requiredFilters.round,
+  });
+
   const filteredData = useMemo(() => {
+    if (!fetchedOrcrData) return [];
     return fetchedOrcrData.filter(
       (orcr) =>
-        orcr.institute
-          .toLowerCase()
-          .includes(filters.searchKeyword.toLowerCase()) &&
-        orcr.academicProgramName
-          .toLowerCase()
-          .includes(filters.academicProgramName.toLowerCase()) &&
-        orcr.quota.toLowerCase().includes(filters.quota.toLowerCase()) &&
+        orcr.institute?.toLowerCase().includes(filters.searchKeyword.toLowerCase()) &&
+        orcr.academicProgramName?.toLowerCase().includes(filters.academicProgramName.toLowerCase()) &&
+        orcr.quota?.toLowerCase().includes(filters.quota.toLowerCase()) &&
         (filters.seatType === "" || orcr.seatType === filters.seatType) &&
-        orcr.institute
-          .toLowerCase()
-          .includes(filters.institute.toLowerCase()) &&
-        orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.marks && orcr.marks <= filters.rank
+        orcr.institute?.toLowerCase().includes(filters.institute.toLowerCase()) &&
+        orcr.gender?.toLowerCase().includes(filters.gender.toLowerCase()) &&
+        orcr.marks != null && orcr.marks <= filters.rank
     );
   }, [fetchedOrcrData, filters]);
 
-  const totalPages = Math.ceil(filteredData.length / colsShown);
+  const totalPages = Math.max(1, Math.ceil(filteredData.length / colsShown));
 
   const filterOptions: [
     { institute: string[] },
@@ -104,51 +99,43 @@ export default function BITSAT() {
     { seatType: string[] },
     { gender: string[] }
   ] = useMemo(() => {
+    if (!fetchedOrcrData) return [
+      { institute: [] },
+      { academicProgramName: [] },
+      { quota: [] },
+      { seatType: [] },
+      { gender: [] },
+    ];
     return [
-      {
-        institute: [
-          ...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.institute)),
-        ],
-      },
-      {
-        academicProgramName: [
-          ...new Set(
-            fetchedOrcrData.map((orcr: Orcr) => orcr.academicProgramName)
-          ),
-        ],
-      },
-      { quota: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.quota))] },
-      {
-        seatType: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.seatType))],
-      },
-      { gender: [...new Set(fetchedOrcrData.map((orcr: Orcr) => orcr.gender))] },
+      { institute: [...new Set(fetchedOrcrData.map(orcr => orcr.institute))] },
+      { academicProgramName: [...new Set(fetchedOrcrData.map(orcr => orcr.academicProgramName))] },
+      { quota: [...new Set(fetchedOrcrData.map(orcr => orcr.quota))] },
+      { seatType: [...new Set(fetchedOrcrData.map(orcr => orcr.seatType))] },
+      { gender: [...new Set(fetchedOrcrData.map(orcr => orcr.gender))] },
     ];
   }, [fetchedOrcrData]);
 
   const sortedData = useMemo(() => {
+    if (!filteredData) return [];
     if (sort.type === "marks" && sort.marks) {
-      return filteredData.sort((a, b) => {
-        return sort.marks === "asc"
-          ? (a.marks || 0) - (b.marks || 0)
-          : (b.marks || 0) - (a.marks || 0);
-      });
+      return [...filteredData].sort((a, b) =>
+        sort.marks === "asc"
+          ? (a.marks ?? 0) - (b.marks ?? 0)
+          : (b.marks ?? 0) - (a.marks ?? 0)
+      );
     }
-    return filteredData
+    return filteredData;
   }, [filteredData, sort]);
 
-  const paginatedData: Orcr[] = useMemo(() => {
+  const paginatedData = useMemo(() => {
+    if (!sortedData) return [];
     return sortedData.slice((currPage - 1) * colsShown, currPage * colsShown);
-  }, [sortedData, currPage, colsShown, sort]);
+  }, [sortedData, currPage, colsShown]);
 
   useEffect(() => {
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    }, 10);
+    setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 10);
   }, [currPage, colsShown]);
 
-  useEffect(() => {
-    fetchOrcrData();
-  }, [requiredFilters]);
   return (
     <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
       <RequiredFilters
@@ -166,16 +153,15 @@ export default function BITSAT() {
         <input
           type="text"
           value={filters.searchKeyword}
-          onChange={(e) =>
-            setFilters({ ...filters, searchKeyword: e.target.value })
-          }
+          onChange={(e) => setFilters({ ...filters, searchKeyword: e.target.value })}
           placeholder="Search by Institute"
           className="p-2 bg-white border-2 dark:bg-[#1a1a1a] rounded-lg shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white focus:shadow-[0px_0px_0px_0px] focus:translate-y-1 focus:translate-x-1 focus:duration-100 transition-all ease-in-out text-black dark:text-white border-black dark:border-gray-100 w-full"
         />
         <ViewToggle view={view} setView={setView} />
       </div>
-      {loading && <Loading />}
-      {!loading && paginatedData.length !== 0 && (
+      {isLoading && <Loading />}
+      {error && <NotFound text={(error as Error).message || "Error loading data"} />}
+      {!isLoading && !error && paginatedData.length !== 0 && (
         <>
           <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
           <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
@@ -189,7 +175,7 @@ export default function BITSAT() {
           </div>
         </>
       )}
-      {!loading && paginatedData.length === 0 && <NotFound text="No data found" />}
+      {!isLoading && !error && paginatedData.length === 0 && <NotFound text="No data found" />}
     </div>
-  )
+  );
 }

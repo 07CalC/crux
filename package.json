@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@prisma/client": "^6.8.2",
+    "@tanstack/react-query": "^5.86.0",
+    "@tanstack/react-query-devtools": "^5.86.0",
     "@types/fs-extra": "^11.0.4",
     "axios": "^1.8.2",
     "fs-extra": "^11.3.0",

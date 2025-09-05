@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Suspense } from "react";
 import { Loading } from "./components/Loading";
+import { QueryProvider } from "./components/QueryProvider";
 
 export const metadata: Metadata = {
   title: "Cr#x | Discover & Explore Colleges in India",
@@ -57,13 +58,12 @@ export default async function RootLayout({
       <body
         className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
       >
-
         <NextTopLoader showSpinner={false} color="#fefefe" height={7} />
         <Navbar />
         <MobileSidebar />
-        <Suspense fallback={<Loading />}>
+        <QueryProvider>
           {children}
-        </Suspense>
+        </QueryProvider>
         <Footer />
         <ToastContainer />
         <ScrollToTop />

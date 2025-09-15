@@ -142,6 +142,13 @@ export default async function Home() {
         </div>
       </section>
 
+      <section className="w-full mt-5 text-black dark:text-white px-4 flex flex-col md:flex-row items-center justify-center">
+        <IoWarning className="text-red-500 animate-pulse mr-2 size-28 lg:size-10" />
+        <p className="text-lg md:text-xl text-center">
+          The NIRF details such as NIRF ranking and students statistics are outdated and will be updated soon.
+
+        </p>
+      </section>
 
       {/* Warning Section - Glassmorphic */}
       <section className="w-full px-4 pt-16 md:px-20">

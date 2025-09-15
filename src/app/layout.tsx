@@ -6,8 +6,6 @@ import NextTopLoader from 'nextjs-toploader';
 import MobileSidebar from "./components/MobileSidebar";
 import { ToastContainer } from "react-toastify";
 import { ScrollToTop } from "./components/ScrollToTop";
-import { Suspense } from "react";
-import { Loading } from "./components/Loading";
 import { QueryProvider } from "./components/QueryProvider";
 
 export const metadata: Metadata = {

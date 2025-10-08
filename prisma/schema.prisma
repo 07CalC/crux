@@ -1,0 +1,120 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model College {
+  id              String         @id @default(uuid())
+  name            String         @unique
+  bongs           Int            @default(0)
+  coverImage      String?
+  location        String?
+  officialWebsite String?
+  totalStudents   Int?
+  maleStudents    Int?
+  femaleStudents  Int?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  nirf            Int?
+  moderated       Boolean        @default(false)
+  collegeType     CollegeType?
+  images          CollegeImage[]
+  orcrs           Orcr[]
+  reviews         Review[]
+  placements      placement[]
+}
+
+model Orcr {
+  id                  String   @id @default(uuid())
+  year                Int
+  round               Int
+  type                OrcrType
+  exam                Exam
+  collegeId           String
+  institute           String
+  academicProgramName String
+  quota               String
+  seatType            String
+  gender              String
+  openRank            Int?
+  closeRank           Int?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  marks               Int?
+  college             College  @relation(fields: [collegeId], references: [id])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  collegeId String
+  rating    Int
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  college   College  @relation(fields: [collegeId], references: [id])
+}
+
+model placement {
+  id              String   @id @default(uuid())
+  year            Int
+  collegeId       String
+  totalGrads      Int
+  placed          Int
+  median          Int
+  higherEducation Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  college         College  @relation(fields: [collegeId], references: [id])
+}
+
+model CollegeImage {
+  id        String   @id @default(uuid())
+  collegeId String
+  url       String
+  createdAt DateTime @default(now())
+  college   College  @relation(fields: [collegeId], references: [id])
+}
+
+enum CollegeType {
+  IIT
+  GFTI
+  BITS
+  JAC
+}
+
+enum OrcrType {
+  JOSSA
+  CSAB
+  BITSAT
+  OTHER
+}
+
+enum Exam {
+  MAINS
+  ADVANCED
+  BITSAT
+}
+
+model ComparisonSession {
+  id          String       @id @default(uuid())
+  comparisons Comparison[] 
+  createdAt   DateTime     @default(now())
+}
+
+model Comparison {
+  id         String   @id @default(uuid())
+  sessionId  String
+  collegeAId String
+  branchA    String
+  collegeBId String
+  branchB    String
+  userChoice String?   
+  createdAt  DateTime  @default(now())
+
+  session ComparisonSession @relation(fields: [sessionId], references: [id])
+}
+

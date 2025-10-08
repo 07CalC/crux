@@ -1,0 +1,16 @@
+# use to roll the postgres container
+# only for development purposes
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/crux:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=crux
+      - POSTGRES_DB=crux
+

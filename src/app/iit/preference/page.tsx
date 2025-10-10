@@ -1,6 +1,6 @@
 "use client";
-import { ComparisionCard } from "@/app/components/ComparisionCard";
-import { Loading } from "@/app/components/Loading";
+import { ComparisionCard } from "@/components/ComparisionCard";
+import { Loading } from "@/components/common/Loading";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 type College = {

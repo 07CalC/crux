@@ -1,5 +1,5 @@
+name: Deploy to VPS
 
-name: Deploy
 on:
   push:
     branches:
@@ -11,39 +11,35 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          node-version: '18'
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install dependencies
-        run: npm install
+      - name: Build Docker image
+        run: |
+          docker build \
+            --build-arg NODE_ENV=production \
+            --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} NEXT_PUBLIC_UPLOAD_PRESET=${{ secrets.CLOUDINARY_UPLOAD_PRESET }} NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{secrets.CLOUDINARY_CLOUD_NAME}} \
+            -t ghcr.io/${{ github.repository_owner }}/crux:latest .
 
-      - name: Build Next.js app
-        run: npm run build
-
-      - name: Build Docker Image
-        run: docker build -t /-app:latest .
-
-      - name: Login to DockerHub (optional, if pushing image)
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Push Docker image (optional)
-        run: docker push yourusername/nextjs-app:latest
+      - name: Push Docker image to GHCR
+        run: docker push ghcr.io/${{ github.repository_owner }}/crux:latest
 
       - name: Deploy to VPS via SSH
-        uses: appleboy/ssh-action@v0.1.7
+        uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-            docker pull yourusername/nextjs-app:latest
-            docker stop nextjs-container || true
-            docker rm nextjs-container || true
-            docker run -d --name nextjs-container -p 3000:3000 yourusername/nextjs-app:latest
+      docker pull ghcr.io/07calc/crux:latest &&
+      docker stop crux || true &&
+      docker rm crux || true &&
+      docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest &&
+      docker system prune -a -f
+			echo "Deployment complete"

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Navbar } from "./components/Navbar";
-import { Footer } from "./components/Footer";
+import { Footer } from "../components/common/Footer";
 import NextTopLoader from 'nextjs-toploader';
-import MobileSidebar from "./components/MobileSidebar";
+import MobileSidebar from "../components/common/MobileSidebar";
 import { ToastContainer } from "react-toastify";
-import { ScrollToTop } from "./components/ScrollToTop";
-import { QueryProvider } from "./components/QueryProvider";
+import { ScrollToTop } from "../components/common/ScrollToTop";
+import { QueryProvider } from "../components/QueryProvider";
+import { Navbar } from "../components/common/Navbar";
 
 export const metadata: Metadata = {
   title: "Cr#x | Discover & Explore Colleges in India",

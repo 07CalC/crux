@@ -1,13 +1,13 @@
 'use client';
-import Filters from "@/app/components/Filters";
-import { Loading } from "@/app/components/Loading";
-import { NotFound } from "@/app/components/NotFound";
-import { PaginationNav } from "@/app/components/PaginationNav";
-import { RequiredFilters } from "@/app/components/RequiredFilters";
-import { ViewToggle } from "@/app/components/ViewToggle";
+import Filters from "@/components/common/Filters";
+import { Loading } from "@/components/common/Loading";
+import { NotFound } from "@/components/common/NotFound";
+import { PaginationNav } from "@/components/common/PaginationNav";
+import { RequiredFilters } from "@/components/common/RequiredFilters";
+import { ViewToggle } from "@/components/common/ViewToggle";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
-import { Table } from "@/app/components/Table";
+import { Table } from "@/components/common/Table";
 import { availableBitsatYears, bitsatRoundByYearsGlobal, mostRecentBitsatOrcr } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
 

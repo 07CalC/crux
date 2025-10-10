@@ -67,6 +67,14 @@ export default function MobileSidebar() {
                         </Link>
 
                     </div>
+                    <div className="w-full mt-2 flex flex-col gap-2">
+                        <Link onClick={() => toggleSideBar()}
+                            href="#survey" className="text-xl font-semibold text-red-800 dark:text-red-300 underline mb-3">
+                            Help us improve
+                        </Link>
+
+                    </div>
+
                 </nav>
 
                 {/* Footer section */}
@@ -83,7 +91,7 @@ export const SidebarButton = () => {
     return (
         <button
             onClick={() => toggleSideBar()}
-            className="rounded-xl sm:hidden text-black border-2 border-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-500 p-2"
+            className="rounded-xl lg:hidden text-black border-2 border-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-500 p-2"
             aria-label="Open navigation menu"
         >
             <Menu className="w-5 h-5" />

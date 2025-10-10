@@ -1,8 +1,8 @@
-import { AddReview } from "@/app/components/AddReview";
-import { Bonk } from "@/app/components/Bonk";
-import { ClgOrcr } from "@/app/components/ClgOrcr";
-import { NotFound } from "@/app/components/NotFound";
-import { UploadImage } from "@/app/components/UploadImage";
+import { AddReview } from "@/components/collegePage/AddReview";
+import { Bonk } from "@/components/collegePage/Bonk";
+import { ClgOrcr } from "@/components/collegePage/ClgOrcr";
+import { UploadImage } from "@/components/collegePage/UploadImage";
+import { NotFound } from "@/components/common/NotFound";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { IoWarning } from "react-icons/io5";

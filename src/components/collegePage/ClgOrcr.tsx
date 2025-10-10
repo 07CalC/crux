@@ -1,12 +1,13 @@
 "use client";
 import { Orcr } from "@/types/globalTypes";
 import { useState, useMemo, useEffect } from "react";
-import { Table } from "./Table";
-import { PaginationNav } from "./PaginationNav";
-import { NotFound } from "./NotFound";
-import { ViewToggle } from "./ViewToggle";
-import { Loading } from "./Loading";
+import { Table } from "@/components/common/Table";
+
 import { availableBitsatYears, availableCsabYears, availableJossaYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr } from "@/constants";
+import { NotFound } from "../common/NotFound";
+import { Loading } from "../common/Loading";
+import { PaginationNav } from "../common/PaginationNav";
+import { ViewToggle } from "../common/ViewToggle";
 
 export const ClgOrcr = ({
   clgId,

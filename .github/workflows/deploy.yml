@@ -18,7 +18,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GHCR_PAT}}
+          password: ${{ secrets.GHCR_PAT }}
 
       - name: Build Docker image
         run: |
@@ -32,12 +32,12 @@ jobs:
       - name: Push Docker image to GHCR
         run: docker push ghcr.io/07calc/crux:latest
 
-      - name: Deploy to VPS via SSH
+      - name: Deploy via SSH password
         uses: appleboy/ssh-action@v1.2.1
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
+          password: ${{ secrets.VPS_PASSWORD }}
           script: |
             docker pull ghcr.io/07calc/crux:latest
             docker stop crux || true

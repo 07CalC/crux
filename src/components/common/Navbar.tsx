@@ -37,7 +37,7 @@ export const Navbar = () => {
           Explore
         </Link>
         <Link
-          href="#survey"
+          href="/#survey"
           className="mr-4 underline text-3xl font-bold text-red-700 hover:text-gray-300"
         >
           Help!

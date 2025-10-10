@@ -69,7 +69,7 @@ export default function MobileSidebar() {
                     </div>
                     <div className="w-full mt-2 flex flex-col gap-2">
                         <Link onClick={() => toggleSideBar()}
-                            href="#survey" className="text-xl font-semibold text-red-800 dark:text-red-300 underline mb-3">
+                            href="/#survey" className="text-xl font-semibold text-red-800 dark:text-red-300 underline mb-3">
                             Help us improve
                         </Link>
 

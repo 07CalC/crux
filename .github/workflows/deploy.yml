@@ -39,13 +39,13 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           password: ${{ secrets.VPS_PASSWORD }}
           script: |
-            docker pull ghcr.io/07calc/crux:latest
-            docker stop crux || true
-            docker rm crux || true
-            docker run -d --name crux -p 3000:3000 \
+            sudo docker pull ghcr.io/07calc/crux:latest
+            sudo docker stop crux || true
+            sudo docker rm crux || true
+            sudo docker run -d --name crux -p 3000:3000 \
               -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
               -e NEXT_PUBLIC_UPLOAD_PRESET='${{ secrets.CLOUDINARY_UPLOAD_PRESET }}' \
               -e NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME='${{ secrets.CLOUDINARY_CLOUD_NAME }}' \
               ghcr.io/07calc/crux:latest
-            docker system prune -a -f
+            sudo docker system prune -a -f
             echo "✅ Deployment complete!"

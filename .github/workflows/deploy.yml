@@ -24,7 +24,9 @@ jobs:
         run: |
           docker build \
             --build-arg NODE_ENV=production \
-            --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} NEXT_PUBLIC_UPLOAD_PRESET=${{ secrets.CLOUDINARY_UPLOAD_PRESET }} NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{secrets.CLOUDINARY_CLOUD_NAME}} \
+            --build-arg DATABASE_URL=${{ secrets.DATABASE_URL }} \
+            --build-arg NEXT_PUBLIC_UPLOAD_PRESET=${{ secrets.CLOUDINARY_UPLOAD_PRESET }} \
+            --build-arg NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} \
             -t ghcr.io/${{ github.repository_owner }}/crux:latest .
 
       - name: Push Docker image to GHCR
@@ -37,9 +39,9 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
-      docker pull ghcr.io/07calc/crux:latest &&
-      docker stop crux || true &&
-      docker rm crux || true &&
-      docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest &&
-      docker system prune -a -f
-			echo "Deployment complete"
+            docker pull ghcr.io/07calc/crux:latest
+            docker stop crux || true
+            docker rm crux || true
+            docker run -d --name crux -p 3000:3000 ghcr.io/07calc/crux:latest
+            docker system prune -a -f
+            echo "✅ Deployment complete!"

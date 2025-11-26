@@ -8,7 +8,6 @@
 ![2025-06-19-135412_hyprshot](https://github.com/user-attachments/assets/144db8cd-b6c3-4fbf-a658-b3fc166f45d4)
 
 
-
 # License
 
 - 📦 **Code**: Licensed under the [MIT License](./LICENSE)

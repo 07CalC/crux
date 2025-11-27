@@ -13,6 +13,7 @@ export async function POST(req: Request) {
     if (!year || !round || !exam || !type) {
         return new NextResponse(JSON.stringify({ error: "Year, round, exam and type are required" }), { status: 400 });
     }
+    console.log("got request for", year, round, exam, type);
     if (type == "JOSSA" && year >= mostRecentJossaOrcr.year && round > mostRecentJossaOrcr.round) {
         return new NextResponse(JSON.stringify([]), { status: 400 })
     }

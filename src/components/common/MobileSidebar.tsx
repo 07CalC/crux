@@ -52,6 +52,16 @@ export default function MobileSidebar() {
                             </Link>
                             <Link
                                 onClick={() => toggleSideBar()}
+                                href="/orcr/neet-pg"
+                                className="block w-full text-lg py-2 px-3 mb-2 text-black dark:text-white border-l-2 border-black dark:border-white hover:bg-purple-300 dark:hover:bg-purple-900 rounded-r-md transition-colors relative"
+                            >
+                                NEET-PG
+                                <span className="ml-2 bg-green-500 text-white text-xs font-bold px-2 py-0.5 rounded-full">
+                                    NEW
+                                </span>
+                            </Link>
+                            <Link
+                                onClick={() => toggleSideBar()}
                                 href="/orcr/jac"
                                 className="block w-full text-lg py-2 px-3 mb-2 text-black dark:text-white border-l-2 border-black dark:border-white hover:bg-purple-300 dark:hover:bg-purple-900 rounded-r-md transition-colors opacity-50"
                             >
@@ -64,13 +74,6 @@ export default function MobileSidebar() {
                         <Link onClick={() => toggleSideBar()}
                             href="/explore" className="text-xl font-semibold text-black dark:text-white mb-3">
                             Explore Colleges
-                        </Link>
-
-                    </div>
-                    <div className="w-full mt-2 flex flex-col gap-2">
-                        <Link onClick={() => toggleSideBar()}
-                            href="/#survey" className="text-xl font-semibold text-red-800 dark:text-red-300 underline mb-3">
-                            Help us improve
                         </Link>
 
                     </div>

@@ -84,12 +84,16 @@ enum CollegeType {
   GFTI
   BITS
   JAC
+  NEET_PG
+  NEET_UG
 }
 
 enum OrcrType {
   JOSSA
   CSAB
   BITSAT
+  NEET_PG
+  NEET_UG
   OTHER
 }
 
@@ -97,6 +101,8 @@ enum Exam {
   MAINS
   ADVANCED
   BITSAT
+  NEET_PG
+  NEET_UG
 }
 
 model ComparisonSession {

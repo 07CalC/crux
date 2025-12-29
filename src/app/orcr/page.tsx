@@ -25,6 +25,13 @@ const options = [
     description: "BITS Pilani, Goa, Hyderabad",
   },
   {
+    name: "NEET PG",
+    image: "/neetPg.png",
+    done: true,
+    href: "/orcr/neet-pg",
+    description: "Medical Postgraduate (MD/MS/DNB) admissions",
+  },
+  {
     name: "JAC",
     image: "/jac.jpeg",
     done: false,

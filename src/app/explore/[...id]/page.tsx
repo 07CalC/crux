@@ -10,9 +10,16 @@ import { LuExternalLink } from "react-icons/lu";
 
 
 export const revalidate = 60;
+export const dynamicParams = true;
 
 export async function generateStaticParams() {
     const colleges = await prisma.college.findMany({
+        where: {
+            OR: [
+                { collegeType: { not: "NEET_PG" } },
+                { collegeType: null }
+            ]
+        },
         select: {
             id: true,
         }
@@ -70,6 +77,7 @@ export default async function College({
                     src={college?.coverImage || "/defaultCollegeImage.png"}
                     alt={`${college?.name} cover image`}
                     className="w-full h-full object-cover"
+
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
             </div>

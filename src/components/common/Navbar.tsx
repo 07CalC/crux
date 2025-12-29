@@ -23,7 +23,7 @@ export const Navbar = () => {
           X
         </Link>
       </div>
-      <div className="lg:flex items-center hidden gap-x-8">
+      <div className="lg:flex items-center justify-center hidden gap-x-8 ">
         <Link
           href="/orcr"
           className="mr-4 text-3xl font-bold text-black  hover:text-gray-300"
@@ -37,10 +37,13 @@ export const Navbar = () => {
           Explore
         </Link>
         <Link
-          href="/#survey"
-          className="mr-4 underline text-3xl font-bold text-red-700 hover:text-gray-300"
+          href="/orcr/neet-pg"
+          className="mr-4 text-3xl font-bold text-black hover:text-gray-300 relative"
         >
-          Help!
+          NEET-PG
+          <span className="absolute -top-2 -right-12 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+            NEW
+          </span>
         </Link>
 
 

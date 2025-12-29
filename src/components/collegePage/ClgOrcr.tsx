@@ -3,7 +3,7 @@ import { Orcr } from "@/types/globalTypes";
 import { useState, useMemo, useEffect } from "react";
 import { Table } from "@/components/common/Table";
 
-import { availableBitsatYears, availableCsabYears, availableJossaYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr } from "@/constants";
+import { availableBitsatYears, availableCsabYears, availableJossaYears, availableNeetPgYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr, mostRecentNeetPgOrcr, neetPgRoundByYearsGlobal } from "@/constants";
 import { NotFound } from "../common/NotFound";
 import { Loading } from "../common/Loading";
 import { PaginationNav } from "../common/PaginationNav";
@@ -14,7 +14,7 @@ export const ClgOrcr = ({
   clgType,
 }: {
   clgId: string;
-  clgType?: "IIT" | "GFTI" | "BITS" | "JAC";
+  clgType?: "IIT" | "GFTI" | "BITS" | "JAC" | "NEET_PG" | "NEET_UG";
 }) => {
   const [fetchedOrcr, setFetchedOrcr] = useState<Orcr[]>([]);
   const [loading, setLoading] = useState(false);
@@ -42,25 +42,43 @@ export const ClgOrcr = ({
     GFTI: ["JOSSA", "CSAB"],
     BITS: ["BITSAT"],
     JAC: ["JAC"],
+    NEET_PG: ["NEET_PG"],
+    NEET_UG: ["NEET_UG"],
   };
 
 
   const [requiredFilters, setRequiredFilters] = useState<{
     [key: string]: string | number;
   }>({
-    type: counsellingType[clgType!][0],
-    year: clgType === "BITS" ? availableBitsatYears[availableBitsatYears.length - 1] : availableJossaYears[availableJossaYears.length - 1],
-    round: clgType === "BITS" ? mostRecentBitsatOrcr.round : mostRecentJossaOrcr.round,
+    type: counsellingType[clgType!]?.[0] || "JOSSA",
+    year: clgType === "BITS" 
+      ? availableBitsatYears[availableBitsatYears.length - 1] 
+      : clgType === "NEET_PG" 
+        ? availableNeetPgYears[availableNeetPgYears.length - 1]
+        : availableJossaYears[availableJossaYears.length - 1],
+    round: clgType === "BITS" 
+      ? mostRecentBitsatOrcr.round 
+      : clgType === "NEET_PG"
+        ? mostRecentNeetPgOrcr.round
+        : mostRecentJossaOrcr.round,
   });
 
-  const availableYears: Record<string, number[]> = clgType === "BITS" ? { BITSAT: availableBitsatYears } : {
-    JOSSA: availableJossaYears,
-    CSAB: availableCsabYears,
-  }
-  const availableRounds: Record<string, Record<number, number[]>> = clgType === "BITS" ? { BITSAT: bitsatRoundByYearsGlobal } : {
-    JOSSA: jossaRoundByYearsGlobal,
-    CSAB: csabRoundByYearsGlobal,
-  }
+  const availableYears: Record<string, number[]> = clgType === "BITS" 
+    ? { BITSAT: availableBitsatYears } 
+    : clgType === "NEET_PG"
+      ? { NEET_PG: availableNeetPgYears }
+      : {
+        JOSSA: availableJossaYears,
+        CSAB: availableCsabYears,
+      }
+  const availableRounds: Record<string, Record<number, number[]>> = clgType === "BITS" 
+    ? { BITSAT: bitsatRoundByYearsGlobal } 
+    : clgType === "NEET_PG" 
+      ? { NEET_PG: neetPgRoundByYearsGlobal }
+      : {
+        JOSSA: jossaRoundByYearsGlobal,
+        CSAB: csabRoundByYearsGlobal,
+      }
   const requiredFiltersOptions = useMemo(() => {
     const year = requiredFilters.year as number;
     const type = requiredFilters.type as string;
@@ -82,7 +100,14 @@ export const ClgOrcr = ({
         { year: availableBitsatYears },
         { round: [1] },
       ];
-    } else {
+    } else if (clgType === "NEET_PG") {
+      return [
+        { type: ["NEET_PG"] },
+        { year: availableNeetPgYears },
+        { round: neetPgRoundByYearsGlobal[year] || [1] }
+      ]
+    }
+    else {
       return [{ type: ["JAC"] }, { year: [2023, 2024] }, { round: [1, 2, 3] }];
     }
   }, [clgType, requiredFilters.year, requiredFilters.type]);

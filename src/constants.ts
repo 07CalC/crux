@@ -1,5 +1,5 @@
 
-export const AVAILABLE_EXAMS = ["ADVANCED", "MAINS", "BITSAT"];
+export const AVAILABLE_EXAMS = ["ADVANCED", "MAINS", "BITSAT", "NEET_PG"];
 
 export const AVAILABLE_JOSSA_ORCRS = [
   { 2023: [1, 2, 3, 4, 5, 6] },
@@ -16,6 +16,10 @@ export const AVAILABLE_CSAB_ORCRS = [
 export const AVAILABLE_BITSAT_ORCRS = [
   { 2023: [1] },
   { 2024: [1] }
+]
+
+export const AVAILABLE_NEET_PG_ORCRS = [
+  { 2025: [1] }
 ]
 
 export const mostRecentJossaOrcr: { year: number, round: number } = AVAILABLE_JOSSA_ORCRS.reduce((latest, obj) => {
@@ -80,3 +84,24 @@ export const bitsatRoundByYearsGlobal: Record<number, number[]> = Object.fromEnt
 )
 
 export const availableBitsatYears: number[] = AVAILABLE_BITSAT_ORCRS.map(obj => Number(Object.keys(obj)[0]));
+
+export const mostRecentNeetPgOrcr: { year: number, round: number } = AVAILABLE_NEET_PG_ORCRS.reduce((latest, obj) => {
+  const [yearStr, rounds] = Object.entries(obj)[0];
+  const year = Number(yearStr);
+
+  if (year > latest.year) {
+    return { year, round: Math.max(...rounds) };
+  } else if (year === latest.year) {
+    return { year, round: Math.max(latest.round, ...rounds) };
+  }
+  return latest;
+}, { year: 0, round: 0 });
+
+export const neetPgRoundByYearsGlobal: Record<number, number[]> = Object.fromEntries(
+  AVAILABLE_NEET_PG_ORCRS.map(obj => {
+    const [year, rounds] = Object.entries(obj)[0];
+    return [Number(year) as number, rounds as number[]];
+  })
+)
+
+export const availableNeetPgYears: number[] = AVAILABLE_NEET_PG_ORCRS.map(obj => Number(Object.keys(obj)[0]));

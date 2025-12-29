@@ -1,4 +1,7 @@
+"use client";
+
 import { Orcr } from "@/types/globalTypes";
+import { useRouter } from "next/navigation";
 
 export const Table = ({
   orcr,
@@ -20,6 +23,7 @@ export const Table = ({
       closeRank: "asc" | "desc" | null;
     } | { type: "marks"; marks: "asc" | "desc" | null }>>
 }) => {
+  const router = useRouter();
 
   return (
     <div className="overflow-x-auto border  border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
@@ -90,11 +94,10 @@ export const Table = ({
         <tbody className="min-w-max">
           {orcr.map((item: Orcr, index: number) => (
             <tr
-              onClick={() => window.open(`/explore/${item.collegeId}`)}
+              onClick={() => router.push(`/explore/${item.collegeId}`)}
               key={index}
               className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white  cursor-pointer hover:text-white"
             >
-              {/* <Link href={'/explore/' + item.id} > */}
               {view.map(
                 (header, index) =>
                   header.show && (

@@ -10,6 +10,7 @@ import { Navbar } from "../components/common/Navbar";
 
 export const metadata: Metadata = {
   title: "Cr#x | Discover & Explore Colleges in India",
+  metadataBase: new URL("https://crux.hs.vc"),
   description:
     "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
   icons: [

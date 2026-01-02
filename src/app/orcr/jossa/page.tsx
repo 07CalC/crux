@@ -41,7 +41,8 @@ export default function Jossa() {
     quota: "",
     seatType: "",
     gender: "",
-    rank: 0,
+    minRank: 0,
+    maxRank: 0,
   });
 
   type requiredFiltersType = Record<string, string | number>;
@@ -93,7 +94,8 @@ export default function Jossa() {
       (filters.seatType === "" || orcr.seatType === filters.seatType) &&
       orcr.institute.toLowerCase().includes(filters.institute.toLowerCase()) &&
       orcr.gender.toLowerCase().includes(filters.gender.toLowerCase()) &&
-      orcr.closeRank && orcr.closeRank >= filters.rank
+      (filters.minRank === 0 || (orcr.closeRank && orcr.closeRank >= filters.minRank)) &&
+      (filters.maxRank === 0 || (orcr.closeRank && orcr.closeRank <= filters.maxRank))
     );
   }, [fetchedOrcrData, filters]);
 

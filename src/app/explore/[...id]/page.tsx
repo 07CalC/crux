@@ -8,27 +8,6 @@ import Image from "next/image";
 import { IoWarning } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
 
-
-export const revalidate = 60;
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-    const colleges = await prisma.college.findMany({
-        where: {
-            OR: [
-                { collegeType: { not: "NEET_PG" } },
-                { collegeType: null }
-            ]
-        },
-        select: {
-            id: true,
-        }
-    })
-    return colleges.map((college) => ({
-        id: [college.id],
-    }));
-}
-
 export default async function College({
     params,
 }: {

@@ -4,11 +4,6 @@ import { IoSearch } from "react-icons/io5";
 import { NotFound } from "../../components/common/NotFound";
 import { prisma } from "@/lib/prisma";
 
-
-export async function generateStaticParams() {
-  return [{},];
-}
-
 type SearchParams = {
   query?: string;
 };

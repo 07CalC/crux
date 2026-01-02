@@ -202,6 +202,7 @@ def extract_neet_r2_data(pdf_path: str):
     all_entries = []
     skipped_no_upgrade = 0
     skipped_invalid = 0
+    used_r1_fallback = 0
     valid_in_table = 0
 
     for table_idx, df in enumerate(dfs):
@@ -258,112 +259,131 @@ def extract_neet_r2_data(pdf_path: str):
                 skipped_invalid += 1
                 continue
 
-            # Round 2 data typically starts around column 5-6
-            # The exact position varies, so we look for patterns
+            # Strategy: Try to use Round 2 data if available, fallback to Round 1 if not
             
-            # Strategy: Find the R2 remarks column (should contain "Fresh Allotted" or "Did not opt")
-            # Work backwards from there to find institute, course, quota, etc.
-            
-            # Check last column for remarks (most likely position)
+            # Check last column for remarks (most likely position for R2)
             remarks_r2 = clean_text(row[-1])
             
-            # Skip if "Did not opt for Upgradation"
+            # Check if user did not opt for upgradation
             if "did not opt" in remarks_r2.lower() or "not opt" in remarks_r2.lower():
-                skipped_no_upgrade += 1
-                continue
+                # User didn't opt for R2, use R1 data
+                use_r1_data = True
+            # Check if R2 data is empty or just dashes
+            elif not remarks_r2 or remarks_r2 == "-" or remarks_r2 == "--":
+                # R2 data not available, use R1 data
+                use_r1_data = True
+            else:
+                # R2 data appears to be available
+                use_r1_data = False
             
-            # Skip if no meaningful R2 data (empty or just dashes)
-            if not remarks_r2 or remarks_r2 == "-" or remarks_r2 == "--":
-                skipped_invalid += 1
-                continue
-
-            # Try to extract R2 data
-            # Typical layout (from right to left):
-            # [..., quota_r2, institute_r2, course_r2, allotted_cat, cand_cat, option_no, remarks_r2]
-            
-            # Based on the examples:
-            # Column mapping (approximate, may vary):
-            # 0: Rank
-            # 1-4: R1 data (quota, institute, course, remarks)
-            # 5: R2 Quota
-            # 6: R2 Institute
-            # 7: R2 Course
-            # 8: R2 Allotted Category
-            # 9: R2 Candidate Category
-            # 10: R2 Option No
-            # 11: R2 Remarks
-            
-            # Extract R2 data (adjust indices as needed)
+            # Extract data based on which round we're using
             try:
-                # If we have exactly 12 columns
-                if len(row) == 12:
-                    quota_r2 = clean_text(row[5])
-                    institute_r2 = clean_text(row[6])
-                    course_r2 = clean_text(row[7])
-                    allotted_cat = clean_text(row[8])
-                    cand_cat = clean_text(row[9])
-                # If we have 11 columns (no option number)
-                elif len(row) == 11:
-                    quota_r2 = clean_text(row[5])
-                    institute_r2 = clean_text(row[6])
-                    course_r2 = clean_text(row[7])
-                    allotted_cat = clean_text(row[8])
-                    cand_cat = clean_text(row[9])
-                # If we have 10 columns
-                elif len(row) == 10:
-                    quota_r2 = clean_text(row[4])
-                    institute_r2 = clean_text(row[5])
-                    course_r2 = clean_text(row[6])
-                    allotted_cat = clean_text(row[7])
-                    cand_cat = clean_text(row[8])
-                else:
-                    # Try to find institute by looking for typical institute patterns
-                    # Look for columns containing common institute keywords
-                    institute_r2 = ""
-                    course_r2 = ""
-                    quota_r2 = ""
-                    allotted_cat = ""
-                    cand_cat = ""
+                if use_r1_data:
+                    # Use Round 1 data (columns 1-4)
+                    # Typical R1 layout:
+                    # 0: Rank
+                    # 1: R1 Quota
+                    # 2: R1 Institute
+                    # 3: R1 Course
+                    # 4: R1 Remarks (Reported/Not Reported)
                     
-                    for i in range(5, min(len(row) - 2, 9)):
-                        cell = clean_text(row[i])
-                        if "medical" in cell.lower() or "college" in cell.lower() or "hospital" in cell.lower():
-                            institute_r2 = cell
-                            # Course is likely the next column
-                            if i + 1 < len(row):
-                                course_r2 = clean_text(row[i + 1])
-                            # Quota is likely the previous column
-                            if i > 0:
-                                quota_r2 = clean_text(row[i - 1])
-                            # Category is likely after course
-                            if i + 2 < len(row):
-                                allotted_cat = clean_text(row[i + 2])
-                            # Candidate category
-                            if i + 3 < len(row):
-                                cand_cat = clean_text(row[i + 3])
-                            break
-                    
-                    if not institute_r2:
+                    if len(row) < 5:
                         skipped_invalid += 1
                         continue
-                
-                # Validate R2 data
-                if not institute_r2 or not course_r2:
-                    skipped_invalid += 1
-                    continue
-                
-                # Skip if R2 data is just dashes or empty
-                if institute_r2 in ["-", "--", "---"] or course_r2 in ["-", "--", "---"]:
-                    skipped_invalid += 1
-                    continue
+                    
+                    quota = clean_text(row[1])
+                    institute = clean_text(row[2])
+                    course = clean_text(row[3])
+                    remarks_r1 = clean_text(row[4])
+                    
+                    # Validate R1 data
+                    if not institute or not course:
+                        skipped_invalid += 1
+                        continue
+                    
+                    # Skip if R1 data is just dashes
+                    if institute in ["-", "--", "---"] or course in ["-", "--", "---"]:
+                        skipped_invalid += 1
+                        continue
+                    
+                    # For R1, we don't have category info in the same way
+                    allotted_cat = "Open"
+                    cand_cat = "General"
+                    
+                    used_r1_fallback += 1
+                    
+                else:
+                    # Use Round 2 data (columns 5+)
+                    # If we have exactly 12 columns
+                    if len(row) == 12:
+                        quota = clean_text(row[5])
+                        institute = clean_text(row[6])
+                        course = clean_text(row[7])
+                        allotted_cat = clean_text(row[8])
+                        cand_cat = clean_text(row[9])
+                    # If we have 11 columns (no option number)
+                    elif len(row) == 11:
+                        quota = clean_text(row[5])
+                        institute = clean_text(row[6])
+                        course = clean_text(row[7])
+                        allotted_cat = clean_text(row[8])
+                        cand_cat = clean_text(row[9])
+                    # If we have 10 columns
+                    elif len(row) == 10:
+                        quota = clean_text(row[4])
+                        institute = clean_text(row[5])
+                        course = clean_text(row[6])
+                        allotted_cat = clean_text(row[7])
+                        cand_cat = clean_text(row[8])
+                    else:
+                        # Try to find institute by looking for typical institute patterns
+                        # Look for columns containing common institute keywords
+                        institute = ""
+                        course = ""
+                        quota = ""
+                        allotted_cat = ""
+                        cand_cat = ""
+                        
+                        for i in range(5, min(len(row) - 2, 9)):
+                            cell = clean_text(row[i])
+                            if "medical" in cell.lower() or "college" in cell.lower() or "hospital" in cell.lower():
+                                institute = cell
+                                # Course is likely the next column
+                                if i + 1 < len(row):
+                                    course = clean_text(row[i + 1])
+                                # Quota is likely the previous column
+                                if i > 0:
+                                    quota = clean_text(row[i - 1])
+                                # Category is likely after course
+                                if i + 2 < len(row):
+                                    allotted_cat = clean_text(row[i + 2])
+                                # Candidate category
+                                if i + 3 < len(row):
+                                    cand_cat = clean_text(row[i + 3])
+                                break
+                        
+                        if not institute:
+                            skipped_invalid += 1
+                            continue
+                    
+                    # Validate R2 data
+                    if not institute or not course:
+                        skipped_invalid += 1
+                        continue
+                    
+                    # Skip if R2 data is just dashes or empty
+                    if institute in ["-", "--", "---"] or course in ["-", "--", "---"]:
+                        skipped_invalid += 1
+                        continue
 
                 all_entries.append({
                     "rank": int(rank),
-                    "quota": quota_r2 if quota_r2 else "All India",
-                    "institute": institute_r2,
-                    "course": course_r2,
+                    "quota": quota if quota else "All India",
+                    "institute": institute,
+                    "course": course,
                     "category": allotted_cat if allotted_cat and allotted_cat != "-" else "Open",
                     "candidate_category": cand_cat if cand_cat and cand_cat != "-" else "General",
+                    "used_r1": use_r1_data,
                 })
                 valid_in_table += 1
                 
@@ -376,10 +396,11 @@ def extract_neet_r2_data(pdf_path: str):
     print(f"\n{'='*60}")
     print(f"📊 EXTRACTION SUMMARY")
     print(f"{'='*60}")
-    print(f"  ✅ Valid R2 entries extracted: {len(all_entries)}")
-    print(f"  ⊘ Skipped (did not opt for upgrade): {skipped_no_upgrade}")
+    print(f"  ✅ Valid entries extracted: {len(all_entries)}")
+    print(f"  📊 Used Round 2 data: {len(all_entries) - used_r1_fallback}")
+    print(f"  📊 Used Round 1 fallback: {used_r1_fallback}")
     print(f"  ⊘ Skipped (invalid/incomplete data): {skipped_invalid}")
-    print(f"  📈 Total rows processed: {len(all_entries) + skipped_no_upgrade + skipped_invalid}")
+    print(f"  📈 Total rows processed: {len(all_entries) + skipped_invalid}")
     print(f"{'='*60}\n")
 
     return all_entries
@@ -503,7 +524,13 @@ def main():
         print("   4. PDF has the expected table structure")
         sys.exit(1)
 
-    print(f"✅ Successfully extracted {len(entries)} raw Round 2 entries\n")
+    # Count R1 fallbacks
+    r1_count = sum(1 for e in entries if e.get("used_r1", False))
+    r2_count = len(entries) - r1_count
+
+    print(f"✅ Successfully extracted {len(entries)} total entries")
+    print(f"   📊 Round 2 data: {r2_count} entries")
+    print(f"   📊 Round 1 fallback: {r1_count} entries\n")
 
     try:
         orcr = convert_to_orcr_format(entries)
@@ -518,6 +545,8 @@ def main():
     print("📊 FINAL STATISTICS")
     print("=" * 60)
     print(f"  Raw entries extracted: {len(entries)}")
+    print(f"    - Round 2 data: {r2_count}")
+    print(f"    - Round 1 fallback: {r1_count}")
     print(f"  After consolidation: {len(orcr)} unique entries")
     print(f"  Duplicates merged: {len(entries) - len(orcr)}")
     print("=" * 60 + "\n")
@@ -530,7 +559,9 @@ def main():
             f.write("// NEET PG Round 2 2025 Cutoff Data\n")
             f.write("// Generated by parseNeetPgR2_final.py\n")
             f.write("// Total entries: " + str(len(orcr)) + "\n")
-            f.write("// Duplicates consolidated with openRank/closeRank\n\n")
+            f.write(f"// Round 2 data: {r2_count}, Round 1 fallback: {r1_count}\n")
+            f.write("// Duplicates consolidated with openRank/closeRank\n")
+            f.write("// Note: Uses Round 2 data when available, falls back to Round 1 when R2 is absent\n\n")
             f.write("export const neetPgR2_2025 = ")
             f.write(json.dumps(orcr, indent=2))
             f.write(";\n")

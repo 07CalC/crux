@@ -47,7 +47,8 @@ export default function NeetPg() {
     quota: "",
     seatType: "",
     gender: "",
-    rank: 0,
+    minRank: 0,
+    maxRank: 0,
   });
 
   const [requiredFilters, setRequiredFilters] = useState<Record<string, string | number>>({
@@ -91,7 +92,8 @@ export default function NeetPg() {
         (filters.seatType === "" || orcr.seatType === filters.seatType) &&
         orcr.institute?.toLowerCase().includes(filters.institute.toLowerCase()) &&
         orcr.gender?.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        (filters.rank === 0 || (orcr.closeRank && orcr.closeRank >= filters.rank))
+        (filters.minRank === 0 || (orcr.closeRank && orcr.closeRank >= filters.minRank)) &&
+        (filters.maxRank === 0 || (orcr.closeRank && orcr.closeRank <= filters.maxRank))
     );
   }, [fetchedOrcrData, filters]);
 

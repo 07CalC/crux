@@ -45,7 +45,8 @@ export default function BITSAT() {
     quota: "",
     seatType: "",
     gender: "",
-    rank: 390,
+    minRank: 0,
+    maxRank: 390,
   });
   const [requiredFilters, setRequiredFilters] = useState<Record<string, string | number>>({
     year: mostRecentBitsatOrcr.year,
@@ -86,7 +87,8 @@ export default function BITSAT() {
         (filters.seatType === "" || orcr.seatType === filters.seatType) &&
         orcr.institute?.toLowerCase().includes(filters.institute.toLowerCase()) &&
         orcr.gender?.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.marks != null && orcr.marks <= filters.rank
+        (filters.minRank === 0 || (orcr.marks != null && orcr.marks >= filters.minRank)) &&
+        (filters.maxRank === 0 || (orcr.marks != null && orcr.marks <= filters.maxRank))
     );
   }, [fetchedOrcrData, filters]);
 

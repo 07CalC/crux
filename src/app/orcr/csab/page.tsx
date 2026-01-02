@@ -37,7 +37,8 @@ export default function Csab() {
     quota: "",
     seatType: "",
     gender: "",
-    rank: 0,
+    minRank: 0,
+    maxRank: 0,
   });
   const [sort, setSort] = useState<
     { type: "rank"; openRank: "asc" | "desc" | null; closeRank: "asc" | "desc" | null } |
@@ -88,7 +89,8 @@ export default function Csab() {
         (filters.seatType === "" || orcr.seatType === filters.seatType) &&
         orcr.institute?.toLowerCase().includes(filters.institute.toLowerCase()) &&
         orcr.gender?.toLowerCase().includes(filters.gender.toLowerCase()) &&
-        orcr.closeRank && orcr.closeRank >= filters.rank
+        (filters.minRank === 0 || (orcr.closeRank && orcr.closeRank >= filters.minRank)) &&
+        (filters.maxRank === 0 || (orcr.closeRank && orcr.closeRank <= filters.maxRank))
     );
   }, [fetchedOrcrData, filters]);
 

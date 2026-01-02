@@ -1,17 +1,23 @@
 #!/usr/bin/env python3
 """
-NEET PG Round 2 PDF Parser
+NEET PG Round 2 PDF Parser - OPTIMIZED VERSION
 Handles dual-column format with Round 1 and Round 2 data
 Extracts only Round 2 allotments (ignores Round 1 and "Did not opt" cases)
 Exports as JavaScript module for database import
 
-IMPORTANT: When R2 data is missing, falls back to R1 data and looks up
-the correct seatType from neetPgR1_2025.js by matching rank.
+OPTIMIZATIONS:
+- Better PDF reading with lattice mode
+- Smarter column detection
+- Reduced data loss through flexible parsing
+- Progress tracking
+- Better error handling
+- R1 category lookup from neetPgR1_2025.js
 """
 
 import json
 import sys
 import re
+from collections import defaultdict
 
 try:
     import tabula
@@ -42,7 +48,7 @@ def load_r1_data(r1_js_path):
         with open(r1_js_path, 'r', encoding='utf-8') as f:
             content = f.read()
             
-        # Extract JSON array from JS file
+        # Extract JSON array from JS file (after "export const neetPgR1_2025 = ")
         json_start = content.find('[')
         json_end = content.rfind(']') + 1
         
@@ -53,10 +59,12 @@ def load_r1_data(r1_js_path):
         r1_entries = json.loads(content[json_start:json_end])
         print(f"   ✓ Loaded {len(r1_entries)} R1 entries")
         
-        # Create lookup dict
+        # Create lookup dict: For each rank in range, map to seatType
+        # We'll create a more flexible lookup
         r1_lookup = {}
         
         for entry in r1_entries:
+            # Normalize institute and course for matching
             inst_norm = entry['institute'].lower().strip()
             course_norm = entry['academicProgramName'].lower().strip()
             quota = entry.get('quota', 'All India')
@@ -64,10 +72,11 @@ def load_r1_data(r1_js_path):
             
             # Add all ranks in the range
             for rank in range(entry['openRank'], entry['closeRank'] + 1):
+                # Create multiple keys for better matching
                 key = (rank, inst_norm, course_norm, quota)
                 r1_lookup[key] = seat_type
                 
-                # Fallback key
+                # Also add a simpler key with just rank and quota for fallback
                 simple_key = (rank, quota, seat_type)
                 if simple_key not in r1_lookup:
                     r1_lookup[simple_key] = seat_type
@@ -77,6 +86,7 @@ def load_r1_data(r1_js_path):
         
     except FileNotFoundError:
         print(f"   ⚠️ R1 file not found: {r1_js_path}")
+        print(f"   R1 category lookup will not be available")
         return {}
     except Exception as e:
         print(f"   ⚠️ Error loading R1 data: {e}")
@@ -91,37 +101,43 @@ def lookup_r1_category(r1_lookup, rank, institute, course, quota):
     if not r1_lookup:
         return "Open", "General"
     
+    # Normalize for matching
     inst_norm = institute.lower().strip()
     course_norm = course.lower().strip()
     
-    # Try exact match
+    # Try exact match first
     key = (rank, inst_norm, course_norm, quota)
     if key in r1_lookup:
         seat_type = r1_lookup[key]
-        return seat_type, seat_type
+        return seat_type, seat_type  # Use same for both
     
-    # Try partial matches
+    # Try partial institute name match (first 30 chars)
     if len(inst_norm) > 30:
-        key_short = (rank, inst_norm[:30], course_norm, quota)
+        inst_short = inst_norm[:30]
+        key_short = (rank, inst_short, course_norm, quota)
         if key_short in r1_lookup:
-            return r1_lookup[key_short], r1_lookup[key_short]
+            seat_type = r1_lookup[key_short]
+            return seat_type, seat_type
     
+    # Try with simplified course matching (first 20 chars)
     if len(course_norm) > 20:
-        key_course = (rank, inst_norm, course_norm[:20], quota)
+        course_short = course_norm[:20]
+        key_course = (rank, inst_norm, course_short, quota)
         if key_course in r1_lookup:
-            return r1_lookup[key_course], r1_lookup[key_course]
+            seat_type = r1_lookup[key_course]
+            return seat_type, seat_type
     
-    # Last resort: just rank and quota
+    # Last resort: just find ANY entry with this rank and quota
     for (r, q, st) in r1_lookup:
         if isinstance(r, int) and r == rank and q == quota:
             return st, st
     
+    # Default fallback
     return "Open", "General"
 
 
 # -------------------- INDIAN STATES LIST --------------------
 
-# Full state/UT names that should be skipped
 INDIAN_STATES = {
     "andhra pradesh", "arunachal pradesh", "assam", "bihar", "chhattisgarh",
     "goa", "gujarat", "haryana", "himachal pradesh", "jharkhand", "karnataka",
@@ -143,13 +159,10 @@ def is_state(text: str) -> bool:
     """Check if text is a state name (not a city)"""
     text_lower = text.lower().strip()
     
-    # Exact match with state list
     if text_lower in INDIAN_STATES:
         return True
     
-    # Check for state-like patterns (contains state indicators)
-    # but exclude city names like "New Delhi", "Hyderabad"
-    if "(" in text and ")" in text:  # Like "Delhi (NCT)"
+    if "(" in text and ")" in text:
         return True
     
     return False
@@ -163,127 +176,241 @@ def is_email(text: str) -> bool:
 def extract_institute_and_place(raw_institute: str) -> str:
     """
     Extract institute name and place from raw institute string.
-    
-    Logic:
-    1. First token (before first comma) = institute name
-    2. Check tokens backwards from the end:
-       - Skip if pincode (6 digits)
-       - Skip if state name
-       - Skip if email
-       - Skip if empty or just whitespace
-       - Skip if it's the same as institute name (duplicate)
-       - Skip if malformed (contains STATE, UTTAR, etc.)
-       - First valid token = place
-    
-    Returns: "Institute Name, Place"
     """
     if not raw_institute:
         return ""
     
-    # Split by comma
     tokens = [t.strip() for t in raw_institute.split(',') if t.strip()]
     
     if not tokens:
         return ""
     
-    # First token is institute name
     institute_name = tokens[0]
     
-    # If only one token, return as-is
     if len(tokens) == 1:
         return institute_name
     
-    # Find place by checking backwards from the end
     place = None
     
-    # Start from the end and work backwards
     for i in range(len(tokens) - 1, 0, -1):
         token = tokens[i]
         
-        # Skip empty tokens
         if not token or len(token) < 2:
             continue
         
-        # Skip pincode
         if is_pincode(token):
             continue
         
-        # Skip state
         if is_state(token):
             continue
         
-        # Skip email
         if is_email(token):
             continue
         
-        # Skip if it's a duplicate of institute name (case insensitive, partial match)
         if token.lower().strip() == institute_name.lower().strip():
             continue
         
-        # Skip malformed tokens (likely parsing errors)
         token_lower = token.lower()
         malformed_keywords = ['state', 'stateuttar', 'stateuttar pradesh', 'pradesh,', 'nadu,']
         if any(kw in token_lower for kw in malformed_keywords):
             continue
         
-        # Skip tokens that are just addresses/details (too long or contain address keywords)
-        if len(token) > 100:  # Likely a long address
+        if len(token) > 100:
             continue
             
-        # Skip if it contains too many address keywords
         address_keywords = ['road', 'rd', 'street', 'st', 'marg', 'salai', 'sector', 
                            'block', 'phase', 'near', 'opposite']
         if sum(1 for kw in address_keywords if kw in token_lower) >= 2:
             continue
         
-        # This looks like a valid place!
         place = token
         break
     
-    # If no place found, try to extract city from earlier tokens (before state)
-    # This handles cases like "COLLEGE, COLLEGE, Telangana, pincode"
     if not place:
         for i in range(1, len(tokens)):
             token = tokens[i]
             token_lower = token.lower()
             
-            # Skip duplicates
             if token.lower().strip() == institute_name.lower().strip():
                 continue
             
-            # Look for city-like names (capital first letter, not too long, no numbers)
             if len(token) > 3 and len(token) < 30 and not any(char.isdigit() for char in token):
-                # Check if next token is a state (indicating this might be a city)
                 if i + 1 < len(tokens) and is_state(tokens[i + 1]):
                     place = token
                     break
     
-    # Return formatted result
     if place:
         return f"{institute_name}, {place}"
     else:
         return institute_name
 
 
+def is_likely_institute(text: str) -> bool:
+    """Check if text looks like an institute name"""
+    if not text or len(text) < 5:
+        return False
+    
+    text_lower = text.lower()
+    keywords = ['medical', 'college', 'hospital', 'institute', 'university', 
+                'aiims', 'pgimer', 'jipmer', 'dental', 'nursing']
+    
+    return any(kw in text_lower for kw in keywords)
+
+
+def is_likely_course(text: str) -> bool:
+    """Check if text looks like a course name"""
+    if not text or len(text) < 3:
+        return False
+    
+    text_lower = text.lower()
+    keywords = ['md', 'ms', 'm.d', 'm.s', 'diploma', 'dnb', 'dch', 'da', 'dgo',
+                'medicine', 'surgery', 'paediatrics', 'pediatrics', 'orthopaedics',
+                'ophthalmology', 'anaesthesia', 'anesthesia', 'radiology', 'pathology']
+    
+    return any(kw in text_lower for kw in keywords)
+
+
+# -------------------- SMART COLUMN DETECTION --------------------
+
+def detect_columns(row):
+    """
+    Intelligently detect where institute and course are in the row.
+    Returns dict with detected column indices or None if not found.
+    
+    Expected R1 structure (columns 0-4 or 0-6):
+    0: Rank
+    1: R1 Allotted Quota
+    2: R1 Institute
+    3: R1 Course
+    4: R1 Allotted Category (THIS WAS MISSING!)
+    5: R1 Candidate Category (optional)
+    Then R2 data starts...
+    """
+    result = {
+        'rank': None,
+        'r1_quota': None,
+        'r1_institute': None,
+        'r1_course': None,
+        'r1_allotted_cat': None,
+        'r1_cand_cat': None,
+        'r1_remarks': None,
+        'r2_quota': None,
+        'r2_institute': None,
+        'r2_course': None,
+        'r2_allotted_cat': None,
+        'r2_cand_cat': None,
+        'r2_remarks': None
+    }
+    
+    # First column should be rank
+    if len(row) > 0:
+        result['rank'] = 0
+    
+    # Search for institutes (there should be 2: R1 and R2)
+    institute_indices = []
+    course_indices = []
+    
+    for i in range(1, len(row)):
+        cell = clean_text(row[i])
+        if is_likely_institute(cell):
+            institute_indices.append(i)
+        elif is_likely_course(cell):
+            course_indices.append(i)
+    
+    # Typically R1 institute is around index 2, R2 institute is around 5-7
+    if len(institute_indices) >= 2:
+        # First institute is likely R1
+        result['r1_institute'] = institute_indices[0]
+        # Second institute is likely R2
+        result['r2_institute'] = institute_indices[1]
+        
+        # Quota is typically before institute
+        if result['r1_institute'] > 1:
+            result['r1_quota'] = result['r1_institute'] - 1
+        
+        if result['r2_institute'] > 1:
+            result['r2_quota'] = result['r2_institute'] - 1
+    
+    elif len(institute_indices) == 1:
+        # Only one institute found, could be R1 or R2
+        idx = institute_indices[0]
+        if idx <= 3:
+            result['r1_institute'] = idx
+            if idx > 1:
+                result['r1_quota'] = idx - 1
+        else:
+            result['r2_institute'] = idx
+            if idx > 1:
+                result['r2_quota'] = idx - 1
+    
+    # Courses typically follow institutes
+    # R1 structure: Quota, Institute, Course, Allotted Category, Candidate Category, Remarks
+    if result['r1_institute'] and result['r1_institute'] + 1 < len(row):
+        result['r1_course'] = result['r1_institute'] + 1
+        # Category info comes after course
+        if result['r1_course'] + 1 < len(row):
+            result['r1_allotted_cat'] = result['r1_course'] + 1
+        if result['r1_course'] + 2 < len(row):
+            result['r1_cand_cat'] = result['r1_course'] + 2
+        if result['r1_course'] + 3 < len(row):
+            result['r1_remarks'] = result['r1_course'] + 3
+    
+    if result['r2_institute'] and result['r2_institute'] + 1 < len(row):
+        result['r2_course'] = result['r2_institute'] + 1
+        # Categories come after course
+        if result['r2_course'] + 1 < len(row):
+            result['r2_allotted_cat'] = result['r2_course'] + 1
+        if result['r2_course'] + 2 < len(row):
+            result['r2_cand_cat'] = result['r2_course'] + 2
+        # Remarks is typically the last column
+        result['r2_remarks'] = len(row) - 1
+    
+    return result
+
+
 # -------------------- PDF EXTRACTION --------------------
 
 def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
     """
-    Extract Round 2 data from NEET PG Round 2 PDF.
-    The PDF has a dual-column format with Round 1 and Round 2 data for each candidate.
+    Extract Round 2 data from NEET PG Round 2 PDF with optimized parsing.
     Uses r1_lookup to get correct categories for R1 fallback entries.
     """
-    print("\n🔍 Starting PDF extraction...")
-    print("   Reading PDF with tabula...")
-    dfs = tabula.read_pdf(pdf_path, pages="all", multiple_tables=True)
-    print(f"   ✓ Successfully read PDF")
+    print("\n🔍 Starting optimized PDF extraction...")
+    print("   Reading PDF with tabula (lattice mode for better accuracy)...")
+    
+    # Try lattice mode first (better for structured tables)
+    try:
+        dfs = tabula.read_pdf(
+            pdf_path, 
+            pages="all", 
+            multiple_tables=True,
+            lattice=True,  # Better for structured tables
+            pandas_options={'header': None}  # Don't assume first row is header
+        )
+        print(f"   ✓ Successfully read PDF using lattice mode")
+    except:
+        # Fallback to stream mode
+        print("   ⚠ Lattice mode failed, trying stream mode...")
+        dfs = tabula.read_pdf(
+            pdf_path, 
+            pages="all", 
+            multiple_tables=True,
+            stream=True
+        )
+        print(f"   ✓ Successfully read PDF using stream mode")
+    
     print(f"   ✓ Found {len(dfs)} tables to process\n")
 
     all_entries = []
-    skipped_no_upgrade = 0
     skipped_invalid = 0
     used_r1_fallback = 0
-    valid_in_table = 0
+    skipped_no_data = 0
+    
+    # Statistics
+    tables_processed = 0
+    tables_skipped_too_small = 0
+    rows_with_r2 = 0
+    rows_with_r1_only = 0
 
     for table_idx, df in enumerate(dfs):
         if df.empty:
@@ -297,16 +424,19 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
         print(f"   Columns: {len(df.columns)}")
         print(f"   Rows: {len(df)}")
 
-        # The table should have at least 10+ columns (R1 data + R2 data)
-        if len(df.columns) < 10:
-            print(f"   ⚠ Skipping table (too few columns: {len(df.columns)} < 10)\n")
+        # IMPROVED: Don't skip tables with fewer columns - they might have data
+        # Only skip if < 5 columns (definitely not enough)
+        if len(df.columns) < 5:
+            print(f"   ⚠ Skipping table (too few columns: {len(df.columns)} < 5)\n")
+            tables_skipped_too_small += 1
             continue
 
         print(f"   ✓ Valid column count, processing rows...")
 
         # Check if first row is header
         first_row = df.iloc[0].tolist()
-        has_header = any("Rank" in str(cell) or "Quota" in str(cell) for cell in first_row)
+        has_header = any("Rank" in str(cell) or "Quota" in str(cell) or "Institute" in str(cell) 
+                        for cell in first_row if cell and cell == cell)
         start_idx = 1 if has_header else 0
         
         if has_header:
@@ -317,20 +447,19 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
         total_rows = len(df.iloc[start_idx:])
         print(f"   ⏳ Processing {total_rows} data rows...")
         
-        # Progress indicators for every 100 rows
         rows_processed = 0
 
         for row_idx, row in df.iloc[start_idx:].iterrows():
             rows_processed += 1
             
-            # Show progress every 100 rows
-            if rows_processed % 100 == 0:
-                print(f"      ... processed {rows_processed}/{total_rows} rows (found {valid_in_table} valid R2 entries so far)")
+            # Show progress every 50 rows (more frequent updates)
+            if rows_processed % 50 == 0:
+                print(f"      ... {rows_processed}/{total_rows} rows (found {valid_in_table} valid entries, skipped {skipped_invalid})")
             
             row = row.tolist()
             
-            # We need at least 10 columns
-            if len(row) < 10:
+            # IMPROVED: Process rows with at least 5 columns (was 10)
+            if len(row) < 5:
                 continue
 
             # Extract rank from first column
@@ -339,51 +468,51 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
                 skipped_invalid += 1
                 continue
 
-            # Strategy: Try to use Round 2 data if available, fallback to Round 1 if not
+            # SMART COLUMN DETECTION
+            cols = detect_columns(row)
             
-            # Check last column for remarks (most likely position for R2)
-            remarks_r2 = clean_text(row[-1])
+            # Determine if we should use R2 or R1 data
+            use_r1_data = False
+            r2_data_valid = False
             
-            # Check if user did not opt for upgradation
-            if "did not opt" in remarks_r2.lower() or "not opt" in remarks_r2.lower():
-                # User didn't opt for R2, use R1 data
+            # Check if R2 data exists
+            if cols['r2_institute'] is not None and cols['r2_course'] is not None:
+                r2_institute = clean_text(row[cols['r2_institute']])
+                r2_course = clean_text(row[cols['r2_course']])
+                
+                # Check if R2 remarks indicate "did not opt"
+                r2_remarks = ""
+                if cols['r2_remarks'] is not None:
+                    r2_remarks = clean_text(row[cols['r2_remarks']])
+                
+                # Validate R2 data
+                if r2_institute and r2_course and \
+                   r2_institute not in ["-", "--", "---", "NA", "N/A"] and \
+                   r2_course not in ["-", "--", "---", "NA", "N/A"]:
+                    
+                    # Check if user opted out
+                    if "did not opt" not in r2_remarks.lower() and "not opt" not in r2_remarks.lower():
+                        r2_data_valid = True
+            
+            # If R2 data is not valid, try R1
+            if not r2_data_valid:
                 use_r1_data = True
-            # Check if R2 data is empty or just dashes
-            elif not remarks_r2 or remarks_r2 == "-" or remarks_r2 == "--":
-                # R2 data not available, use R1 data
-                use_r1_data = True
-            else:
-                # R2 data appears to be available
-                use_r1_data = False
             
             # Extract data based on which round we're using
             try:
-                if use_r1_data:
-                    # Use Round 1 data (columns 1-6 typically)
-                    # Typical R1 layout:
-                    # 0: Rank
-                    # 1: R1 Quota
-                    # 2: R1 Institute
-                    # 3: R1 Course
-                    # 4: R1 Allotted Category
-                    # 5: R1 Candidate Category
-                    # 6: R1 Remarks (Reported/Not Reported)
-                    
-                    if len(row) < 5:
-                        skipped_invalid += 1
-                        continue
-                    
-                    quota = clean_text(row[1])
-                    institute = clean_text(row[2])
-                    course = clean_text(row[3])
+                if use_r1_data and cols['r1_institute'] is not None and cols['r1_course'] is not None:
+                    # Use Round 1 data
+                    quota = clean_text(row[cols['r1_quota']]) if cols['r1_quota'] is not None else "All India"
+                    institute = clean_text(row[cols['r1_institute']])
+                    course = clean_text(row[cols['r1_course']])
                     
                     # Validate R1 data
                     if not institute or not course:
                         skipped_invalid += 1
                         continue
                     
-                    # Skip if R1 data is just dashes
-                    if institute in ["-", "--", "---"] or course in ["-", "--", "---"]:
+                    if institute in ["-", "--", "---", "NA", "N/A"] or \
+                       course in ["-", "--", "---", "NA", "N/A"]:
                         skipped_invalid += 1
                         continue
                     
@@ -397,78 +526,30 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
                     )
                     
                     used_r1_fallback += 1
+                    rows_with_r1_only += 1
+                    
+                elif r2_data_valid:
+                    # Use Round 2 data
+                    quota = clean_text(row[cols['r2_quota']]) if cols['r2_quota'] is not None else "All India"
+                    institute = clean_text(row[cols['r2_institute']])
+                    course = clean_text(row[cols['r2_course']])
+                    allotted_cat = clean_text(row[cols['r2_allotted_cat']]) if cols['r2_allotted_cat'] is not None else "Open"
+                    cand_cat = clean_text(row[cols['r2_cand_cat']]) if cols['r2_cand_cat'] is not None else "General"
+                    
+                    rows_with_r2 += 1
                     
                 else:
-                    # Use Round 2 data (columns 5+)
-                    # If we have exactly 12 columns
-                    if len(row) == 12:
-                        quota = clean_text(row[5])
-                        institute = clean_text(row[6])
-                        course = clean_text(row[7])
-                        allotted_cat = clean_text(row[8])
-                        cand_cat = clean_text(row[9])
-                    # If we have 11 columns (no option number)
-                    elif len(row) == 11:
-                        quota = clean_text(row[5])
-                        institute = clean_text(row[6])
-                        course = clean_text(row[7])
-                        allotted_cat = clean_text(row[8])
-                        cand_cat = clean_text(row[9])
-                    # If we have 10 columns
-                    elif len(row) == 10:
-                        quota = clean_text(row[4])
-                        institute = clean_text(row[5])
-                        course = clean_text(row[6])
-                        allotted_cat = clean_text(row[7])
-                        cand_cat = clean_text(row[8])
-                    else:
-                        # Try to find institute by looking for typical institute patterns
-                        # Look for columns containing common institute keywords
-                        institute = ""
-                        course = ""
-                        quota = ""
-                        allotted_cat = ""
-                        cand_cat = ""
-                        
-                        for i in range(5, min(len(row) - 2, 9)):
-                            cell = clean_text(row[i])
-                            if "medical" in cell.lower() or "college" in cell.lower() or "hospital" in cell.lower():
-                                institute = cell
-                                # Course is likely the next column
-                                if i + 1 < len(row):
-                                    course = clean_text(row[i + 1])
-                                # Quota is likely the previous column
-                                if i > 0:
-                                    quota = clean_text(row[i - 1])
-                                # Category is likely after course
-                                if i + 2 < len(row):
-                                    allotted_cat = clean_text(row[i + 2])
-                                # Candidate category
-                                if i + 3 < len(row):
-                                    cand_cat = clean_text(row[i + 3])
-                                break
-                        
-                        if not institute:
-                            skipped_invalid += 1
-                            continue
-                    
-                    # Validate R2 data
-                    if not institute or not course:
-                        skipped_invalid += 1
-                        continue
-                    
-                    # Skip if R2 data is just dashes or empty
-                    if institute in ["-", "--", "---"] or course in ["-", "--", "---"]:
-                        skipped_invalid += 1
-                        continue
+                    # No valid data found
+                    skipped_no_data += 1
+                    continue
 
                 all_entries.append({
                     "rank": int(rank),
-                    "quota": quota if quota else "All India",
+                    "quota": quota if quota and quota != "-" else "All India",
                     "institute": institute,
                     "course": course,
-                    "category": allotted_cat if allotted_cat and allotted_cat != "-" else "Open",
-                    "candidate_category": cand_cat if cand_cat and cand_cat != "-" else "General",
+                    "category": allotted_cat if allotted_cat and allotted_cat not in ["-", "NA"] else "Open",
+                    "candidate_category": cand_cat if cand_cat and cand_cat not in ["-", "NA"] else "General",
                     "used_r1": use_r1_data,
                 })
                 valid_in_table += 1
@@ -477,16 +558,19 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
                 skipped_invalid += 1
                 continue
 
-        print(f"   ✓ Table {table_idx + 1} complete: Found {valid_in_table} valid R2 entries")
+        tables_processed += 1
+        print(f"   ✓ Table {table_idx + 1} complete: Found {valid_in_table} valid entries")
 
     print(f"\n{'='*60}")
     print(f"📊 EXTRACTION SUMMARY")
     print(f"{'='*60}")
     print(f"  ✅ Valid entries extracted: {len(all_entries)}")
-    print(f"  📊 Used Round 2 data: {len(all_entries) - used_r1_fallback}")
-    print(f"  📊 Used Round 1 fallback: {used_r1_fallback}")
-    print(f"  ⊘ Skipped (invalid/incomplete data): {skipped_invalid}")
-    print(f"  📈 Total rows processed: {len(all_entries) + skipped_invalid}")
+    print(f"  📊 Used Round 2 data: {rows_with_r2}")
+    print(f"  📊 Used Round 1 fallback: {rows_with_r1_only}")
+    print(f"  ⊘ Skipped (invalid rank/data): {skipped_invalid}")
+    print(f"  ⊘ Skipped (no valid R1/R2 data): {skipped_no_data}")
+    print(f"  📊 Tables processed: {tables_processed}")
+    print(f"  ⊘ Tables skipped (too small): {tables_skipped_too_small}")
     print(f"{'='*60}\n")
 
     return all_entries
@@ -497,57 +581,42 @@ def extract_neet_r2_data(pdf_path: str, r1_lookup: dict):
 def convert_to_orcr_format(entries):
     """
     Convert entries to ORCR format and consolidate duplicates.
-    For duplicate (institute, academicProgramName, quota, seatType, gender) combinations,
-    set openRank = min(ranks) and closeRank = max(ranks).
+    OPTIMIZED: Process in batches and use efficient grouping.
     """
     print("🔄 Converting to ORCR format...")
     print(f"   Processing {len(entries)} entries...")
     
-    # First, create all entries
-    all_entries = []
-    for idx, e in enumerate(entries):
-        if (idx + 1) % 500 == 0:
-            print(f"   ... processed {idx + 1}/{len(entries)} entries")
-            
-        all_entries.append({
-            "year": 2025,
-            "round": 2,
-            "type": "NEET_PG",
-            "exam": "NEET_PG",
-            "institute": extract_institute_and_place(e["institute"]),
-            "academicProgramName": e["course"],
-            "quota": e["quota"],
-            "seatType": e["category"],
-            "gender": "Gender-Neutral",
-            "rank": e["rank"],
-        })
-
-    print(f"   ✓ Created {len(all_entries)} ORCR entries")
-    print(f"\n🔗 Consolidating duplicates...")
-
-    # Group by (institute, academicProgramName, quota, seatType, gender)
-    from collections import defaultdict
+    # Group by key immediately (more efficient)
     groups = defaultdict(list)
     
-    for entry in all_entries:
+    batch_size = 1000
+    for idx, e in enumerate(entries):
+        if (idx + 1) % batch_size == 0:
+            print(f"   ... processed {idx + 1}/{len(entries)} entries (found {len(groups)} unique combinations)")
+        
+        # Create key for grouping
+        institute = extract_institute_and_place(e["institute"])
         key = (
-            entry["institute"],
-            entry["academicProgramName"],
-            entry["quota"],
-            entry["seatType"],
-            entry["gender"]
+            institute,
+            e["course"],
+            e["quota"],
+            e["category"],
+            "Gender-Neutral"  # Fixed gender
         )
-        groups[key].append(entry["rank"])
+        
+        groups[key].append(e["rank"])
     
     print(f"   ✓ Grouped into {len(groups)} unique combinations")
-    print(f"   ✓ Will merge {len(all_entries) - len(groups)} duplicate entries")
+    print(f"   ✓ Will merge {len(entries) - len(groups)} duplicate entries")
     
     # Consolidate: openRank = min, closeRank = max
+    print(f"\n🔗 Consolidating groups...")
     orcr = []
+    
     for idx, (key, ranks) in enumerate(groups.items()):
-        if (idx + 1) % 500 == 0:
+        if (idx + 1) % batch_size == 0:
             print(f"   ... consolidated {idx + 1}/{len(groups)} groups")
-            
+        
         institute, course, quota, seatType, gender = key
         orcr.append({
             "year": 2025,
@@ -572,11 +641,11 @@ def convert_to_orcr_format(entries):
 def main():
     pdf_path = "neet/neet_pg_r2.pdf"
     r1_js_path = "neet/neetPgR1_2025.js"
-    output_js_path = "neet/neetPgR2_2025.js"
-    sample_path = "neet/cutoff_2025_r2_sample.json"
+    output_js_path = "neet/neetPgR2_2025_optimized.js"
+    sample_path = "neet/cutoff_2025_r2_sample_optimized.json"
 
     print("\n" + "=" * 60)
-    print("         NEET PG Round 2 Parser - 2025")
+    print("      NEET PG Round 2 Parser - OPTIMIZED")
     print("=" * 60)
     print(f"📄 Input PDF: {pdf_path}")
     print(f"📄 R1 Data: {r1_js_path} (for category lookup)")
@@ -647,8 +716,8 @@ def main():
     try:
         # Export as JavaScript module
         with open(output_js_path, "w", encoding="utf-8") as f:
-            f.write("// NEET PG Round 2 2025 Cutoff Data\n")
-            f.write("// Generated by parseNeetPgR2_final.py\n")
+            f.write("// NEET PG Round 2 2025 Cutoff Data - OPTIMIZED PARSER\n")
+            f.write("// Generated by parseNeetPgR2_optimized.py\n")
             f.write("// Total entries: " + str(len(orcr)) + "\n")
             f.write(f"// Round 2 data: {r2_count}, Round 1 fallback: {r1_count}\n")
             f.write("// Duplicates consolidated with openRank/closeRank\n")

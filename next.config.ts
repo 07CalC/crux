@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  generateBuildId: async () => {
+    return process.env.GITHUB_SHA || process.env.BUILD_ID || new Date().getTime().toString();
+  },
   output: "standalone",
   images: {
     remotePatterns: [

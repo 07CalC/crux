@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { Metadata } from "next";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ id: string }>;
-}) {
+}): Promise<Metadata> {
   const { id } = await params
   const college = await prisma.college.findUnique({
     where: {
@@ -13,6 +14,7 @@ export async function generateMetadata({
   });
   return {
     title: `${college?.name} | cr#x`,
+    metadataBase: new URL("https://crux.hs.vc"),
     description: `Find all the information about ${college?.name} here. | cr#x`,
     openGraph: {
       title: college?.name,

@@ -3,8 +3,6 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   experimental: {
     cpus: 1,
-    workerThreads: false,
-    webpackMemoryOptimizations: true,
   },
   output: "standalone",
   images: {

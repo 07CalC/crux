@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const userAgent = req.headers.get("user-agent");
   const fetchMode = req.headers.get('sec-fetch-mode');
   const fetchSite = req.headers.get('sec-fetch-site');

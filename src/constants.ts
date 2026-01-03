@@ -19,7 +19,8 @@ export const AVAILABLE_BITSAT_ORCRS = [
 ]
 
 export const AVAILABLE_WBJEE_ORCRS = [
-  { 2025: [1, 2] }
+  { 2025: [1, 2] },
+  { 2024: [1, 2, 3] }
 ]
 
 export const AVAILABLE_NEET_PG_ORCRS = [

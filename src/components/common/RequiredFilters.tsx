@@ -1,6 +1,6 @@
 import { bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, neetPgRoundByYearsGlobal } from "@/constants";
 import React, { useEffect } from "react";
-
+import { FiCalendar, FiLayers } from "react-icons/fi";
 
 type props = {
     requiredFilters: { [key: string]: string | number };
@@ -8,8 +8,6 @@ type props = {
     filters: Array<{ [key: string]: string[] | number[] }>
     counsellingType: "JOSSA" | "CSAB" | "BITSAT" | "NEET_PG";
 }
-
-
 
 export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, counsellingType }: props) => {
     const availableRoundsAll = {
@@ -19,6 +17,7 @@ export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, 
         NEET_PG: neetPgRoundByYearsGlobal
     }
     const roundByYears = availableRoundsAll[counsellingType];
+    
     useEffect(() => {
         const selectedYear = requiredFilters.year as number;
         const selectedRound = requiredFilters.round as number;
@@ -33,27 +32,54 @@ export const RequiredFilters = ({ requiredFilters, setRequiredFilters, filters, 
             }
         }
     }, [requiredFilters.year, setRequiredFilters]);
+
+    const getIcon = (key: string) => {
+        if (key.toLowerCase().includes('year')) return <FiCalendar className="w-4 h-4" />;
+        if (key.toLowerCase().includes('round')) return <FiLayers className="w-4 h-4" />;
+        return null;
+    };
+
+    const formatLabel = (key: string) => {
+        return key.charAt(0).toUpperCase() + key.slice(1);
+    };
+
     return (
-        <div className="p-4 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full">
-            {filters.map((filter, index) => (
-                <div key={index}>
-                    <label className="text-lg font-semibold text-black dark:text-gray-100">
-                        {Object.keys(filter)[0]}
-                    </label>
-                    <select
-                        name={Object.keys(filter)[0]}
-                        value={requiredFilters[Object.keys(filter)[0]]}
-                        onChange={(e) => setRequiredFilters({ ...requiredFilters, [Object.keys(filter)[0]]: e.target.value })}
-                        className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-purple-500  text-black dark:text-gray-100"
-                    >
-                        {Object.values(filter)[0].map((value: string | number, index: number) => (
-                            <option className="bg-white dark:bg-[#1a1a1a] hover:bg-purple-500 active:bg-purple-500" key={index} value={value}>
-                                {value}
-                            </option>
-                        ))}
-                    </select>
+        <div className="card p-6 mb-8">
+            <div className="flex items-center gap-2 mb-6">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                    <FiLayers className="w-4 h-4 text-white" />
                 </div>
-            ))}
+                <h3 className="text-lg md:text-xl font-bold">Select Dataset</h3>
+            </div>
+            
+            <div className="space-y-4">
+                {filters.map((filter, index) => {
+                    const key = Object.keys(filter)[0];
+                    const icon = getIcon(key);
+                    
+                    return (
+                        <div key={index} className="space-y-2">
+                            <label className="flex items-center gap-2 text-sm font-semibold text-muted-foreground">
+                                {icon}
+                                <span>{formatLabel(key)}</span>
+                            </label>
+                            <select
+                                name={key}
+                                value={requiredFilters[key]}
+                                onChange={(e) => setRequiredFilters({ ...requiredFilters, [key]: e.target.value })}
+                                className="input cursor-pointer w-full"
+                                title={String(requiredFilters[key])}
+                            >
+                                {Object.values(filter)[0].map((value: string | number, index: number) => (
+                                    <option key={index} value={value} title={String(value)}>
+                                        {value}
+                                    </option>
+                                ))}
+                            </select>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 };

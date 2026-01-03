@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
-import { IoStatsChart } from "react-icons/io5";
+import { motion } from "motion/react";
+import { FiTrendingUp, FiFilter, FiCheckCircle, FiArrowRight, FiBarChart2 } from "react-icons/fi";
 
 export const CutoffSection = () => {
   const cutoffRows = [
@@ -15,96 +18,195 @@ export const CutoffSection = () => {
     institute: "IIITA",
   };
 
+  const features = [
+    { icon: FiBarChart2, text: "JoSAA • 6 Rounds", color: "from-primary to-secondary" },
+    { icon: FiFilter, text: "CSAB • Special", color: "from-secondary to-accent" },
+    { icon: FiCheckCircle, text: "BITSAT • NEET PG", color: "from-accent to-primary" },
+  ];
+
   return (
+    <section className="section bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 badge-primary"
+          >
+            <FiTrendingUp className="w-4 h-4" />
+            <span className="text-sm font-semibold">Data-Driven Decisions</span>
+          </motion.div>
 
-    <section className="mx-2 md:mx-4 rounded-2xl py-16 px-4 sm:px-8 bg-white dark:bg-zinc-900 shadow-[0_4px_20px_rgba(0,0,0,0.1)] dark:shadow-[0_4px_20px_rgba(255,255,255,0.05)] border border-gray-200 dark:border-white/10 backdrop-blur-sm">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row items-center gap-12">
-          <div className="flex-1 order-2 md:order-1">
-            <div className="overflow-x-auto border-2  border-black px-4 dark:border-white shadow-purple-500  rounded-lg max-w-[100vw] -mx-4 sm:mx-0 bg-gray-300 dark:bg-[#222222]">
-              <table className="min-w-full border-collapse text-left font-thin">
-                <thead>
-                  <tr className="min-w-max">
-                    <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
-                      <span>Institute</span>
-                    </th>
-                    <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
-                      <span>Program</span>
-                    </th>
-                    <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
-                      <span>Gender</span>
-                    </th>
-                    <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
-                      <span>Open</span>
-                    </th>
-                    <th className="text-md lg:text-lg xl:text-2xl text-center text-purple-600 dark:text-purple-400 font-bold border-b border-black dark:border-white px-2 md:px-4 py-2">
-                      <span>Close</span>
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="min-w-max">
-                  {cutoffRows.map((row, idx) => (
-                    <tr
-                      key={idx}
-                      className="hover:bg-gray-500 hover:dark:bg-[#444444] text-black dark:text-white cursor-pointer hover:text-white"
-                    >
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
-                        <Link href={`/${cutoffCommon.id}`}>
-                          {cutoffCommon.institute}
-                        </Link>
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
-                        {row.program}
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
-                        {row.gender}
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
-                        {row.open}
-                      </td>
-                      <td className="text-sm md:text-md lg:text-xl text-center border-t border-black font-normal dark:border-white px-2 md:px-4 py-2">
-                        {row.close}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-5xl font-bold"
+          >
+            Historical <span className="text-gradient">Cutoff Data</span>
+          </motion.h2>
 
-          <div className="flex-1 order-1 md:order-2 text-center md:text-left">
-            <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-              Previous Year Cutoffs
-            </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300 mb-6">
-              Access detailed historical data on opening and closing ranks for
-              various programs across colleges in JoSAA and CSAB counseling
-              rounds.
-            </p>
-            <div className="flex flex-wrap gap-3 justify-center md:justify-start">
-              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                JoSAA Cutoffs
-              </span>
-              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                CSAB Trends
-              </span>
-              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                BITSAT
-              </span>
-              <span className="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">
-                JAC Delhi (Coming Soon)
-              </span>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
+            Analyze 3 years of opening & closing ranks across JoSAA, CSAB, BITSAT & NEET PG counseling
+          </motion.p>
+        </div>
+
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          {/* Content Side */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="space-y-6"
+          >
+            <div className="space-y-4">
+              <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                  <FiTrendingUp className="w-5 h-5 text-white" />
+                </div>
+                Make Informed Choices
+              </h3>
+              <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
+                Access comprehensive historical cutoff data for IITs, NITs, IIITs, and GFTIs. 
+                Filter by branch, gender, category, and seat type to find your perfect match.
+              </p>
             </div>
-            <Link
-              href="/orcr"
-              className="mt-8 rounded-xl inline-flex items-center text-lg text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-300 dark:bg-purple-700 p-3"
+
+            {/* Feature Pills */}
+            <div className="flex flex-wrap gap-3">
+              {features.map((feature, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 + index * 0.1 }}
+                  className="card-hover group"
+                >
+                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mr-2 group-hover:scale-110 transition-transform`}>
+                    <feature.icon className="w-4 h-4 text-white" />
+                  </div>
+                  <span className="text-sm font-semibold">{feature.text}</span>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* CTA Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="flex flex-col sm:flex-row gap-4 pt-4"
             >
-              Explore All Cutoffs <IoStatsChart className="ml-2" />
-            </Link>
-          </div>
+              <Link href="/orcr" className="btn-primary group">
+                <FiBarChart2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>Explore All Cutoffs</span>
+                <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+              <Link href="/orcr/neet-pg" className="btn-secondary group">
+                <FiCheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>NEET PG</span>
+                <span className="badge-accent text-xs px-2 py-0.5 ml-1">NEW</span>
+              </Link>
+            </motion.div>
+          </motion.div>
+
+          {/* Table Side */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="card overflow-hidden">
+              {/* Table Header */}
+              <div className="bg-gradient-to-r from-primary via-secondary to-primary px-6 py-4">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-base md:text-lg font-bold text-white">
+                    IIIT Allahabad • 2025 R1
+                  </h4>
+                  <span className="bg-white/20 backdrop-blur-sm text-white text-xs font-bold px-3 py-1 rounded-full border border-white/30">
+                    Sample
+                  </span>
+                </div>
+              </div>
+
+              {/* Responsive Table */}
+              <div className="overflow-x-auto">
+                <table className="min-w-full">
+                  <thead className="bg-muted/50">
+                    <tr>
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                        Program
+                      </th>
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                        Gender
+                      </th>
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                        Open
+                      </th>
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                        Close
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cutoffRows.map((row, idx) => (
+                      <motion.tr
+                        key={idx}
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.7 + idx * 0.05 }}
+                        className="group hover:bg-primary/5 transition-colors border-b border-border last:border-b-0"
+                      >
+                        <td className="text-xs md:text-sm text-center font-medium px-4 py-3">
+                          {row.program}
+                        </td>
+                        <td className="text-xs md:text-sm text-center text-muted-foreground px-4 py-3">
+                          {row.gender}
+                        </td>
+                        <td className="text-xs md:text-sm text-center font-semibold px-4 py-3">
+                          <span className="inline-flex items-center gap-1 text-secondary">
+                            {row.open.toLocaleString()}
+                          </span>
+                        </td>
+                        <td className="text-xs md:text-sm text-center font-semibold px-4 py-3">
+                          <span className="inline-flex items-center gap-1 text-accent">
+                            {row.close.toLocaleString()}
+                          </span>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+
+              {/* View More Link */}
+              <div className="bg-muted/30 px-6 py-4 text-center border-t border-border">
+                <Link
+                  href={`/explore/${cutoffCommon.id}`}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors group"
+                >
+                  <span>View full college details</span>
+                  <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
-  )
-
-}
+  );
+};

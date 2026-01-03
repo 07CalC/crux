@@ -1,6 +1,8 @@
+"use client";
 
 import Image from "next/image";
-import { FaLocationArrow } from "react-icons/fa";
+import { motion } from "motion/react";
+import { FiExternalLink, FiUsers } from "react-icons/fi";
 
 export function PartnersSection() {
   const partners = [
@@ -47,85 +49,107 @@ export function PartnersSection() {
   ];
 
   return (
-    <section className="w-full py-16 ">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-black dark:text-white mb-6">
-            Community Partners
-          </h2>
-          <p className="text-md text-gray-600 dark:text-gray-300  mx-auto">
+    <section className="section bg-muted/30">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center gap-2 badge-primary"
+          >
+            <FiUsers className="w-4 h-4" />
+            <span className="text-sm font-semibold">Community Partners</span>
+          </motion.div>
+
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-4xl font-bold"
+          >
+            Built With <span className="text-gradient">Community Input</span>
+          </motion.h2>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-md text-muted-foreground mx-auto max-w-2xl"
+          >
             Crux is built with input from real students and educators. These communities help us reach more aspirants and make better tools.
-          </p>
+          </motion.p>
         </div>
 
-        <div
-          className={`grid grid-cols-1 sm:grid-cols-2 items-center justify-center
-               gap-6`}
-        >
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           {partners.map((partner, index) => (
-            <div
+            <motion.div
               key={index}
-              className={`
-  w-full
-  ${partners.length === 1 ? "max-w-2xl" : ""}
-  rounded-xl 
-  bg-white dark:bg-[#1a1a1a]
-  overflow-hidden 
-  transition-all 
-  ease-in-out 
-  duration-200 
-  shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
-  dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]
-  hover:-translate-y-1 
-  hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
-  dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
-`}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              className="card overflow-hidden group hover:scale-[1.02] transition-transform"
             >
               {/* Cover Image */}
-              <div
-                className="relative h-32 sm:h-40 bg-cover bg-center"
-                style={{ backgroundImage: `url(${partner.cover})` }}
-              ></div>
+              <div className="relative h-40 overflow-hidden">
+                <div
+                  className="absolute inset-0 bg-cover bg-center transition-transform group-hover:scale-110 duration-500"
+                  style={{ backgroundImage: `url(${partner.cover})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+              </div>
 
               {/* Content */}
-              <div className="p-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <Image
-                    width={48}
-                    height={48}
-                    src={partner.icon}
-                    alt={`${partner.name} Icon`}
-                    className="h-12 w-12 rounded-full border border-gray-300"
-                  />
-                  <div>
-                    <h3 className="text-lg font-bold text-black dark:text-white">
-                      {partner.name}
-                    </h3>
-                    <span className="text-purple-600 text-sm font-semibold">
-                      {partner.platform}
-                    </span>
+              <div className="p-6 relative">
+                {/* Icon Badge */}
+                <div className="absolute -top-8 left-6">
+                  <div className="w-16 h-16 rounded-2xl border-4 border-background overflow-hidden shadow-lg">
+                    <Image
+                      width={64}
+                      height={64}
+                      src={partner.icon}
+                      alt={`${partner.name} Icon`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
 
-                <p className="text-sm text-gray-700 dark:text-gray-300 mb-4">
-                  {partner.description}
-                </p>
+                <div className="mt-10 space-y-3">
+                  <div>
+                    <h3 className="text-lg font-bold">
+                      {partner.name}
+                    </h3>
+                    <span className="inline-flex items-center text-primary text-sm font-semibold">
+                      {partner.platform}
+                    </span>
+                  </div>
 
-                <div className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 dark:text-gray-400">
-                    👥 {partner.members}
-                  </span>
-                  <a
-                    href={partner.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[3px_3px_0px_0px] shadow-[3px_3px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 p-2 dark:shadow-white shadow-black bg-purple-500 px-2 text-center "
-                  >
-                    <FaLocationArrow />
-                  </a>
+                  <p className="text-sm text-muted-foreground line-clamp-2">
+                    {partner.description}
+                  </p>
+
+                  <div className="flex items-center justify-between pt-2">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <FiUsers className="w-4 h-4" />
+                      <span>{partner.members}</span>
+                    </div>
+                    <a
+                      href={partner.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn-ghost group/link"
+                    >
+                      <span className="text-sm">Visit</span>
+                      <FiExternalLink className="w-4 h-4 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition-transform" />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

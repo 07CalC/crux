@@ -1,6 +1,6 @@
 import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
-import { IoSearch } from "react-icons/io5";
+import { FiSearch, FiX, FiMapPin, FiAward, FiHeart, FiExternalLink } from "react-icons/fi";
 import { NotFound } from "../../components/common/NotFound";
 import { prisma } from "@/lib/prisma";
 
@@ -40,141 +40,173 @@ export default async function Explore({ searchParams }: PageProps) {
   const hasFilters = query;
 
   return (
-    <div className="md:px-10 px-2 mx-auto py-12 w-full relative">
-      <div className="mb-10">
-        <form className="flex flex-col md:flex-row gap-4 bg-white dark:bg-[#1a1a1a]   transition-all 
-  shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] 
-  dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,1)]
- p-4 rounded-xl max-w-2xl">
-          <div className="flex-1">
-            <div className="relative">
-              <input
-                type="text"
-                id="query"
-                name="query"
-                defaultValue={query}
-                placeholder="Search by college name"
-                className="p-2 active:ring-0 ring-0 w-full border-2 text-lg font-semibold border-black dark:border-gray-100 rounded-lg bg-gray-200 dark:bg-[#222222] text-black dark:text-gray-100"
-              />
-              <IoSearch
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-            </div>
+    <section className="section min-h-screen bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5">
+      <div className="container-custom">
+        {/* Header Section */}
+        <div className="text-center mb-12 space-y-4">
+          <div className="inline-flex items-center gap-2 badge-primary">
+            <FiSearch className="w-4 h-4" />
+            <span className="text-sm font-semibold">Discover Your Future</span>
           </div>
 
-          <div className="flex space-x-5 justify-center self-end">
-            <button
-              type="submit"
-              className="rounded-xl gap-x-3 sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white shadow-black bg-purple-500 p-2"
-            >
-              Search
-              <IoSearch className="mr-2" size={25} />
-            </button>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold">
+            Explore <span className="text-gradient">Colleges</span>
+          </h1>
 
-            {hasFilters && (
-              <Link
-                href="/explore"
-                className="rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 dark:shadow-white shadow-black bg-purple-500 p-2"
-                scroll={true}
-              >
-                Clear
-              </Link>
-            )}
-          </div>
-        </form>
-      </div>
+          <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+            Browse through 170+ engineering colleges with detailed information, rankings, and student reviews.
+          </p>
+        </div>
 
-      <div className="mb-6">
-        <p className="text-gray-600 dark:text-gray-300">
-          Found {colleges.length}{" "}
-          {colleges.length === 1 ? "college" : "colleges"}
-          {query && ` matching "${query}"`}
-        </p>
-      </div>
-
-      {/* College Grid */}
-      <div className="grid sm:grid-cols-2 lg:grid-cols-3 grid-cols-1 gap-8">
-        {colleges.length > 0 ? (
-          colleges.map((college) => (
-            <div
-              key={college.id}
-              className="flex flex-col h-full rounded-xl overflow-hidden bg-white dark:bg-[#1a1a1a] border border-black   
-  transition-all 
-  ease-in-out 
-  duration-200 
-  shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
-  dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]
-  hover:-translate-y-1 
-  hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
-  dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
-active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 
-"
-            >
-              <Link
-                href={`/explore/${college.id}`}
-                className="flex flex-col h-64 relative group"
-                scroll={true}
-              >
-                <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300"></div>
-                <img
-                  loading="lazy"
-                  src={
-                    college?.coverImage ||
-                    "/defaultCollegeImage.png"
-                  }
-                  alt={`${college.name} cover image`}
-                  className="w-full h-full object-cover rounded-t-xl"
+        {/* Search Bar */}
+        <div className="mb-10 max-w-3xl mx-auto">
+          <form className="card p-6">
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex-1 relative">
+                <FiSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-muted-foreground w-5 h-5" />
+                <input
+                  type="text"
+                  id="query"
+                  name="query"
+                  defaultValue={query}
+                  placeholder="Search by college name..."
+                  className="input pl-12 pr-4"
                 />
-              </Link>
-              <div className="p-4 flex flex-col flex-grow">
-                <Link href={`/explore/${college.id}`} scroll={true}>
-                  <h2 className="text-black font-semibold text-xl sm:text-2xl mb-2 dark:text-white hover:text-purple-700 dark:hover:text-purple-300 transition-colors">
-                    {college.name}
-                  </h2>
-                </Link>
-                <p className="text-purple-500 text-sm md:text-lg mb-4">
-                  {college.location}
-                </p>
+              </div>
 
-                <div className="flex justify-between items-center mt-auto">
-                  <p className="text-black dark:text-white font-bold text-sm md:text-xl">
-                    {college.nirf ? `NIRF: ${college.nirf}` : ""}
-                  </p>
-                  <p className="text-black dark:text-white font-bold text-sm md:text-xl">
-                    Bonks: {college.bongs}
-                  </p>
-                  <a
-                    href={college.officialWebsite || "#"}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={`rounded-xl text-sm md:text-lg flex items-center gap-2 text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-3 py-2 ${!college.officialWebsite
-                      ? "opacity-50 cursor-not-allowed"
-                      : "hover:bg-purple-600"
-                      }`}
+              <div className="flex gap-3">
+                <button
+                  type="submit"
+                  className="btn-primary group"
+                >
+                  <FiSearch className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  <span>Search</span>
+                </button>
+
+                {hasFilters && (
+                  <Link
+                    href="/explore"
+                    className="btn-outline group"
+                    scroll={true}
                   >
-                    <LuExternalLink />
-                  </a>
-                </div>
+                    <FiX className="w-5 h-5 group-hover:rotate-90 transition-transform" />
+                    <span>Clear</span>
+                  </Link>
+                )}
               </div>
             </div>
-          ))
-        ) : (
-          <div className="col-span-full text-center py-12">
-            <NotFound text="No colleges found" />
-            <Link
-              href="/explore"
-              className=" inline-block text-purple-500 hover:text-purple-700"
-              scroll={true}
-            >
-              Clear filters and show all colleges
-            </Link>
-          </div>
-        )}
+          </form>
+        </div>
+
+        {/* Results Count */}
+        <div className="mb-8">
+          <p className="text-sm md:text-base text-muted-foreground">
+            Found <span className="font-bold text-foreground">{colleges.length}</span>{" "}
+            {colleges.length === 1 ? "college" : "colleges"}
+            {query && (
+              <span>
+                {" "}matching <span className="font-semibold text-primary">"{query}"</span>
+              </span>
+            )}
+          </p>
+        </div>
+
+        {/* College Grid */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {colleges.length > 0 ? (
+            colleges.map((college) => (
+              <div
+                key={college.id}
+                className="group card card-hover overflow-hidden p-0 h-full flex flex-col"
+              >
+                {/* Image */}
+                <Link
+                  href={`/explore/${college.id}`}
+                  className="relative h-48 overflow-hidden"
+                  scroll={true}
+                >
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  <img
+                    loading="lazy"
+                    src={college?.coverImage || "/defaultCollegeImage.png"}
+                    alt={`${college.name} cover image`}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
+                  {/* Overlay badge */}
+                  {college.nirf && (
+                    <div className="absolute top-4 left-4 z-20">
+                      <div className="badge-primary backdrop-blur-sm bg-primary/90 text-primary-foreground">
+                        <FiAward className="w-3 h-3" />
+                        <span className="font-bold">NIRF {college.nirf}</span>
+                      </div>
+                    </div>
+                  )}
+                </Link>
+
+                {/* Content */}
+                <div className="p-5 flex flex-col flex-grow">
+                  <Link href={`/explore/${college.id}`} scroll={true} className="group/title">
+                    <h2 className="text-lg md:text-xl font-bold mb-2 group-hover/title:text-primary transition-colors line-clamp-2">
+                      {college.name}
+                    </h2>
+                  </Link>
+
+                  <div className="flex items-center gap-2 text-sm text-muted-foreground mb-4">
+                    <FiMapPin className="w-4 h-4 text-secondary" />
+                    <span>{college.location}</span>
+                  </div>
+
+                  {/* Stats & Actions */}
+                  <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
+                    <div className="flex items-center gap-3 text-sm">
+                      {college.nirf && (
+                        <div className="flex items-center gap-1">
+                          <FiAward className="w-4 h-4 text-accent" />
+                          <span className="font-semibold">{college.nirf}</span>
+                        </div>
+                      )}
+                      <div className="flex items-center gap-1">
+                        <FiHeart className="w-4 h-4 text-secondary" />
+                        <span className="font-semibold">{college.bongs}</span>
+                      </div>
+                    </div>
+
+                    <a
+                      href={college.officialWebsite || "#"}
+                      target="_blank"
+                      rel="noreferrer"
+                      className={`btn-ghost p-2 group/link ${
+                        !college.officialWebsite
+                          ? "opacity-50 cursor-not-allowed pointer-events-none"
+                          : ""
+                      }`}
+                      aria-label="Visit official website"
+                    >
+                      <FiExternalLink className="w-5 h-5 group-hover/link:scale-110 transition-transform" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full">
+              <div className="card text-center py-16">
+                <NotFound text="No colleges found" />
+                {hasFilters && (
+                  <Link
+                    href="/explore"
+                    className="inline-flex items-center gap-2 mt-6 text-primary hover:text-secondary font-semibold transition-colors"
+                    scroll={true}
+                  >
+                    <FiX className="w-4 h-4" />
+                    <span>Clear filters and show all colleges</span>
+                  </Link>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-
-      <div id="top" className="absolute top-0 left-0" />
-
-    </div>
+    </section>
   );
 }

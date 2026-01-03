@@ -2,12 +2,13 @@
 import { Orcr } from "@/types/globalTypes";
 import { useState, useMemo, useEffect } from "react";
 import { Table } from "@/components/common/Table";
-
 import { availableBitsatYears, availableCsabYears, availableJossaYears, availableNeetPgYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr, mostRecentNeetPgOrcr, neetPgRoundByYearsGlobal } from "@/constants";
 import { NotFound } from "../common/NotFound";
 import { Loading } from "../common/Loading";
 import { PaginationNav } from "../common/PaginationNav";
 import { ViewToggle } from "../common/ViewToggle";
+import { MobileFilterSidebar } from "../common/MobileFilterSidebar";
+import { FiFilter } from "react-icons/fi";
 
 export const ClgOrcr = ({
   clgId,
@@ -20,6 +21,7 @@ export const ClgOrcr = ({
   const [loading, setLoading] = useState(false);
   const [currPage, setCurrPage] = useState(1);
   const [colsShown, setColsShown] = useState(10);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
   const [sort, setSort] = useState<{
     type: "rank";
     openRank: "asc" | "desc" | null;
@@ -31,6 +33,7 @@ export const ClgOrcr = ({
     marks: null,
   });
   const [filters, setFilters] = useState({
+    searchKeyword: "",
     academicProgramName: "",
     seatType: "",
     gender: "",
@@ -159,6 +162,10 @@ export const ClgOrcr = ({
 
   const filteredData = useMemo(() => {
     return fetchedOrcr.filter((orcr) => {
+      const matchesSearch = orcr.academicProgramName
+        .toLowerCase()
+        .includes(filters.searchKeyword.toLowerCase());
+
       const matchesProgram = orcr.academicProgramName
         .toLowerCase()
         .includes(filters.academicProgramName.toLowerCase());
@@ -178,7 +185,7 @@ export const ClgOrcr = ({
         orcr.closeRank !== undefined &&
         orcr.closeRank >= filters.rank;
 
-      return matchesProgram && matchesSeatType && matchesGender && matchesRank;
+      return matchesSearch && matchesProgram && matchesSeatType && matchesGender && matchesRank;
     });
   }, [fetchedOrcr, filters, clgType]);
 
@@ -233,6 +240,7 @@ export const ClgOrcr = ({
     setFetchedOrcr(data);
     setLoading(false);
     setFilters({
+      searchKeyword: "",
       academicProgramName: "",
       seatType: "",
       gender: "",
@@ -287,176 +295,392 @@ export const ClgOrcr = ({
   };
 
   if (!loading && fetchedOrcr.length === 0)
-    return <NotFound text="No data found" />;
+    return (
+      <div className="card p-12 text-center">
+        <NotFound text="No cutoff data available for this college" />
+      </div>
+    );
 
   return (
-    <div className="w-full mt-10 h-full flex flex-col items-center justify-center border-2 border-purple-500 bg-purple-400/40 dark:bg-purple-900/40 rounded-lg shadow-lg p-4">
-      <div className="w-full mb-6">
-        <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
-          {requiredFiltersOptions.map((option, index) => {
-            const key = Object.keys(option)[0];
-            return (
-              <div key={index}>
-                <label className="text-lg font-semibold text-black dark:text-gray-100">
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
+    <section className="overflow-x-hidden">
+      <div className="max-w-[100vw]">
+        {/* Mobile Filter Button */}
+        <button
+          onClick={() => setIsMobileFilterOpen(true)}
+          className="lg:hidden btn-primary mb-4 w-full sm:w-auto"
+        >
+          <FiFilter className="w-5 h-5" />
+          <span>Filters</span>
+        </button>
+
+        {/* Mobile Filter Sidebar */}
+        <MobileFilterSidebar 
+          isOpen={isMobileFilterOpen} 
+          onClose={() => setIsMobileFilterOpen(false)}
+        >
+          {/* Required Filters */}
+          <div className="card p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold">Required Filters</h3>
+            </div>
+            
+            <div className="space-y-4">
+              {requiredFiltersOptions.map((option, index) => {
+                const key = Object.keys(option)[0];
+                return (
+                  <div key={index}>
+                    <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </label>
+                    <select
+                      name={key}
+                      value={requiredFilters[key]}
+                      onChange={handleRequiredFilterChange}
+                      className="input w-full"
+                    >
+                      {(option[key as keyof typeof option] as (string | number)[]).map((value, index) => (
+                        <option key={index} value={value}>
+                          {value}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Optional Filters */}
+          <div className="card p-4">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
+                </svg>
+              </div>
+              <h3 className="text-base font-bold">Additional Filters</h3>
+            </div>
+            
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                  Program
                 </label>
                 <select
-                  name={key}
-                  value={requiredFilters[key]}
-                  onChange={handleRequiredFilterChange}
-                  className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
+                  name="academicProgramName"
+                  value={filters.academicProgramName}
+                  onChange={(e) =>
+                    setFilters({ ...filters, academicProgramName: e.target.value })
+                  }
+                  className="input w-full"
                 >
-                  {(option[key as keyof typeof option] as (string | number)[]).map((value, index) => (
-                    <option
-                      key={index}
-                      value={value}
-                      className="bg-white dark:bg-[#1a1a1a]"
-                    >
+                  <option value="">All Programs</option>
+                  {filterOptions[0].academicProgramName.map((value, index) => (
+                    <option key={index} value={value}>
                       {value}
                     </option>
                   ))}
                 </select>
               </div>
-            );
-          })}
-        </div>
-        <div className="p-4 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
-          <div>
-            <label className="text-lg font-semibold text-black dark:text-gray-100">
-              Program
-            </label>
-            <select
-              name="academicProgramName"
-              value={filters.academicProgramName}
-              onChange={(e) =>
-                setFilters({ ...filters, academicProgramName: e.target.value })
-              }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
-            >
-              <option value="">All</option>
-              {filterOptions[0].academicProgramName.map((value, index) => (
-                <option
-                  key={index}
-                  value={value}
-                  className="bg-white dark:bg-[#1a1a1a]"
+
+              <div>
+                <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                  Seat Type
+                </label>
+                <select
+                  name="seatType"
+                  value={filters.seatType}
+                  onChange={(e) =>
+                    setFilters({ ...filters, seatType: e.target.value })
+                  }
+                  className="input w-full"
                 >
-                  {value}
-                </option>
-              ))}
-            </select>
+                  <option value="">All Seat Types</option>
+                  {filterOptions[1].seatType.map((value, index) => (
+                    <option key={index} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                  Gender
+                </label>
+                <select
+                  name="gender"
+                  value={filters.gender}
+                  onChange={(e) =>
+                    setFilters({ ...filters, gender: e.target.value })
+                  }
+                  className="input w-full"
+                >
+                  <option value="">All Genders</option>
+                  {filterOptions[2].gender.map((value, index) => (
+                    <option key={index} value={value}>
+                      {value}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                  {clgType === "BITS" ? "Max Marks" : "Min Rank"}
+                </label>
+                <input
+                  type="number"
+                  name="rank"
+                  value={filters.rank || ""}
+                  onChange={(e) =>
+                    setFilters({ ...filters, rank: parseInt(e.target.value) || 0 })
+                  }
+                  placeholder={clgType === "BITS" ? "Enter marks" : "Enter rank"}
+                  className="input w-full"
+                />
+              </div>
+
+              <button
+                onClick={() => {
+                  setFilters({
+                    searchKeyword: "",
+                    academicProgramName: "",
+                    seatType: "",
+                    gender: "",
+                    rank: 0,
+                  });
+                }}
+                className="btn-outline w-full"
+              >
+                Clear All Filters
+              </button>
+            </div>
+          </div>
+        </MobileFilterSidebar>
+
+        <div className="grid lg:grid-cols-[380px,1fr] gap-6">
+          {/* Left Sidebar - Scrollable Filters (Desktop Only) */}
+          <div className="hidden lg:block space-y-6">
+            {/* Required Filters */}
+            <div className="card p-4">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                    <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold">Required Filters</h3>
+              </div>
+              
+              <div className="space-y-4">
+                {requiredFiltersOptions.map((option, index) => {
+                  const key = Object.keys(option)[0];
+                  return (
+                    <div key={index}>
+                      <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                        {key.charAt(0).toUpperCase() + key.slice(1)}
+                      </label>
+                      <select
+                        name={key}
+                        value={requiredFilters[key]}
+                        onChange={handleRequiredFilterChange}
+                        className="input w-full"
+                      >
+                        {(option[key as keyof typeof option] as (string | number)[]).map((value, index) => (
+                          <option key={index} value={value}>
+                            {value}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Optional Filters */}
+            <div className="card p-4">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M3 3a1 1 0 000 2h11a1 1 0 100-2H3zM3 7a1 1 0 000 2h7a1 1 0 100-2H3zM3 11a1 1 0 100 2h4a1 1 0 100-2H3zM15 8a1 1 0 10-2 0v5.586l-1.293-1.293a1 1 0 00-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L15 13.586V8z" />
+                  </svg>
+                </div>
+                <h3 className="text-base font-bold">Additional Filters</h3>
+              </div>
+              
+              <div className="space-y-4">
+                <div>
+                  <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                    Program
+                  </label>
+                  <select
+                    name="academicProgramName"
+                    value={filters.academicProgramName}
+                    onChange={(e) =>
+                      setFilters({ ...filters, academicProgramName: e.target.value })
+                    }
+                    className="input w-full"
+                  >
+                    <option value="">All Programs</option>
+                    {filterOptions[0].academicProgramName.map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                    Seat Type
+                  </label>
+                  <select
+                    name="seatType"
+                    value={filters.seatType}
+                    onChange={(e) =>
+                      setFilters({ ...filters, seatType: e.target.value })
+                    }
+                    className="input w-full"
+                  >
+                    <option value="">All Seat Types</option>
+                    {filterOptions[1].seatType.map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    value={filters.gender}
+                    onChange={(e) =>
+                      setFilters({ ...filters, gender: e.target.value })
+                    }
+                    className="input w-full"
+                  >
+                    <option value="">All Genders</option>
+                    {filterOptions[2].gender.map((value, index) => (
+                      <option key={index} value={value}>
+                        {value}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="text-sm font-semibold text-muted-foreground mb-2 block">
+                    {clgType === "BITS" ? "Max Marks" : "Min Rank"}
+                  </label>
+                  <input
+                    type="number"
+                    name="rank"
+                    value={filters.rank || ""}
+                    onChange={(e) =>
+                      setFilters({ ...filters, rank: parseInt(e.target.value) || 0 })
+                    }
+                    placeholder={clgType === "BITS" ? "Enter marks" : "Enter rank"}
+                    className="input w-full"
+                  />
+                </div>
+
+                <button
+                  onClick={() => {
+                    setFilters({
+                      searchKeyword: "",
+                      academicProgramName: "",
+                      seatType: "",
+                      gender: "",
+                      rank: 0,
+                    });
+                  }}
+                  className="btn-outline w-full"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <label className="text-lg font-semibold text-black dark:text-gray-100">
-              Seat Type
-            </label>
-            <select
-              name="seatType"
-              value={filters.seatType}
-              onChange={(e) =>
-                setFilters({ ...filters, seatType: e.target.value })
-              }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
-            >
-              <option value="">All</option>
-              {filterOptions[1].seatType.map((value, index) => (
-                <option
-                  key={index}
-                  value={value}
-                  className="bg-white dark:bg-[#1a1a1a]"
-                >
-                  {value}
-                </option>
-              ))}
-            </select>
-          </div>
+          {/* Right Content - Scrollable Data Area */}
+          <div className="space-y-6 min-w-0">
+            {/* Search and View Controls */}
+            <div className="card p-4">
+              <div className="flex flex-col gap-4">
+                {/* Search Input */}
+                <div className="flex-1 relative min-w-0 w-full">
+                  <input
+                    type="text"
+                    value={filters.searchKeyword}
+                    onChange={(e) =>
+                      setFilters({ ...filters, searchKeyword: e.target.value })
+                    }
+                    placeholder="Search by program name..."
+                    className="input pl-4 pr-4 w-full"
+                  />
+                </div>
 
-          <div>
-            <label className="text-lg font-semibold text-black dark:text-gray-100">
-              Gender
-            </label>
-            <select
-              name="gender"
-              value={filters.gender}
-              onChange={(e) =>
-                setFilters({ ...filters, gender: e.target.value })
-              }
-              className="p-3 active:ring-0 ring-0 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
-            >
-              <option value="">All</option>
-              {filterOptions[2].gender.map((value, index) => (
-                <option
-                  key={index}
-                  value={value}
-                  className="bg-white dark:bg-[#1a1a1a]"
-                >
-                  {value}
-                </option>
-              ))}
-            </select>
-          </div>
+                {/* View Toggle */}
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    {/* Results Count */}
+                    {!loading && (
+                      <p className="text-sm text-muted-foreground">
+                        <span className="font-bold text-foreground">{paginatedData.length}</span> of{" "}
+                        <span className="font-bold text-foreground">{filteredData.length}</span> results
+                      </p>
+                    )}
+                  </div>
+                  <ViewToggle view={view} setView={setView} />
+                </div>
+              </div>
+            </div>
 
-          <div>
-            <label className="text-lg font-semibold text-black dark:text-gray-100">
-              {clgType === "BITS" ? "Marks" : "Rank"}
-            </label>
-            <input
-              type="number"
-              name="rank"
-              value={filters.rank || ""}
-              onChange={(e) =>
-                setFilters({ ...filters, rank: parseInt(e.target.value) || 0 })
-              }
-              placeholder="Enter your rank"
-              className="p-2 w-full border-2 text-lg font-semibold shadow-[4px_4px_0px_0px] border-black dark:border-gray-100 rounded-lg bg-white dark:bg-[#1a1a1a] text-black dark:text-gray-100"
-            />
-          </div>
-        </div>
-        <div className=" flex flex-row w-full gap-x-5 justify-end items-center">
-          <div>
-            <button
-              onClick={() => {
-                setFilters({
-                  academicProgramName: "",
-                  seatType: "",
-                  gender: "",
-                  rank: 0,
-                });
-              }}
-              className="rounded-xl text-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 border-2 border-black dark:border-white shadow-black dark:shadow-white bg-purple-500 p-2"
-            >
-              Clear Filters
-            </button>
-          </div>
-          <div>
-            <ViewToggle view={view} setView={setView} />
+            {/* Loading State */}
+            {loading && (
+              <div className="card p-12">
+                <Loading />
+              </div>
+            )}
+
+            {/* Data Table */}
+            {!loading && paginatedData.length > 0 && (
+              <div className="space-y-6">
+                <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
+                
+                {/* Pagination */}
+                <div className="card p-4">
+                  <PaginationNav
+                    currPage={currPage}
+                    setCurrPage={setCurrPage}
+                    totalPages={totalPages}
+                    colsShown={colsShown}
+                    setColsShown={setColsShown}
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Empty State */}
+            {!loading && paginatedData.length === 0 && fetchedOrcr.length > 0 && (
+              <div className="card p-12 text-center">
+                <NotFound text="No results match your filters" />
+              </div>
+            )}
           </div>
         </div>
       </div>
-
-      {loading && <Loading />}
-      {!loading && paginatedData.length > 0 && (
-        <>
-          <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
-          <div className="flex mt-5 justify-center sm:justify-end items-center space-x-4 w-full ">
-            <PaginationNav
-              currPage={currPage}
-              setCurrPage={setCurrPage}
-              totalPages={totalPages}
-              colsShown={colsShown}
-              setColsShown={setColsShown}
-            />
-          </div>
-        </>
-
-      )}
-
-      {loading && (
-        <p className="text-center text-black dark:text-white">Loading...</p>
-      )}
-      {!loading && paginatedData.length === 0 && (
-        <NotFound text="No data found" />
-      )}
-    </div>
+    </section>
   );
 };

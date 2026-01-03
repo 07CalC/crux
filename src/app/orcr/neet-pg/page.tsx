@@ -5,11 +5,13 @@ import { NotFound } from "@/components/common/NotFound";
 import { PaginationNav } from "@/components/common/PaginationNav";
 import { RequiredFilters } from "@/components/common/RequiredFilters";
 import { ViewToggle } from "@/components/common/ViewToggle";
+import { MobileFilterSidebar } from "@/components/common/MobileFilterSidebar";
 import { Orcr } from "@/types/globalTypes";
 import { useEffect, useMemo, useState } from "react";
 import { Table } from "@/components/common/Table";
 import { availableNeetPgYears, neetPgRoundByYearsGlobal, mostRecentNeetPgOrcr } from "@/constants";
 import { useQuery } from "@tanstack/react-query";
+import { FiFilter } from "react-icons/fi";
 
 const fetchOrcrData = async (requiredFilters: Record<string, string | number>) => {
   const res = await fetch("/api/v1/getOrcr", {
@@ -30,6 +32,7 @@ const fetchOrcrData = async (requiredFilters: Record<string, string | number>) =
 export default function NeetPg() {
   const [currPage, setCurrPage] = useState<number>(1);
   const [colsShown, setColsShown] = useState<number>(10);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState<boolean>(false);
   const [sort, setSort] = useState<{
     type: "rank";
     openRank: "asc" | "desc" | null;
@@ -148,45 +151,129 @@ export default function NeetPg() {
   }, [currPage, colsShown]);
 
   return (
-    <div className="flex flex-col items-center w-full p-4 gap-y-6 h-full">
-      <RequiredFilters
-        requiredFilters={requiredFilters}
-        setRequiredFilters={setRequiredFilters}
-        filters={requiredFiltersOptions}
-        counsellingType="NEET_PG"
-      />
-      <div className="w-full max-w-screen sm:px-4 flex justify-between gap-x-3 sm:gap-x-8 items-center">
-        <Filters
-          filters={filters}
-          filterOptions={filterOptions}
-          setFilters={setFilters}
-        />
-        <input
-          type="text"
-          value={filters.searchKeyword}
-          onChange={(e) => setFilters({ ...filters, searchKeyword: e.target.value })}
-          placeholder="Search by Institute"
-          className="p-2 bg-white border-2 dark:bg-[#1a1a1a] rounded-lg shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white focus:shadow-[0px_0px_0px_0px] focus:translate-y-1 focus:translate-x-1 focus:duration-100 transition-all ease-in-out text-black dark:text-white border-black dark:border-gray-100 w-full"
-        />
-        <ViewToggle view={view} setView={setView} />
-      </div>
-      {isLoading && <Loading />}
-      {error && <NotFound text={(error as Error).message || "Error loading data"} />}
-      {!isLoading && !error && paginatedData.length !== 0 && (
-        <>
-          <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
-          <div className="flex justify-center sm:justify-end items-center space-x-4 w-full ">
-            <PaginationNav
-              currPage={currPage}
-              setCurrPage={setCurrPage}
-              totalPages={totalPages}
-              colsShown={colsShown}
-              setColsShown={setColsShown}
+    <section className="min-h-screen bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5 overflow-x-hidden">
+      <div className="w-full px-4 md:px-6 lg:px-8 py-6 max-w-[100vw]">
+        {/* Mobile Filter Button */}
+        <button
+          onClick={() => setIsMobileFilterOpen(true)}
+          className="lg:hidden btn-primary mb-4 w-full sm:w-auto"
+        >
+          <FiFilter className="w-5 h-5" />
+          <span>Filters</span>
+        </button>
+
+        {/* Mobile Filter Sidebar */}
+        <MobileFilterSidebar 
+          isOpen={isMobileFilterOpen} 
+          onClose={() => setIsMobileFilterOpen(false)}
+        >
+          <RequiredFilters
+            requiredFilters={requiredFilters}
+            setRequiredFilters={setRequiredFilters}
+            filters={requiredFiltersOptions}
+            counsellingType="NEET_PG"
+          />
+          <Filters
+            filters={filters}
+            filterOptions={filterOptions}
+            setFilters={setFilters}
+          />
+        </MobileFilterSidebar>
+
+        <div className="grid lg:grid-cols-[420px,1fr] gap-6 lg:h-[calc(100vh-8rem)]">
+          {/* Left Sidebar - Scrollable Filters (Desktop Only) */}
+          <div className="hidden lg:block space-y-6 overflow-y-auto pr-2 h-full pb-6">
+            {/* Required Filters */}
+            <RequiredFilters
+              requiredFilters={requiredFilters}
+              setRequiredFilters={setRequiredFilters}
+              filters={requiredFiltersOptions}
+              counsellingType="NEET_PG"
+            />
+
+            {/* Filters */}
+            <Filters
+              filters={filters}
+              filterOptions={filterOptions}
+              setFilters={setFilters}
             />
           </div>
-        </>
-      )}
-      {!isLoading && !error && paginatedData.length === 0 && <NotFound text="No data found" />}
-    </div>
+
+          {/* Right Content - Scrollable Data Area */}
+          <div className="space-y-6 lg:overflow-y-auto lg:h-full pb-6 min-w-0">
+            {/* Search and View Controls */}
+            <div className="card p-4 lg:sticky lg:top-0 lg:z-10 lg:bg-card/95 lg:backdrop-blur-sm">
+              <div className="flex flex-col gap-4">
+                {/* Search Input */}
+                <div className="flex-1 relative min-w-0 w-full">
+                  <input
+                    type="text"
+                    value={filters.searchKeyword}
+                    onChange={(e) =>
+                      setFilters({ ...filters, searchKeyword: e.target.value })
+                    }
+                    placeholder="Search by institute name..."
+                    className="input pl-4 pr-4 w-full"
+                  />
+                </div>
+
+                {/* View Toggle */}
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    {/* Results Count */}
+                    {!isLoading && !error && (
+                      <p className="text-sm text-muted-foreground">
+                        <span className="font-bold text-foreground">{paginatedData.length}</span> of{" "}
+                        <span className="font-bold text-foreground">{filteredData.length}</span> results
+                      </p>
+                    )}
+                  </div>
+                  <ViewToggle view={view} setView={setView} />
+                </div>
+              </div>
+            </div>
+
+            {/* Loading State */}
+            {isLoading && (
+              <div className="card p-12">
+                <Loading />
+              </div>
+            )}
+
+            {/* Error State */}
+            {error && (
+              <div className="card p-12">
+                <NotFound text={error.message || "Error loading data"} />
+              </div>
+            )}
+
+            {/* Data Table */}
+            {!isLoading && !error && paginatedData.length !== 0 && (
+              <>
+                <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
+                
+                {/* Pagination */}
+                <div className="card p-4">
+                  <PaginationNav
+                    currPage={currPage}
+                    setCurrPage={setCurrPage}
+                    totalPages={totalPages}
+                    colsShown={colsShown}
+                    setColsShown={setColsShown}
+                  />
+                </div>
+              </>
+            )}
+
+            {/* Empty State */}
+            {!isLoading && !error && paginatedData.length === 0 && (
+              <div className="card p-12">
+                <NotFound text="No data found matching your filters" />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }

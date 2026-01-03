@@ -5,7 +5,7 @@ import { ComingSoon } from "../../components/common/ComingSoon";
 
 export default async function Nirf() {
     return (
-        <div className="flex flex-col py-10 w-full h-full gap-y-4 justify-center items-center">
+        <div className="flex flex-col py-10 w-full h-full min-h-screen gap-y-4 justify-center items-center">
             <ComingSoon />
             <div className="flex flex-col items-center">
                 <div className="mb-4 max-w-xs mx-auto z-20 relative">

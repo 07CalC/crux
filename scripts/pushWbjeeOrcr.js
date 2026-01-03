@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { WBJEE_2025_R1 } from "../ORCR/wbjee_2025_r1.js";
+import { WBJEE_2024 as WBJEE_2025_R1 } from "../ORCR/wbjee_2024.js";
 
 const prisma = new PrismaClient();
 
@@ -42,7 +42,7 @@ async function pushWbjeeData() {
   }
 
   const orcrData = WBJEE_2025_R1.map(item => ({
-    year: 2025,
+    year: 2024,
     round: item.round,
     type: "WBJEE",
     exam: item.exam === "WBJEE" ? "WBJEE" : "MAINS",

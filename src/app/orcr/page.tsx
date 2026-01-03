@@ -1,6 +1,9 @@
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
+import { motion } from "motion/react";
+import { FiBarChart2, FiTrendingUp, FiArrowRight, FiActivity } from "react-icons/fi";
 
 const options = [
   {
@@ -9,6 +12,8 @@ const options = [
     done: true,
     href: "/orcr/jossa",
     description: "IITs, NITs, IIITs, and GFTIs admissions",
+    color: "from-primary to-secondary",
+    icon: <FiBarChart2 className="w-6 h-6" />,
   },
   {
     name: "CSAB",
@@ -16,6 +21,8 @@ const options = [
     done: true,
     href: "/orcr/csab",
     description: "Special vacant seat rounds for NITs, IIITs, GFTIs",
+    color: "from-secondary to-accent",
+    icon: <FiTrendingUp className="w-6 h-6" />,
   },
   {
     name: "BITSAT",
@@ -23,6 +30,8 @@ const options = [
     done: true,
     href: "/orcr/bitsat",
     description: "BITS Pilani, Goa, Hyderabad",
+    color: "from-accent to-primary",
+    icon: <FiBarChart2 className="w-6 h-6" />,
   },
   {
     name: "NEET PG",
@@ -30,6 +39,9 @@ const options = [
     done: true,
     href: "/orcr/neet-pg",
     description: "Medical Postgraduate (MD/MS/DNB) admissions",
+    color: "from-primary to-accent",
+    icon: <FiActivity className="w-6 h-6" />,
+    badge: "New",
   },
   {
     name: "JAC",
@@ -37,63 +49,156 @@ const options = [
     done: false,
     href: "/orcr/jac",
     description: "DTU, NSUT, IGDTUW, IIIT-D (Delhi Region)",
+    color: "from-secondary to-primary",
+    icon: <FiBarChart2 className="w-6 h-6" />,
   },
 ];
 
 export default function Orcr() {
   return (
-    <section className="w-full px-4 py-16 ">
-      <div className=" mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-2 justify-center gap-6">
-          {options.map((option) => (
-            <div
-              key={option.name}
-              className={`
-  w-full
-  rounded-xl 
-  bg-gray-50 dark:bg-[#1a1a1a]
-  overflow-hidden 
-  transition-all 
-  ease-in-out 
-  duration-200 
-  shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
-  dark:shadow-[6px_6px_0px_0px_rgba(255,255,255,1)]
-  hover:-translate-y-1 
-  hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
-  dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
-  p-4
-  py-8
-  border-2 border-black dark:border-white
-  ${!option.done ? "opacity-80 cursor-not-allowed" : ""}
-`}
-            >
-              <div className="flex items-center gap-4">
-                <div className="relative w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border border-white/20 shadow-sm">
-                  <Image
-                    src={option.image}
-                    alt={option.name}
-                    fill
-                    className="object-cover hover:scale-110 rounded-full border-2 border-black dark:border-white transition-transform duration-200"
-                  />
-                </div>
-                <h3 className="text-3xl text-purple-500 font-bold">{option.name}</h3>
-              </div>
-              <p className="mt-4 text-gray-900 dark:text-white/80 text-lg md:text-xl">
-                {option.description}
-              </p>
+    <section className="section min-h-screen bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5">
+      <div className="container-custom">
+        {/* Section Header */}
+        <div className="text-center mb-16 space-y-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="inline-flex items-center gap-2 badge-primary"
+          >
+            <FiTrendingUp className="w-4 h-4" />
+            <span className="text-sm font-semibold">Historical Cutoff Data</span>
+          </motion.div>
 
-              {/* Explore Button */}
-              <div className="flex justify-end mt-6">
-                <Link
-                  href={option.href}
-                  className={`rounded-xl sm:text-lg self-start items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 sm:shadow-[4px_4px_0px_0px] shadow-[3px_3px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 sm:active:translate-x-2 sm:active:translate-y-2 active:duration-100 p-2 dark:shadow-white shadow-black bg-purple-500 px-2 text-center ${!option.done ? "cursor-not-allowed" : ""}`}
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.5 }}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold"
+          >
+            Explore <span className="text-gradient">Cutoff Rankings</span>
+          </motion.h1>
+
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+            className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto"
+          >
+            Access comprehensive opening and closing rank data from various counseling processes. 
+            Analyze trends across 3 years to make informed admission decisions.
+          </motion.p>
+        </div>
+
+        {/* Options Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {options.map((option, index) => (
+            <motion.div
+              key={option.name}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 + index * 0.1, duration: 0.5 }}
+            >
+              <Link
+                href={option.done ? option.href : "#"}
+                className={`group block ${!option.done ? "pointer-events-none" : ""}`}
+              >
+                <div
+                  className={`relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-300 ${
+                    option.done
+                      ? "hover:shadow-xl hover:-translate-y-1 hover:border-primary/50"
+                      : "opacity-60"
+                  }`}
                 >
-                  {option.done ? "Explore →" : "Coming Soon"}
-                </Link>
-              </div>
-            </div>
+                  {/* Gradient Overlay */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
+
+                  <div className="relative p-6 md:p-8 space-y-4">
+                    {/* Header */}
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex items-center gap-4">
+                        {/* Icon */}
+                        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300`}>
+                          {option.icon}
+                        </div>
+
+                        {/* Logo Image */}
+                        <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden border-2 border-border group-hover:border-primary/30 transition-colors">
+                          <Image
+                            src={option.image}
+                            alt={option.name}
+                            fill
+                            className="object-cover group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Badge */}
+                      {option.badge && (
+                        <span className="badge-secondary animate-pulse">
+                          {option.badge}
+                        </span>
+                      )}
+                      {!option.done && (
+                        <span className="badge-primary text-xs">
+                          Coming Soon
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Title */}
+                    <div>
+                      <h3 className="text-2xl md:text-3xl font-bold mb-2 group-hover:text-primary transition-colors">
+                        {option.name}
+                      </h3>
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                        {option.description}
+                      </p>
+                    </div>
+
+                    {/* Action */}
+                    {option.done && (
+                      <div className="flex items-center gap-2 text-primary font-semibold text-sm md:text-base pt-2">
+                        <span>Explore Cutoffs</span>
+                        <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Bottom Accent Line */}
+                  <div className={`h-1 bg-gradient-to-r ${option.color} transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300`} />
+                </div>
+              </Link>
+            </motion.div>
           ))}
         </div>
+
+        {/* Bottom Info */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.8, duration: 0.5 }}
+          className="text-center mt-16 max-w-3xl mx-auto"
+        >
+          <div className="card p-6">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-secondary animate-pulse" />
+                <span>3 years of data</span>
+              </div>
+              <div className="hidden md:block w-px h-4 bg-border" />
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-accent animate-pulse delay-150" />
+                <span>Multiple rounds tracked</span>
+              </div>
+              <div className="hidden md:block w-px h-4 bg-border" />
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 rounded-full bg-primary animate-pulse delay-300" />
+                <span>Updated regularly</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

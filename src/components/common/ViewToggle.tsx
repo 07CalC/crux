@@ -1,10 +1,8 @@
 import { Orcr } from "@/types/globalTypes";
-import { SlidersHorizontal } from "lucide-react";
+import { FiEye, FiX, FiChevronDown } from "react-icons/fi";
 import { AnimatePresence } from "motion/react";
 import * as motion from "motion/react-client";
 import { useEffect, useRef, useState } from "react";
-
-
 
 type props = {
     view: { name: string; key: keyof Orcr; show: boolean }[]
@@ -30,41 +28,75 @@ export const ViewToggle = ({ view, setView }: props) => {
             document.removeEventListener("mousedown", handleClickOutside);
         };
     })
+
+    const visibleCount = view.filter(v => v.show).length;
+
     return (
-        <div className="rounded-xl w-full max-w-screen h-full flex-1" ref={viewRef}>
+        <div className="relative" ref={viewRef}>
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="rounded-xl sm:text-lg self-start gap-x-2 items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 dark:shadow-white  shadow-black bg-purple-500 p-2"
+                className="btn-secondary group relative"
             >
-                <SlidersHorizontal size={20} /> <p className="hidden sm:flex">View</p>
+                <FiEye className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>Columns</span>
+                <FiChevronDown className="w-4 h-4" />
+                <span className="badge-primary text-xs px-2 py-0.5 ml-1">
+                    {visibleCount}
+                </span>
             </button>
 
             <AnimatePresence>
                 {isOpen && (
                     <motion.div
-                        initial={{ height: 0, opacity: 0, y: -10 }}
-                        animate={{ height: "auto", opacity: 1, y: 0 }}
-                        exit={{ height: 0, opacity: 0, y: 10 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className="absolute right-0 sm:right-4 z-10 mt-6">
-                        <div className="grid grid-cols-2 gap-4 p-4 w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-[#2a2a2a] dark:to-[#1f1f1f] border-black border-2 dark:border-white rounded-xl shadow-[8px_8px_0px_0px] dark:shadow-white shadow-black">
-                            {view.map((item, index) => (
-                                <div onClick={() => setView(view.map((v, i) => i === index ? { ...v, show: !v.show } : v))} key={index} className="flex items-center">
-                                    <input
-                                        type="checkbox"
-                                        className="mr-2 h-6 w-6 bg-purple-500 accent-purple-500"
-                                        checked={item.show}
-                                        onChange={() => setView(view.map((v, i) => i === index ? { ...v, show: !v.show } : v))}
-                                    />
-                                    <label className="text-black dark:text-white">{item.name}</label>
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2, ease: "easeInOut" }}
+                        className="fixed sm:absolute inset-x-4 sm:inset-x-auto sm:right-0 top-auto z-50 mt-4"
+                    >
+                        <div className="card p-4 sm:p-6 space-y-4 shadow-xl sm:min-w-[320px]">
+                            {/* Header */}
+                            <div className="flex items-center justify-between pb-4 border-b border-border">
+                                <div className="flex items-center gap-2">
+                                    <FiEye className="w-5 h-5 text-primary" />
+                                    <h3 className="text-base sm:text-lg font-bold">Visible Columns</h3>
                                 </div>
-                            ))}
+                                <button
+                                    onClick={() => setIsOpen(false)}
+                                    className="btn-ghost p-2 group/close"
+                                >
+                                    <FiX className="w-5 h-5 group-hover/close:rotate-90 transition-transform" />
+                                </button>
+                            </div>
+
+                            {/* Column toggles */}
+                            <div className="space-y-2 max-h-[60vh] sm:max-h-[400px] overflow-y-auto pr-2">
+                                {view.map((item, index) => (
+                                    <label
+                                        key={index}
+                                        className="flex items-center gap-3 p-2 sm:p-3 rounded-lg hover:bg-muted/50 cursor-pointer transition-colors group"
+                                    >
+                                        <input
+                                            type="checkbox"
+                                            className="w-4 h-4 flex-shrink-0 rounded border-border text-primary focus:ring-2 focus:ring-primary/20 cursor-pointer"
+                                            checked={item.show}
+                                            onChange={() => setView(view.map((v, i) => i === index ? { ...v, show: !v.show } : v))}
+                                        />
+                                        <span className="text-sm font-medium group-hover:text-primary transition-colors flex-1 break-words">
+                                            {item.name}
+                                        </span>
+                                    </label>
+                                ))}
+                            </div>
+
+                            {/* Footer */}
+                            <div className="flex justify-between items-center pt-4 border-t border-border text-sm text-muted-foreground">
+                                <span>{visibleCount} of {view.length} visible</span>
+                            </div>
                         </div>
                     </motion.div>
-
                 )}
             </AnimatePresence>
         </div>
-
     );
 }

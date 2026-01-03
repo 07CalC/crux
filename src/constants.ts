@@ -19,7 +19,7 @@ export const AVAILABLE_BITSAT_ORCRS = [
 ]
 
 export const AVAILABLE_NEET_PG_ORCRS = [
-  { 2025: [1] }
+  { 2025: [1, 2] }
 ]
 
 export const mostRecentJossaOrcr: { year: number, round: number } = AVAILABLE_JOSSA_ORCRS.reduce((latest, obj) => {

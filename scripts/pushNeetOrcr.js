@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { neetPgR1_2025 } from "../neet/neetPgR1_2025.js";
+import { neetPgR2_2025 } from "../neet/neetPgR2_2025_optimized.js";
 
 const prisma = new PrismaClient();
 
@@ -15,14 +15,14 @@ function chunkArray(array, size) {
 
 async function pushNeetData() {
   console.log("Starting NEET PG data import...");
-  console.log(`Total entries to process: ${neetPgR1_2025.length}`);
+  console.log(`Total entries to process: ${neetPgR2_2025.length}`);
 
-  await prisma.orcr.deleteMany({
-    where: {
-      exam: "NEET_PG"
-    }
-  });
-  console.log("deleted")
+  // await prisma.orcr.deleteMany({
+  //   where: {
+  //     exam: "NEET_PG"
+  //   }
+  // });
+  // console.log("deleted")
 
   // Get all existing colleges
   const colleges = await prisma.college.findMany({
@@ -34,7 +34,7 @@ async function pushNeetData() {
 
   // Extract unique institutes from NEET data
   const uniqueInstitutes = new Map();
-  neetPgR1_2025.forEach((item) => {
+  neetPgR2_2025.forEach((item) => {
     const parts = item.institute.split(',').map(s => s.trim());
     const instituteName = parts[0];
     const location = parts[1] || null;
@@ -94,7 +94,7 @@ async function pushNeetData() {
   }
 
   // Map all data (now all colleges should exist)
-  const orcrData = neetPgR1_2025.map((item) => {
+  const orcrData = neetPgR2_2025.map((item) => {
     // Try exact match first
     let collegeId = collegeMap.get(item.institute);
 

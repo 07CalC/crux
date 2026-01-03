@@ -84,6 +84,7 @@ enum CollegeType {
   GFTI
   BITS
   JAC
+  WBJEE
   NEET_PG
   NEET_UG
 }
@@ -94,6 +95,7 @@ enum OrcrType {
   BITSAT
   NEET_PG
   NEET_UG
+  WBJEE
   OTHER
 }
 
@@ -101,6 +103,7 @@ enum Exam {
   MAINS
   ADVANCED
   BITSAT
+  WBJEE
   NEET_PG
   NEET_UG
 }

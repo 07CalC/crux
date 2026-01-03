@@ -32,6 +32,13 @@ const options = [
     description: "Medical Postgraduate (MD/MS/DNB) admissions",
   },
   {
+    name: "WBJEE",
+    image: "/wbjee.png",
+    done: true,
+    href: "/orcr/wbjee",
+    description: "West Bengal state-level engineering entrance exam"
+  },
+  {
     name: "JAC",
     image: "/jac.jpeg",
     done: false,

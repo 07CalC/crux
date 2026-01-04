@@ -36,7 +36,7 @@ export async function POST(req: Request) {
             type: type,
         }
     });
-    if (!orcr) return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
+    if (orcr.length === 0) return new NextResponse(JSON.stringify({ error: "Orcr not found" }), { status: 404 });
     if (!fs.existsSync(CACHE_DIR)) fs.mkdirSync(CACHE_DIR);
 
     const jsonString = JSON.stringify(orcr);

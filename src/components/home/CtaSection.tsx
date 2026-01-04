@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "motion/react";
-import { FiSearch, FiBarChart2, FiArrowRight } from "react-icons/fi";
+import { FiSearch, FiBarChart2, FiArrowRight, FiMessageSquare } from "react-icons/fi";
 
 export const CtaSection = () => {
   return (
@@ -17,7 +17,7 @@ export const CtaSection = () => {
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-pattern-dots opacity-5" />
-          
+
           {/* Gradient Orbs */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-br from-secondary/20 to-accent/20 rounded-full blur-3xl" />
@@ -52,10 +52,16 @@ export const CtaSection = () => {
                 <span>Explore Colleges</span>
                 <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
-              
+
               <Link href="/orcr" className="btn-secondary group">
                 <FiBarChart2 className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span>View Cutoffs</span>
+                <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
+
+              <Link href="/feedback" className="btn-outline group">
+                <FiMessageSquare className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                <span>Send Feedback</span>
                 <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
@@ -69,7 +75,7 @@ export const CtaSection = () => {
               className="flex flex-wrap justify-center gap-8 pt-8 border-t border-border"
             >
               {[
-                { label: "Colleges", value: "170+" },
+                { label: "Colleges", value: "1500+" },
                 { label: "Data Points", value: "10K+" },
                 { label: "Years of Data", value: "3" },
               ].map((stat, index) => (

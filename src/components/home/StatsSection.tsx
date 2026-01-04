@@ -7,9 +7,9 @@ export const StatsSection = () => {
   const stats = [
     {
       icon: <FiAward className="w-8 h-8" />,
-      value: "170+",
+      value: "1500+",
       label: "Top Colleges",
-      description: "IITs, NITs, IIITs & GFTIs",
+      description: "IITs, NITs, IIITs, GFTIs, BITS ,Med schools and more",
       color: "from-primary to-primary"
     },
     {
@@ -28,7 +28,7 @@ export const StatsSection = () => {
     },
     {
       icon: <FiUsers className="w-8 h-8" />,
-      value: "10,000+",
+      value: "1000+",
       label: "Students Helped",
       description: "Finding their dream college",
       color: "from-primary to-secondary"
@@ -50,7 +50,7 @@ export const StatsSection = () => {
             <FiTrendingUp className="w-4 h-4" />
             <span className="text-sm font-semibold">Proven Track Record</span>
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -60,7 +60,7 @@ export const StatsSection = () => {
           >
             Trusted by <span className="text-gradient">Thousands</span>
           </motion.h2>
-          
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -117,29 +117,6 @@ export const StatsSection = () => {
           <p className="text-muted-foreground mb-4">
             Join thousands of students making informed decisions
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            <div className="flex items-center gap-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4, 5].map((i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-accent border-2 border-background"
-                  />
-                ))}
-              </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                10,000+ students
-              </span>
-            </div>
-            <div className="flex items-center gap-2 text-yellow-500">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <FiAward key={i} className="w-5 h-5 fill-current" />
-              ))}
-              <span className="text-sm font-medium text-muted-foreground ml-2">
-                4.9/5 Rating
-              </span>
-            </div>
-          </div>
         </motion.div>
       </div>
     </section>

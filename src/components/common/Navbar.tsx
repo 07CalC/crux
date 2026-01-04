@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { FiMenu, FiX, FiSearch, FiBarChart2, FiAward, FiActivity } from "react-icons/fi";
+import { FiMenu, FiX, FiSearch, FiBarChart2, FiAward, FiActivity, FiMessageSquare } from "react-icons/fi";
 import { ThemeToggleButton } from "./ToggleThemeButton";
 
 export const Navbar = () => {
@@ -22,6 +22,7 @@ export const Navbar = () => {
     { href: "/explore", label: "Explore", icon: <FiSearch className="w-4 h-4" /> },
     { href: "/orcr", label: "Cutoffs", icon: <FiBarChart2 className="w-4 h-4" /> },
     { href: "/orcr/neet-pg", label: "NEET PG", icon: <FiActivity className="w-4 h-4" />, badge: "New" },
+    { href: "/feedback", label: "Feedback", icon: <FiMessageSquare className="w-4 h-4" /> },
   ];
 
   return (

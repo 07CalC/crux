@@ -71,7 +71,7 @@ export default async function RootLayout({
         <ThemeInitializer />
         <NextTopLoader showSpinner={false} color="#6366f1" height={3} />
         <Navbar />
-        <main className="pt-16 md:pt-20">
+        <main className="pt-16">
           <QueryProvider>
             {children}
           </QueryProvider>

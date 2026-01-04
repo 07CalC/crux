@@ -10,6 +10,7 @@ const quickLinks = [
   { title: "Explore", link: "/explore" },
   // { title: "Rankings", link: "/nirf" },
   { title: "NEET PG", link: "/orcr/neet-pg" },
+  { title: "Feedback", link: "/feedback" },
 ];
 
 const officialLinks = [

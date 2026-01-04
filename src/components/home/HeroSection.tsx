@@ -7,22 +7,22 @@ import { motion } from "motion/react";
 
 export const HeroSection = () => {
   const stats = [
-    { value: "170+", label: "Colleges", icon: <FiAward className="w-4 h-4" /> },
-    { value: "10K+", label: "Students", icon: <FiUsers className="w-4 h-4" /> },
+    { value: "1500+", label: "Colleges", icon: <FiAward className="w-4 h-4" /> },
+    // { value: "10K+", label: "Students", icon: <FiUsers className="w-4 h-4" /> },
     { value: "3", label: "Years Data", icon: <FiTrendingUp className="w-4 h-4" /> },
   ];
 
   const features = [
-    { icon: <FiTrendingUp />, text: "JEE, NEET & BITSAT Cutoffs" },
-    { icon: <FiAward />, text: "NIRF Rankings" },
+    { icon: <FiTrendingUp />, text: "JEE, NEET & more Cutoffs" },
+    // { icon: <FiAward />, text: "NIRF Rankings" },
     { icon: <FiStar />, text: "Student Reviews" },
   ];
 
   return (
-    <section className="relative section overflow-hidden bg-pattern-dots pt-24 md:pt-28">
+    <section className="relative section overflow-hidden bg-pattern-dots">
       {/* Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-accent/5 to-secondary/5 opacity-50" />
-      
+
       {/* Floating Shapes */}
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-1000" />
@@ -39,7 +39,7 @@ export const HeroSection = () => {
             {/* Badge */}
             <div className="inline-flex items-center gap-2 badge-primary px-4 py-2 rounded-full">
               <FiStar className="w-4 h-4" />
-              <span className="text-sm font-semibold">Trusted by 10,000+ Students</span>
+              <span className="text-sm font-semibold">Trusted by many Aspirants</span>
             </div>
 
             {/* Heading */}
@@ -51,7 +51,7 @@ export const HeroSection = () => {
                 </span>
               </h1>
               <p className="text-lg md:text-xl text-muted-foreground max-w-2xl">
-                Compare 170+ engineering and medical colleges with real cutoff data, rankings, and authentic student reviews. Make informed decisions with confidence.
+                Compare 1500+ engineering and medical colleges with real cutoff data, rankings, and authentic student reviews. Make informed decisions with confidence.
               </p>
             </div>
 
@@ -112,7 +112,7 @@ export const HeroSection = () => {
           >
             {/* Main Image Card */}
             <div className="relative group">
-              <div className="card card-hover overflow-hidden">
+              <div className="card overflow-hidden">
                 <Image
                   src="/iiita.jpeg"
                   alt="Modern college campus with state-of-the-art facilities"
@@ -121,8 +121,7 @@ export const HeroSection = () => {
                   className="object-cover w-full h-full"
                   priority
                 />
-                
-                {/* Overlay on Hover */}
+
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                   <div>
                     <h3 className="text-white text-xl font-bold mb-1">IIIT Allahabad</h3>
@@ -136,14 +135,14 @@ export const HeroSection = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.6 }}
-                className="absolute -bottom-6 -left-6 card backdrop-blur-xl bg-card/90"
+                className="absolute -bottom-6 -right-6 card backdrop-blur-xl bg-card/90"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent text-white">
                     <FiAward className="w-6 h-6" />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">170+</div>
+                    <div className="text-2xl font-bold">1500+</div>
                     <div className="text-sm text-muted-foreground">Top Colleges</div>
                   </div>
                 </div>

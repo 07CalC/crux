@@ -21,7 +21,8 @@ export const CutoffSection = () => {
   const features = [
     { icon: FiBarChart2, text: "JoSAA • 6 Rounds", color: "from-primary to-secondary" },
     { icon: FiFilter, text: "CSAB • Special", color: "from-secondary to-accent" },
-    { icon: FiCheckCircle, text: "BITSAT • NEET PG", color: "from-accent to-primary" },
+    { icon: FiCheckCircle, text: "BITSAT ", color: "from-accent to-primary" },
+    { icon: FiCheckCircle, text: "NEET PG", color: "from-accent to-primary" }
   ];
 
   return (
@@ -77,7 +78,7 @@ export const CutoffSection = () => {
                 Make Informed Choices
               </h3>
               <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
-                Access comprehensive historical cutoff data for IITs, NITs, IIITs, and GFTIs. 
+                Access comprehensive historical cutoff data for IITs, NITs, IIITs, and GFTIs.
                 Filter by branch, gender, category, and seat type to find your perfect match.
               </p>
             </div>
@@ -93,9 +94,9 @@ export const CutoffSection = () => {
                   transition={{ delay: 0.3 + index * 0.1 }}
                   className="card-hover group"
                 >
-                  <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mr-2 group-hover:scale-110 transition-transform`}>
-                    <feature.icon className="w-4 h-4 text-white" />
-                  </div>
+                  {/* <div className={`w-8 h-8 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mr-2 group-hover:scale-110 transition-transform`}> */}
+                  {/*   <feature.icon className="w-4 h-4 text-white" /> */}
+                  {/* </div> */}
                   <span className="text-sm font-semibold">{feature.text}</span>
                 </motion.div>
               ))}
@@ -117,7 +118,7 @@ export const CutoffSection = () => {
               <Link href="/orcr/neet-pg" className="btn-secondary group">
                 <FiCheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                 <span>NEET PG</span>
-                <span className="badge-accent text-xs px-2 py-0.5 ml-1">NEW</span>
+                <span className="badge-primary text-xs px-2 py-0.5 ml-1">NEW</span>
               </Link>
             </motion.div>
           </motion.div>

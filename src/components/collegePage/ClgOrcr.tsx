@@ -2,7 +2,8 @@
 import { Orcr } from "@/types/globalTypes";
 import { useState, useMemo, useEffect } from "react";
 import { Table } from "@/components/common/Table";
-import { availableBitsatYears, availableCsabYears, availableJossaYears, availableNeetPgYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr, mostRecentNeetPgOrcr, neetPgRoundByYearsGlobal } from "@/constants";
+
+import { availableBitsatYears, availableCsabYears, availableJossaYears, availableNeetPgYears, availableWbjeeYears, bitsatRoundByYearsGlobal, csabRoundByYearsGlobal, jossaRoundByYearsGlobal, mostRecentBitsatOrcr, mostRecentJossaOrcr, mostRecentNeetPgOrcr, mostRecentWbjeeOrcr, neetPgRoundByYearsGlobal, wbjeeRoundByYearsGlobal } from "@/constants";
 import { NotFound } from "../common/NotFound";
 import { Loading } from "../common/Loading";
 import { PaginationNav } from "../common/PaginationNav";
@@ -15,7 +16,7 @@ export const ClgOrcr = ({
   clgType,
 }: {
   clgId: string;
-  clgType?: "IIT" | "GFTI" | "BITS" | "JAC" | "NEET_PG" | "NEET_UG";
+  clgType?: "IIT" | "GFTI" | "BITS" | "JAC" | "NEET_PG" | "NEET_UG" | "WBJEE";
 }) => {
   const [fetchedOrcr, setFetchedOrcr] = useState<Orcr[]>([]);
   const [loading, setLoading] = useState(false);
@@ -47,6 +48,7 @@ export const ClgOrcr = ({
     JAC: ["JAC"],
     NEET_PG: ["NEET_PG"],
     NEET_UG: ["NEET_UG"],
+    WBJEE: ["WBJEE"]
   };
 
 
@@ -54,34 +56,38 @@ export const ClgOrcr = ({
     [key: string]: string | number;
   }>({
     type: counsellingType[clgType!]?.[0] || "JOSSA",
-    year: clgType === "BITS" 
-      ? availableBitsatYears[availableBitsatYears.length - 1] 
-      : clgType === "NEET_PG" 
+    year: clgType === "BITS"
+      ? availableBitsatYears[availableBitsatYears.length - 1]
+      : clgType === "NEET_PG"
         ? availableNeetPgYears[availableNeetPgYears.length - 1]
-        : availableJossaYears[availableJossaYears.length - 1],
-    round: clgType === "BITS" 
-      ? mostRecentBitsatOrcr.round 
+        : clgType === "WBJEE" ? availableWbjeeYears[availableWbjeeYears.length - 1] : availableJossaYears[availableJossaYears.length - 1],
+    round: clgType === "BITS"
+      ? mostRecentBitsatOrcr.round
       : clgType === "NEET_PG"
         ? mostRecentNeetPgOrcr.round
-        : mostRecentJossaOrcr.round,
+        : clgType === "WBJEE" ? mostRecentWbjeeOrcr.round : mostRecentJossaOrcr.round,
   });
 
-  const availableYears: Record<string, number[]> = clgType === "BITS" 
-    ? { BITSAT: availableBitsatYears } 
+  const availableYears: Record<string, number[]> = clgType === "BITS"
+    ? { BITSAT: availableBitsatYears }
     : clgType === "NEET_PG"
-      ? { NEET_PG: availableNeetPgYears }
-      : {
-        JOSSA: availableJossaYears,
-        CSAB: availableCsabYears,
-      }
-  const availableRounds: Record<string, Record<number, number[]>> = clgType === "BITS" 
-    ? { BITSAT: bitsatRoundByYearsGlobal } 
-    : clgType === "NEET_PG" 
-      ? { NEET_PG: neetPgRoundByYearsGlobal }
-      : {
-        JOSSA: jossaRoundByYearsGlobal,
-        CSAB: csabRoundByYearsGlobal,
-      }
+      ? { NEET_PG: availableNeetPgYears } :
+      clgType === "WBJEE"
+        ? { WBJEE: availableWbjeeYears }
+        : {
+          JOSSA: availableJossaYears,
+          CSAB: availableCsabYears,
+        }
+  const availableRounds: Record<string, Record<number, number[]>> = clgType === "BITS"
+    ? { BITSAT: bitsatRoundByYearsGlobal }
+    : clgType === "NEET_PG"
+      ? { NEET_PG: neetPgRoundByYearsGlobal } :
+      clgType === "WBJEE"
+        ? { WBJEE: wbjeeRoundByYearsGlobal }
+        : {
+          JOSSA: jossaRoundByYearsGlobal,
+          CSAB: csabRoundByYearsGlobal,
+        }
   const requiredFiltersOptions = useMemo(() => {
     const year = requiredFilters.year as number;
     const type = requiredFilters.type as string;
@@ -108,6 +114,12 @@ export const ClgOrcr = ({
         { type: ["NEET_PG"] },
         { year: availableNeetPgYears },
         { round: neetPgRoundByYearsGlobal[year] || [1] }
+      ]
+    } else if (clgType === "WBJEE") {
+      return [
+        { type: ["WBJEE"] },
+        { year: availableWbjeeYears },
+        { round: wbjeeRoundByYearsGlobal[year] || [1] }
       ]
     }
     else {
@@ -151,11 +163,13 @@ export const ClgOrcr = ({
 
     const extraFields: { name: string; key: keyof Orcr; show: boolean }[] =
       clgType === "BITS"
-        ? [{ name: "Marks", key: "marks", show: true }]
-        : [
-          { name: "Open Rank", key: "openRank", show: true },
-          { name: "Close Rank", key: "closeRank", show: true },
-        ];
+        ? [{ name: "Marks", key: "marks", show: true }] :
+        clgType === "WBJEE"
+          ? [{ name: "Exam", key: "exam", show: true }]
+          : [
+            { name: "Open Rank", key: "openRank", show: true },
+            { name: "Close Rank", key: "closeRank", show: true },
+          ];
 
     setView([...baseView, ...extraFields]);
   }, [clgType]);
@@ -314,8 +328,8 @@ export const ClgOrcr = ({
         </button>
 
         {/* Mobile Filter Sidebar */}
-        <MobileFilterSidebar 
-          isOpen={isMobileFilterOpen} 
+        <MobileFilterSidebar
+          isOpen={isMobileFilterOpen}
           onClose={() => setIsMobileFilterOpen(false)}
         >
           {/* Required Filters */}
@@ -328,7 +342,7 @@ export const ClgOrcr = ({
               </div>
               <h3 className="text-base font-bold">Required Filters</h3>
             </div>
-            
+
             <div className="space-y-4">
               {requiredFiltersOptions.map((option, index) => {
                 const key = Object.keys(option)[0];
@@ -365,7 +379,7 @@ export const ClgOrcr = ({
               </div>
               <h3 className="text-base font-bold">Additional Filters</h3>
             </div>
-            
+
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-semibold text-muted-foreground mb-2 block">
@@ -477,7 +491,7 @@ export const ClgOrcr = ({
                 </div>
                 <h3 className="text-base font-bold">Required Filters</h3>
               </div>
-              
+
               <div className="space-y-4">
                 {requiredFiltersOptions.map((option, index) => {
                   const key = Object.keys(option)[0];
@@ -514,7 +528,7 @@ export const ClgOrcr = ({
                 </div>
                 <h3 className="text-base font-bold">Additional Filters</h3>
               </div>
-              
+
               <div className="space-y-4">
                 <div>
                   <label className="text-sm font-semibold text-muted-foreground mb-2 block">
@@ -658,7 +672,7 @@ export const ClgOrcr = ({
             {!loading && paginatedData.length > 0 && (
               <div className="space-y-6">
                 <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
-                
+
                 {/* Pagination */}
                 <div className="card p-4">
                   <PaginationNav

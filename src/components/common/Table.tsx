@@ -74,18 +74,17 @@ export const Table = ({
     <div className="card overflow-hidden p-0">
       <div className="overflow-x-auto">
         <table className="min-w-full">
-          <thead className="bg-muted/50">
+          <thead className="bg-muted/50 top-0 ">
             <tr>
               {view.map(
                 (header, index) =>
                   header.show && (
                     <th
                       key={index}
-                      className={`text-sm font-bold text-left px-4 py-3 border-b border-border ${
-                        (header.key === "marks" || header.key === "openRank" || header.key === "closeRank")
+                      className={`text-sm font-bold text-left px-4 py-3 border-b border-border bg-muted/50 backdrop-blur-sm ${(header.key === "marks" || header.key === "openRank" || header.key === "closeRank")
                           ? "cursor-pointer hover:bg-muted/70 transition-colors group"
                           : ""
-                      }`}
+                        }`}
                       onClick={() => {
                         if (header.key === "marks" || header.key === "openRank" || header.key === "closeRank") {
                           handleSort(header.key);

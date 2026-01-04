@@ -9,6 +9,7 @@ import { Loading } from "../common/Loading";
 import { PaginationNav } from "../common/PaginationNav";
 import { ViewToggle } from "../common/ViewToggle";
 import { MobileFilterSidebar } from "../common/MobileFilterSidebar";
+import { SearchableSelect } from "../common/SearchableSelect";
 import { FiFilter } from "react-icons/fi";
 
 export const ClgOrcr = ({
@@ -308,12 +309,19 @@ export const ClgOrcr = ({
     });
   };
 
+  useEffect(() => {
+    setCurrPage(1)
+  }, [filters])
+
   if (!loading && fetchedOrcr.length === 0)
     return (
       <div className="card p-12 text-center">
         <NotFound text="No cutoff data available for this college" />
       </div>
     );
+
+
+
 
   return (
     <section className="overflow-x-hidden">
@@ -385,21 +393,14 @@ export const ClgOrcr = ({
                 <label className="text-sm font-semibold text-muted-foreground mb-2 block">
                   Program
                 </label>
-                <select
-                  name="academicProgramName"
+                <SearchableSelect
                   value={filters.academicProgramName}
-                  onChange={(e) =>
-                    setFilters({ ...filters, academicProgramName: e.target.value })
-                  }
-                  className="input w-full"
-                >
-                  <option value="">All Programs</option>
-                  {filterOptions[0].academicProgramName.map((value, index) => (
-                    <option key={index} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
+                  onChange={(value) => setFilters({ ...filters, academicProgramName: String(value) })}
+                  options={filterOptions[0].academicProgramName}
+                  placeholder="Select Program"
+                  allowEmpty={true}
+                  emptyLabel="All Programs"
+                />
               </div>
 
               <div>
@@ -479,9 +480,7 @@ export const ClgOrcr = ({
         </MobileFilterSidebar>
 
         <div className="grid lg:grid-cols-[380px,1fr] gap-6">
-          {/* Left Sidebar - Scrollable Filters (Desktop Only) */}
           <div className="hidden lg:block space-y-6">
-            {/* Required Filters */}
             <div className="card p-4">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
@@ -534,21 +533,14 @@ export const ClgOrcr = ({
                   <label className="text-sm font-semibold text-muted-foreground mb-2 block">
                     Program
                   </label>
-                  <select
-                    name="academicProgramName"
+                  <SearchableSelect
                     value={filters.academicProgramName}
-                    onChange={(e) =>
-                      setFilters({ ...filters, academicProgramName: e.target.value })
-                    }
-                    className="input w-full"
-                  >
-                    <option value="">All Programs</option>
-                    {filterOptions[0].academicProgramName.map((value, index) => (
-                      <option key={index} value={value}>
-                        {value}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(value) => setFilters({ ...filters, academicProgramName: String(value) })}
+                    options={filterOptions[0].academicProgramName}
+                    placeholder="Select Program"
+                    allowEmpty={true}
+                    emptyLabel="All Programs"
+                  />
                 </div>
 
                 <div>
@@ -631,7 +623,7 @@ export const ClgOrcr = ({
           <div className="space-y-6 min-w-0">
             {/* Search and View Controls */}
             <div className="card p-4">
-              <div className="flex flex-col gap-4">
+              <div className="flex gap-4">
                 {/* Search Input */}
                 <div className="flex-1 relative min-w-0 w-full">
                   <input
@@ -645,6 +637,7 @@ export const ClgOrcr = ({
                   />
                 </div>
 
+                <ViewToggle view={view} setView={setView} />
                 {/* View Toggle */}
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -656,7 +649,6 @@ export const ClgOrcr = ({
                       </p>
                     )}
                   </div>
-                  <ViewToggle view={view} setView={setView} />
                 </div>
               </div>
             </div>

@@ -8,7 +8,7 @@ import { FiGithub, FiHeart, FiExternalLink, FiStar } from "react-icons/fi";
 const quickLinks = [
   { title: "Cutoffs", link: "/orcr" },
   { title: "Explore", link: "/explore" },
-  { title: "Rankings", link: "/nirf" },
+  // { title: "Rankings", link: "/nirf" },
   { title: "NEET PG", link: "/orcr/neet-pg" },
 ];
 
@@ -16,7 +16,9 @@ const officialLinks = [
   { title: "NIRF", link: "https://www.nirfindia.org/" },
   { title: "JoSAA", link: "https://josaa.nic.in/" },
   { title: "CSAB", link: "https://csab.nic.in/" },
-  { title: "BITSAT", link: "https://www.bitsadmission.com/fd/BITSAT_cutoffs.html?06012025" },
+  { title: "BITSAT", link: "https://admissions.bits-pilani.ac.in/" },
+  { title: "Neet-Pg", link: "https://mcc.nic.in/pg-medical-counselling/" },
+  { title: "WBJEE", link: "https://wbjeeb.nic.in/ewbjee/" },
   { title: "JAC Delhi", link: "https://jacdelhi.admissions.nic.in/" }
 ];
 
@@ -25,9 +27,9 @@ export const Footer = () => {
     <footer className="relative bg-gradient-to-br from-muted/50 via-background to-muted/50 border-t border-border overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-dots opacity-5" />
-      
+
       {/* Large Background Text */}
-      <div 
+      <div
         className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[10rem] md:text-[15rem] lg:text-[20rem] font-extrabold text-muted/5 leading-none select-none pointer-events-none"
         aria-hidden="true"
       >

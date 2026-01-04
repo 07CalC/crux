@@ -79,6 +79,16 @@
     @apply bg-muted-foreground/50;
   }
 
+  /* Hide scrollbar utility class */
+  .hide-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+
   /* Selection */
   ::selection {
     @apply bg-primary/20 text-foreground;
@@ -99,7 +109,7 @@
 @layer components {
   /* Modern Card Component */
   .card {
-    @apply bg-card text-card-foreground rounded-2xl border border-border shadow-sm transition-all duration-300 p-6;
+    @apply bg-card text-card-foreground rounded-2xl border border-border shadow-sm transition-all duration-300 p-4;
   }
 
   .card-hover {

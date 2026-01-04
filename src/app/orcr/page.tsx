@@ -92,7 +92,7 @@ export default function Orcr() {
             transition={{ delay: 0.2, duration: 0.5 }}
             className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto"
           >
-            Access comprehensive opening and closing rank data from various counseling processes. 
+            Access comprehensive opening and closing rank data from various counseling processes.
             Analyze trends across 3 years to make informed admission decisions.
           </motion.p>
         </div>
@@ -111,11 +111,10 @@ export default function Orcr() {
                 className={`group block ${!option.done ? "pointer-events-none" : ""}`}
               >
                 <div
-                  className={`relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-300 ${
-                    option.done
-                      ? "hover:shadow-xl hover:-translate-y-1 hover:border-primary/50"
-                      : "opacity-60"
-                  }`}
+                  className={`relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-300 ${option.done
+                    ? "hover:shadow-xl hover:-translate-y-1 hover:border-primary/50"
+                    : "opacity-60"
+                    }`}
                 >
                   {/* Gradient Overlay */}
                   <div className={`absolute inset-0 bg-gradient-to-br ${option.color} opacity-0 group-hover:opacity-5 transition-opacity duration-300`} />
@@ -125,9 +124,6 @@ export default function Orcr() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-4">
                         {/* Icon */}
-                        <div className={`w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300`}>
-                          {option.icon}
-                        </div>
 
                         {/* Logo Image */}
                         <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden border-2 border-border group-hover:border-primary/30 transition-colors">

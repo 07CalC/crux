@@ -170,8 +170,8 @@ export default function Jossa() {
         </button>
 
         {/* Mobile Filter Sidebar */}
-        <MobileFilterSidebar 
-          isOpen={isMobileFilterOpen} 
+        <MobileFilterSidebar
+          isOpen={isMobileFilterOpen}
           onClose={() => setIsMobileFilterOpen(false)}
         >
           <RequiredFilters
@@ -210,7 +210,7 @@ export default function Jossa() {
           <div className="space-y-6 lg:overflow-y-auto lg:h-full pb-6 min-w-0">
             {/* Search and View Controls */}
             <div className="card p-4 lg:sticky lg:top-0 lg:z-10 lg:bg-card/95 lg:backdrop-blur-sm">
-              <div className="flex flex-col gap-4">
+              <div className="flex  gap-4">
                 {/* Search Input */}
                 <div className="flex-1 relative min-w-0 w-full">
                   <input
@@ -224,6 +224,7 @@ export default function Jossa() {
                   />
                 </div>
 
+                <ViewToggle view={view} setView={setView} />
                 {/* View Toggle */}
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -235,7 +236,6 @@ export default function Jossa() {
                       </p>
                     )}
                   </div>
-                  <ViewToggle view={view} setView={setView} />
                 </div>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function Jossa() {
             {!isLoading && !error && paginatedData.length !== 0 && (
               <>
                 <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
-                
+
                 {/* Pagination */}
                 <div className="card p-4">
                   <PaginationNav

@@ -150,6 +150,10 @@ export default function NeetPg() {
     setTimeout(() => window.scrollTo({ top: 0, behavior: "smooth" }), 10);
   }, [currPage, colsShown]);
 
+
+  useEffect(() => {
+    setCurrPage(1)
+  }, [filters])
   return (
     <section className="min-h-screen bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5 overflow-x-hidden">
       <div className="w-full px-4 md:px-6 lg:px-8 py-6 max-w-[100vw]">
@@ -163,8 +167,8 @@ export default function NeetPg() {
         </button>
 
         {/* Mobile Filter Sidebar */}
-        <MobileFilterSidebar 
-          isOpen={isMobileFilterOpen} 
+        <MobileFilterSidebar
+          isOpen={isMobileFilterOpen}
           onClose={() => setIsMobileFilterOpen(false)}
         >
           <RequiredFilters
@@ -203,7 +207,7 @@ export default function NeetPg() {
           <div className="space-y-6 lg:overflow-y-auto lg:h-full pb-6 min-w-0">
             {/* Search and View Controls */}
             <div className="card p-4 lg:sticky lg:top-0 lg:z-10 lg:bg-card/95 lg:backdrop-blur-sm">
-              <div className="flex flex-col gap-4">
+              <div className="flex  gap-4">
                 {/* Search Input */}
                 <div className="flex-1 relative min-w-0 w-full">
                   <input
@@ -217,6 +221,7 @@ export default function NeetPg() {
                   />
                 </div>
 
+                <ViewToggle view={view} setView={setView} />
                 {/* View Toggle */}
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex-1 min-w-0">
@@ -228,7 +233,6 @@ export default function NeetPg() {
                       </p>
                     )}
                   </div>
-                  <ViewToggle view={view} setView={setView} />
                 </div>
               </div>
             </div>
@@ -251,7 +255,7 @@ export default function NeetPg() {
             {!isLoading && !error && paginatedData.length !== 0 && (
               <>
                 <Table orcr={paginatedData} view={view} sort={sort} setSort={setSort} />
-                
+
                 {/* Pagination */}
                 <div className="card p-4">
                   <PaginationNav

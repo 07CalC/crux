@@ -23,7 +23,7 @@ export const ComingSoonSection = () => {
     <section className="section bg-gradient-to-br from-primary via-secondary to-accent relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-grid opacity-10" />
-      
+
       {/* Decorative Elements */}
       <div className="absolute top-10 right-10 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
       <div className="absolute bottom-10 left-10 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
@@ -74,12 +74,12 @@ export const ComingSoonSection = () => {
               <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                 <feature.icon className="w-7 h-7 text-white" />
               </div>
-              
-              <h3 className="text-xl md:text-2xl font-bold text-white mb-3">
+
+              <h3 className="text-xl md:text-2xl font-bold text-black dark:text-white mb-3">
                 {feature.title}
               </h3>
-              
-              <p className="text-white/80 leading-relaxed">
+
+              <p className="text-black/80 dark:text-white/80 leading-relaxed">
                 {feature.description}
               </p>
             </motion.div>

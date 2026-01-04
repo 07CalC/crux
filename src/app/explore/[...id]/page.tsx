@@ -2,11 +2,13 @@ import { AddReview } from "@/components/collegePage/AddReview";
 import { Bonk } from "@/components/collegePage/Bonk";
 import { ClgOrcr } from "@/components/collegePage/ClgOrcr";
 import { UploadImage } from "@/components/collegePage/UploadImage";
+import { CollegeTabs } from "@/components/collegePage/CollegeTabs";
 import { NotFound } from "@/components/common/NotFound";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
-import { IoWarning } from "react-icons/io5";
+import { IoWarning, IoInformationCircle, IoLocationSharp } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
+import { HiChartBar, HiStar, HiPhotograph } from "react-icons/hi";
 
 export default async function College({
     params,
@@ -27,16 +29,15 @@ export default async function College({
             </div>
         );
     }
-    // Prepare stats that have data available
     const availableStats = [];
-    
+
     if (college?.totalStudents) {
         availableStats.push({
             label: "Total Students",
             value: college.totalStudents.toLocaleString()
         });
     }
-    
+
     if (college?.maleStudents && college?.femaleStudents && college.maleStudents + college.femaleStudents > 0) {
         const malePercent = Math.round((college.maleStudents / (college.maleStudents + college.femaleStudents)) * 100);
         const femalePercent = 100 - malePercent;
@@ -45,14 +46,14 @@ export default async function College({
             value: `${malePercent}:${femalePercent}`
         });
     }
-    
+
     if (college?.maleStudents) {
         availableStats.push({
             label: "Male Students",
             value: college.maleStudents.toLocaleString()
         });
     }
-    
+
     if (college?.femaleStudents) {
         availableStats.push({
             label: "Female Students",
@@ -77,7 +78,6 @@ export default async function College({
 
     return (
         <section className="min-h-screen bg-gradient-to-br from-primary/5 via-muted/50 to-secondary/5">
-            {/* Hero Section with Cover Image */}
             <div className="w-full h-[50vh] md:h-[60vh] relative overflow-hidden">
                 <img
                     src={college?.coverImage || "/defaultCollegeImage.png"}
@@ -85,25 +85,24 @@ export default async function College({
                     className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent"></div>
-                
-                {/* Hero Content */}
+
                 <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 lg:p-12">
                     <div className="container-custom">
                         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6">
                             <div className="space-y-3">
-                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-lg">
+                                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-black dark:text-white drop-shadow-lg">
                                     {college?.name}
                                 </h1>
-                                <p className="text-lg md:text-xl text-primary-foreground/90 drop-shadow-md flex items-center gap-2">
-                                    <span>📍</span> {college?.location}
+                                <p className="text-lg md:text-xl text-gray-900 dark:text-gray-100 drop-shadow-md flex items-center gap-2">
+                                    <IoLocationSharp className="text-xl" /> {college?.location}
                                 </p>
                                 <Bonk clgId={college?.id || ""} bonksCount={college?.bongs || 0} />
                             </div>
                             <div className="flex gap-3">
-                                <a 
-                                    href={college?.officialWebsite || "#"} 
-                                    target="_blank" 
-                                    rel="noreferrer" 
+                                <a
+                                    href={college?.officialWebsite || "#"}
+                                    target="_blank"
+                                    rel="noreferrer"
                                     className="btn-primary group"
                                 >
                                     <span>Official Website</span>
@@ -115,64 +114,96 @@ export default async function College({
                 </div>
             </div>
 
-            <div className="container-custom py-8">
-                {/* Warning Banner */}
-                {college?.moderated === false && (
-                    <div className="card mb-6 p-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
-                        <div className="flex items-start gap-4">
-                            <IoWarning className="text-yellow-600 dark:text-yellow-500 text-3xl flex-shrink-0" />
-                            <div className="text-yellow-800 dark:text-yellow-200">
-                                <p className="font-bold text-lg mb-2">Unverified Information</p>
-                                <p className="text-sm">
-                                    The information about this college has not been independently verified and may include content submitted by anonymous users. Please exercise discretion and verify details from official sources before relying on them.
-                                </p>
+            <CollegeTabs
+                tabs={[
+                    { id: "info", label: "Info", icon: <IoInformationCircle /> },
+                    { id: "cutoffs", label: "Cutoffs", icon: <HiChartBar /> },
+                    { id: "reviews", label: "Reviews", icon: <HiStar /> },
+                    { id: "gallery", label: "Gallery", icon: <HiPhotograph /> },
+                ]}
+            >
+                {/* Info Tab */}
+                <div className="space-y-6">
+                    {/* Warning Banner */}
+                    {college?.moderated === false && (
+                        <div className="card p-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
+                            <div className="flex items-start gap-4">
+                                <IoWarning className="text-yellow-600 dark:text-yellow-500 text-3xl flex-shrink-0" />
+                                <div className="text-yellow-800 dark:text-yellow-200">
+                                    <p className="font-bold text-lg mb-2">Unverified Information</p>
+                                    <p className="text-sm">
+                                        The information about this college has not been independently verified and may include content submitted by anonymous users. Please exercise discretion and verify details from official sources before relying on them.
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                {/* Stats Grid - Only show if stats are available */}
-                {availableStats.length > 0 && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                        {availableStats.map((stat, index) => (
-                            <div key={index} className="card p-6 hover:shadow-lg transition-shadow">
-                                <h3 className="text-sm font-semibold text-muted-foreground mb-2">{stat.label}</h3>
-                                <p className="text-3xl font-bold text-gradient">{stat.value}</p>
+                    {/* Stats Grid - Only show if stats are available */}
+                    {availableStats.length > 0 && (
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                                <span className="text-gradient">Statistics</span>
+                            </h2>
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {availableStats.map((stat, index) => (
+                                    <div key={index} className="card p-6 hover:shadow-lg transition-shadow">
+                                        <h3 className="text-sm font-semibold text-muted-foreground mb-2">{stat.label}</h3>
+                                        <p className="text-3xl font-bold text-gradient">{stat.value}</p>
+                                    </div>
+                                ))}
                             </div>
-                        ))}
-                    </div>
-                )}
+                        </div>
+                    )}
 
-                {/* NIRF Ranking Card */}
-                {college?.nirf && (
-                    <div className="card p-8 mb-12 bg-gradient-to-br from-primary/10 to-secondary/10">
-                        <div className="text-center">
-                            <h3 className="text-xl font-bold text-muted-foreground mb-3">NIRF Ranking</h3>
-                            <p className="text-6xl font-bold text-gradient">{college.nirf}</p>
+                    {/* NIRF Ranking Card */}
+                    {college?.nirf && (
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                                <span className="text-gradient">NIRF Ranking</span>
+                            </h2>
+                            <div className="card p-8 bg-gradient-to-br from-primary/10 to-secondary/10">
+                                <div className="text-center">
+                                    <p className="text-6xl font-bold text-gradient">{college.nirf}</p>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Coming Soon Section */}
+                    <div className="card p-8 bg-gradient-to-br from-primary/10 to-secondary/10 text-center">
+                        <p className="text-2xl md:text-3xl font-bold mb-6">
+                            More details about {college?.name} coming soon
+                        </p>
+                        <div className="flex flex-col items-center">
+                            <div className="mb-4 max-w-xs mx-auto z-20 relative">
+                                <div className="card p-4 text-center">
+                                    <p className="font-bold">literally me working hard to deliver fast</p>
+                                </div>
+                                <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-primary mx-auto"></div>
+                            </div>
+
+                            <Image
+                                src="/racoon.jpg"
+                                alt="coming soon"
+                                width={400}
+                                height={400}
+                                className="w-full max-w-sm object-contain relative z-10 rounded-xl"
+                            />
                         </div>
                     </div>
-                )}
+                </div>
 
-                {/* Cutoffs Section */}
-                <div className="mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        <span className="text-gradient">Cutoffs</span>
-                    </h2>
+                <div>
                     <ClgOrcr clgId={college?.id || ""} clgType={college?.collegeType || "GFTI"} />
                 </div>
 
-                {/* Reviews Section */}
-                <div className="mb-16">
-                    <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-3xl md:text-4xl font-bold">
-                            <span className="text-gradient">Student Reviews</span>
-                        </h2>
-                    </div>
-                    
+                {/* Reviews Tab */}
+                <div className="space-y-6">
                     <AddReview clgId={college?.id || ""} />
-                    
+
                     {reviews.length > 0 ? (
-                        <div className="space-y-6 mt-6">
+                        <div className="space-y-6">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 {reviews.map((review) => (
                                     <div key={review.id} className="card p-6 hover:shadow-lg transition-all group">
@@ -209,7 +240,7 @@ export default async function College({
                             </div>
                         </div>
                     ) : (
-                        <div className="card p-12 text-center mt-6">
+                        <div className="card p-12 text-center">
                             <div className="flex flex-col items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-muted-foreground mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
@@ -221,13 +252,9 @@ export default async function College({
                     )}
                 </div>
 
-                {/* Image Gallery Section */}
-                <div className="mb-16">
-                    <h2 className="text-3xl md:text-4xl font-bold mb-6">
-                        <span className="text-gradient">Campus Gallery</span>
-                    </h2>
-
-                    <div className="card p-4 mb-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
+                {/* Gallery Tab */}
+                <div className="space-y-6">
+                    <div className="card p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
                         <div className="flex items-start gap-3">
                             <IoWarning className="text-yellow-600 dark:text-yellow-500 text-xl flex-shrink-0 mt-0.5" />
                             <div className="text-yellow-800 dark:text-yellow-200 text-sm">
@@ -241,9 +268,9 @@ export default async function College({
                     </div>
 
                     <UploadImage clgId={college.id || ""} />
-                    
+
                     {gallery && gallery.length > 0 ? (
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {gallery.map((image, index) => (
                                 <div key={index} className="relative group overflow-hidden rounded-xl border-2 border-border hover:border-primary transition-all">
                                     <Image
@@ -262,7 +289,7 @@ export default async function College({
                             ))}
                         </div>
                     ) : (
-                        <div className="card p-12 text-center mt-6">
+                        <div className="card p-12 text-center">
                             <div className="flex flex-col items-center justify-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-muted-foreground mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -273,30 +300,7 @@ export default async function College({
                         </div>
                     )}
                 </div>
-
-                {/* Coming Soon Section */}
-                <div className="card p-8 bg-gradient-to-br from-primary/10 to-secondary/10 text-center">
-                    <p className="text-2xl md:text-3xl font-bold mb-6">
-                        More details about {college?.name} coming soon
-                    </p>
-                    <div className="flex flex-col items-center">
-                        <div className="mb-4 max-w-xs mx-auto z-20 relative">
-                            <div className="card p-4 text-center">
-                                <p className="font-bold">literally me working hard to deliver fast</p>
-                            </div>
-                            <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-primary mx-auto"></div>
-                        </div>
-
-                        <Image
-                            src="/racoon.jpg"
-                            alt="coming soon"
-                            width={400}
-                            height={400}
-                            className="w-full max-w-sm object-contain relative z-10 rounded-xl"
-                        />
-                    </div>
-                </div>
-            </div>
+            </CollegeTabs>
         </section>
     )
 }

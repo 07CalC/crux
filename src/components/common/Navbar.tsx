@@ -88,7 +88,7 @@ export const Navbar = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="lg:hidden bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150"
+                className="lg:hidden bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150"
                 aria-label="Toggle mobile menu"
                 aria-expanded={isMobileMenuOpen}
               >
@@ -119,12 +119,12 @@ export const Navbar = () => {
 
         {/* Menu Panel */}
         <div
-          className={`absolute top-0 right-0 bottom-0 w-full max-w-sm bg-card border-l-3 border-border shadow-[8px_0px_0px_0px] shadow-border transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+          className={`absolute top-0 right-0 bottom-0 w-[90vw] sm:w-[85vw] max-w-sm bg-card border-l-2 sm:border-l-3 border-border shadow-[6px_0px_0px_0px] sm:shadow-[8px_0px_0px_0px] shadow-border transition-transform duration-300 ${isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
             }`}
         >
           <div className="flex flex-col h-full">
             {/* Mobile Menu Header */}
-            <div className="flex items-center justify-between p-6 border-b-3 border-border">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b-2 sm:border-b-3 border-border">
               <div className="flex items-center gap-2">
                 <Image
                   src="/logo.png"
@@ -140,7 +140,7 @@ export const Navbar = () => {
               </div>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150"
+                className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150"
                 aria-label="Close mobile menu"
               >
                 <FiX className="w-6 h-6" />
@@ -148,14 +148,14 @@ export const Navbar = () => {
             </div>
 
             {/* Mobile Menu Links */}
-            <nav className="flex-1 overflow-y-auto p-6">
+            <nav className="flex-1 overflow-y-auto p-4 sm:p-6">
               <div className="space-y-2">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="flex items-center justify-between px-4 py-3 rounded-lg border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 group"
+                    className="flex items-center justify-between px-4 py-3 min-h-[44px] rounded-lg border-2 sm:border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[3px_3px_0px_0px] sm:hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 group"
                   >
                     <span className="flex items-center gap-3 text-base font-medium text-foreground">
                       <span className="text-primary">{link.icon}</span>
@@ -172,7 +172,7 @@ export const Navbar = () => {
             </nav>
 
             {/* Mobile Menu Footer */}
-            <div className="p-6 border-t-3 border-border">
+            <div className="p-4 sm:p-6 border-t-2 sm:border-t-3 border-border">
               <p className="text-sm text-muted-foreground text-center">
                 Made with ❤️ for Students
               </p>

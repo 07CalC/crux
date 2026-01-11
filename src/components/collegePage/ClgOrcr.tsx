@@ -623,7 +623,7 @@ export const ClgOrcr = ({
           <div className="space-y-6 min-w-0">
             {/* Search and View Controls */}
             <div className="card p-4">
-              <div className="flex gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 {/* Search Input */}
                 <div className="flex-1 relative min-w-0 w-full">
                   <input

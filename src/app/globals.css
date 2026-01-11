@@ -59,16 +59,23 @@
   }
 
   ::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 8px;
+    height: 8px;
+  }
+
+  @media (min-width: 640px) {
+    ::-webkit-scrollbar {
+      width: 12px;
+      height: 12px;
+    }
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-muted border-3 border-border;
+    @apply bg-muted border-2 sm:border-3 border-border;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-primary rounded-lg border-3 border-border;
+    @apply bg-primary rounded-lg border-2 sm:border-3 border-border;
   }
 
   ::-webkit-scrollbar-thumb:hover {
@@ -101,7 +108,76 @@
 
 @layer components {
   .card {
-    @apply bg-card text-card-foreground rounded-lg border-3 border-border shadow-[4px_4px_0px_0px] shadow-border transition-all duration-200 p-4;
+    @apply bg-card text-card-foreground rounded-lg border-2 sm:border-3 border-border shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border transition-all duration-200 p-3 sm:p-4 md:p-5;
+  }
+
+  .card-hover {
+    @apply hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border hover:-translate-x-0.5 hover:-translate-y-0.5;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg font-bold transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none border-2 sm:border-3 border-border min-h-[44px] min-w-[44px];
+  }
+
+  .btn-primary {
+    @apply btn bg-primary text-primary-foreground shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 px-4 py-2 sm:px-6 sm:py-3;
+  }
+
+  .btn-secondary {
+    @apply btn bg-secondary text-secondary-foreground shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 px-4 py-2 sm:px-6 sm:py-3;
+  }
+
+  .btn-outline {
+    @apply btn bg-background shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 px-4 py-2 sm:px-6 sm:py-3;
+  }
+
+  .btn-ghost {
+    @apply btn border-0 shadow-none hover:bg-muted active:translate-x-0 active:translate-y-0 px-3 py-2 sm:px-4 sm:py-2;
+  }
+
+  .input {
+    @apply w-full px-3 py-3 sm:px-4 sm:py-3 bg-background border-2 sm:border-3 border-border rounded-lg text-foreground text-base placeholder:text-muted-foreground focus:border-primary focus:shadow-[0px_0px_0px_3px] focus:shadow-primary/20 transition-all duration-200 min-h-[44px];
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 sm:px-3 sm:py-1 text-xs font-bold rounded-md border-2 sm:border-3 border-border;
+  }
+
+  .badge-primary {
+    @apply badge bg-primary text-primary-foreground;
+  }
+
+  .badge-secondary {
+    @apply badge bg-secondary text-secondary-foreground;
+  }
+
+  .badge-accent {
+    @apply badge bg-accent text-accent-foreground;
+  }
+
+  /* Retro Clicky Utilities */
+  .clicky-shadow {
+    @apply shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border;
+  }
+
+  .clicky-shadow-hover {
+    @apply hover:shadow-[4px_4px_0px_0px] sm:hover:shadow-[6px_6px_0px_0px] hover:shadow-border;
+  }
+
+  .clicky-shadow-lg {
+    @apply shadow-[4px_4px_0px_0px] sm:shadow-[6px_6px_0px_0px] shadow-border;
+  }
+
+  .clicky-translate {
+    @apply translate-x-1 translate-y-1;
+  }
+
+  .clicky-active {
+    @apply active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1;
+  }
+
+  .clicky-border {
+    @apply border-2 sm:border-3 border-border rounded-lg;
   }
 
   .card-hover {
@@ -174,11 +250,11 @@
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8;
   }
 
   .section {
-    @apply py-6 md:py-8 lg:py-10;
+    @apply py-4 sm:py-6 md:py-8 lg:py-10;
   }
 
   .text-gradient {
@@ -208,7 +284,7 @@
   }
 
   .glass {
-    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-3 border-border shadow-[4px_4px_0px_0px] shadow-border;
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-2 sm:border-3 border-border shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border;
   }
 
   .shimmer {

@@ -57,7 +57,7 @@ export default function Wbjee() {
 
   const roundByYears: Record<number, number[]> = wbjeeRoundByYearsGlobal;
   const requiredFiltersOptions: [{ exam: string[] }, { year: number[] }, { round: number[] }] = useMemo(() => [
-    { exam: ["ADVANCED", "MAINS"] },
+    { exam: ["WBJEE", "MAINS"] },
     { year: availableWbjeeYears },
     { round: roundByYears[requiredFilters.year as number] as number[] }
   ], [requiredFilters, roundByYears]);

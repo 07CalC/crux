@@ -14,7 +14,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col h-full w-full">
       <HeroSection />
-      <SurveySection />
+      {/* <SurveySection /> */}
       <WarningsSection />
       <StatsSection />
       <CutoffSection />

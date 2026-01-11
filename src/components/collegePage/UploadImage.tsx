@@ -116,10 +116,10 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
               </span>
             </div>
 
-            <div className="relative w-full max-w-2xl mx-auto aspect-video border-2 border-dashed border-purple-500 rounded-lg overflow-hidden">
+            <div className="relative w-full max-w-2xl mx-auto aspect-video border-3 border-dashed border-purple-500 rounded-lg overflow-hidden">
               {isUploading ? (
                 <div className="absolute inset-0 flex items-center justify-center bg-gray-100 dark:bg-gray-800">
-                  <div className="animate-spin rounded-full h-12 w-12 border-4 border-purple-500 border-t-transparent"></div>
+                  <div className="animate-spin rounded-full h-12 w-12 border-3 border-purple-500 border-t-transparent"></div>
                 </div>
               ) : previewUrl ? (
                 <div className="relative w-full h-full">
@@ -163,7 +163,7 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
           <div className="flex gap-4">
             <button
               onClick={() => fileInputRef.current?.click()}
-              className="px-4 py-2 rounded-xl text-black border-2 border-black dark:border-white 
+              className="px-4 py-2 rounded-lg text-black border-3 border-black dark:border-white 
                       dark:text-white transition-all ease-in-out duration-200 
                       sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] 
                       active:shadow-[0px_0px_0px_0px] active:translate-x-1 
@@ -177,7 +177,7 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
 
             <button
               onClick={handleUpload}
-              className="px-4 py-2 rounded-xl text-black border-2 border-black dark:border-white 
+              className="px-4 py-2 rounded-lg text-black border-3 border-black dark:border-white 
                       dark:text-white transition-all ease-in-out duration-200 
                       sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] 
                       active:shadow-[0px_0px_0px_0px] active:translate-x-1 

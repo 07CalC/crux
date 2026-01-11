@@ -2,15 +2,15 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "../components/common/Footer";
 import NextTopLoader from 'nextjs-toploader';
-import MobileSidebar from "../components/common/MobileSidebar";
 import { ToastContainer } from "react-toastify";
 import { ScrollToTop } from "../components/common/ScrollToTop";
 import { QueryProvider } from "../components/QueryProvider";
 import { Navbar } from "../components/common/Navbar";
+import { ThemeInitializer } from "../components/common/ThemeInitializer";
 
 export const metadata: Metadata = {
   title: "Cr#x | Discover & Explore Colleges in India",
-  metadataBase: new URL("https://crux.hs.vc"),
+  metadataBase: new URL("https://crux-pied.vercel.app/"),
   description:
     "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
   icons: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Cr#x",
     images: [
       {
-        url: "https://crux.hs.vc/crux.png",
+        url: "/crux.png",
         width: 1200,
         height: 630,
       },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Cr#x | Discover & Explore Colleges in India",
     description:
       "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
-    images: ["https://crux.hs.vc/crux.png"],
+    images: ["/crux.png"],
   }
 };
 
@@ -52,17 +52,30 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head>
-        <script defer src="https://cloud.umami.is/script.js" data-website-id="2f7b543e-b3f3-4ec3-96e1-01f8905c6c9c"></script>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  const theme = JSON.parse(localStorage.getItem('crux-theme-storage') || '{}')?.state?.theme || 'light';
+                  if (theme === 'dark') {
+                    document.documentElement.classList.add('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
       </head>
-      <body
-        className={`transition-colors duration-500 ease-in-out w-full pt-20 font-mono bg-gray-100 dark:bg-[#2a2a2e] `}
-      >
-        <NextTopLoader showSpinner={false} color="#fefefe" height={7} />
+      <body>
+        <ThemeInitializer />
+        <NextTopLoader showSpinner={false} color="#a855f7" height={3} />
         <Navbar />
-        <MobileSidebar />
-        <QueryProvider>
-          {children}
-        </QueryProvider>
+        <main className="pt-20">
+          <QueryProvider>
+            {children}
+          </QueryProvider>
+        </main>
         <Footer />
         <ToastContainer />
         <ScrollToTop />

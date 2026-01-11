@@ -171,7 +171,7 @@ export default function FeedbackPage() {
 
               {previewUrl ? (
                 <div className="space-y-3">
-                  <div className="relative w-full max-w-md aspect-video border-2 border-dashed border-purple-500 rounded-lg overflow-hidden">
+                  <div className="relative w-full max-w-md aspect-video border-3 border-dashed border-purple-500 rounded-lg overflow-hidden">
                     <Image
                       src={previewUrl}
                       alt="Preview"
@@ -182,7 +182,7 @@ export default function FeedbackPage() {
                   <button
                     type="button"
                     onClick={handleRemoveImage}
-                    className="px-4 py-2 text-sm rounded-lg border-2 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                    className="px-4 py-2 text-sm rounded-lg border-3 border-red-500 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
                     disabled={isSubmitting}
                   >
                     Remove Image
@@ -201,7 +201,7 @@ export default function FeedbackPage() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="px-4 py-2 rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 transition-colors text-foreground"
+                    className="px-4 py-2 rounded-lg border-3 border-dashed border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-500 transition-colors text-foreground"
                     disabled={isSubmitting}
                   >
                     <svg
@@ -228,7 +228,7 @@ export default function FeedbackPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-6 py-3 rounded-xl text-white border-2 border-purple-600 
+                className="w-full px-6 py-3 rounded-lg text-white border-3 border-purple-600 
                          bg-purple-600 hover:bg-purple-700 transition-all ease-in-out duration-200 
                          sm:shadow-[6px_6px_0px_0px] shadow-[4px_4px_0px_0px] 
                          active:shadow-[0px_0px_0px_0px] active:translate-x-1 

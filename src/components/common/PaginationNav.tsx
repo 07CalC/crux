@@ -47,41 +47,41 @@ export const PaginationNav = ({
           <button
             onClick={() => setCurrPage(1)}
             disabled={currPage === 1}
-            className="btn-ghost p-2 disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
             aria-label="First page"
           >
-            <FiChevronsLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <FiChevronsLeft className="w-5 h-5" />
           </button>
           
           <button
             disabled={currPage === 1}
             onClick={() => setCurrPage(prev => prev - 1)}
-            className="btn-ghost p-2 disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
             aria-label="Previous page"
           >
-            <FiChevronLeft className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <FiChevronLeft className="w-5 h-5" />
           </button>
 
-          <div className="px-4 py-2 bg-primary/10 text-primary font-semibold rounded-lg min-w-[60px] text-center">
+          <div className="px-4 py-2 bg-primary text-primary-foreground border-3 border-border font-bold rounded-lg min-w-[60px] text-center shadow-[4px_4px_0px_0px] shadow-border">
             {currPage}
           </div>
 
           <button
             disabled={currPage === totalPages}
             onClick={() => setCurrPage(prev => prev + 1)}
-            className="btn-ghost p-2 disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
             aria-label="Next page"
           >
-            <FiChevronRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <FiChevronRight className="w-5 h-5" />
           </button>
 
           <button
             disabled={currPage === totalPages}
             onClick={() => setCurrPage(totalPages)}
-            className="btn-ghost p-2 disabled:opacity-30 disabled:cursor-not-allowed group"
+            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
             aria-label="Last page"
           >
-            <FiChevronsRight className="w-5 h-5 group-hover:scale-110 transition-transform" />
+            <FiChevronsRight className="w-5 h-5" />
           </button>
         </div>
       </div>

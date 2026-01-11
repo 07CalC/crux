@@ -106,7 +106,7 @@ export const BonkSection = () => {
                   transition={{ delay: 0.3 + index * 0.1 }}
                   className="card-hover group"
                 >
-                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 bg-gradient-to-br from-accent to-primary rounded-lg flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
                     <feature.icon className="w-6 h-6 text-white" />
                   </div>
                   <div className="flex-1 min-w-0">
@@ -132,7 +132,7 @@ export const BonkSection = () => {
           >
             <div className="card h-full flex flex-col">
               {/* Header */}
-              <div className="bg-gradient-to-r from-accent via-primary to-accent px-6 py-5 border-b border-border">
+              <div className="bg-gradient-to-r from-accent via-primary to-accent px-6 py-5 border-b-3 border-border">
                 <h3 className="text-xl md:text-2xl font-bold text-white flex items-center gap-2">
                   <FiTrendingUp className="w-6 h-6" />
                   Top Bonked Colleges
@@ -151,7 +151,7 @@ export const BonkSection = () => {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ delay: 0.6 + index * 0.1 }}
-                    className="group flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 rounded-xl transition-all hover:scale-[1.02]"
+                    className="group flex items-center justify-between p-4 bg-muted/30 hover:bg-muted/50 rounded-lg transition-all hover:scale-[1.02]"
                   >
                     <div className="flex items-center gap-3 flex-1 min-w-0">
                       <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0 ${getRankStyle(college.rank)}`}>
@@ -177,7 +177,7 @@ export const BonkSection = () => {
               </div>
 
               {/* Footer CTA */}
-              <div className="px-6 py-4 bg-muted/30 border-t border-border text-center">
+              <div className="px-6 py-4 bg-muted/30 border-t-3 border-border text-center">
                 <Link href="/explore" className="btn-outline group inline-flex">
                   <GiSpikedBat className="w-5 h-5" />
                   <span>See All Colleges</span>

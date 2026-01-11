@@ -126,7 +126,7 @@ export default async function College({
                 <div className="space-y-6">
                     {/* Warning Banner */}
                     {college?.moderated === false && (
-                        <div className="card p-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
+                        <div className="card p-6 bg-yellow-50 dark:bg-yellow-900/20 border-l-3 border-yellow-500">
                             <div className="flex items-start gap-4">
                                 <IoWarning className="text-yellow-600 dark:text-yellow-500 text-3xl flex-shrink-0" />
                                 <div className="text-yellow-800 dark:text-yellow-200">
@@ -188,7 +188,7 @@ export default async function College({
                                 alt="coming soon"
                                 width={400}
                                 height={400}
-                                className="w-full max-w-sm object-contain relative z-10 rounded-xl"
+                                className="w-full max-w-sm object-contain relative z-10 rounded-lg"
                             />
                         </div>
                     </div>
@@ -254,7 +254,7 @@ export default async function College({
 
                 {/* Gallery Tab */}
                 <div className="space-y-6">
-                    <div className="card p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-4 border-yellow-500">
+                    <div className="card p-4 bg-yellow-50 dark:bg-yellow-900/20 border-l-3 border-yellow-500">
                         <div className="flex items-start gap-3">
                             <IoWarning className="text-yellow-600 dark:text-yellow-500 text-xl flex-shrink-0 mt-0.5" />
                             <div className="text-yellow-800 dark:text-yellow-200 text-sm">
@@ -272,7 +272,7 @@ export default async function College({
                     {gallery && gallery.length > 0 ? (
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {gallery.map((image, index) => (
-                                <div key={index} className="relative group overflow-hidden rounded-xl border-2 border-border hover:border-primary transition-all">
+                                <div key={index} className="relative group overflow-hidden rounded-lg border-3 border-border hover:border-primary transition-all">
                                     <Image
                                         src={image}
                                         alt={`${college.name} campus image ${index + 1}`}

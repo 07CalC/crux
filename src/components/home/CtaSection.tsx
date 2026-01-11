@@ -13,7 +13,7 @@ export const CtaSection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border border-border p-12 md:p-16"
+          className="relative overflow-hidden rounded-lg bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5 border border-border p-12 md:p-16"
         >
           {/* Background Pattern */}
           <div className="absolute inset-0 bg-pattern-dots opacity-5" />
@@ -72,7 +72,7 @@ export const CtaSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.6 }}
-              className="flex flex-wrap justify-center gap-8 pt-8 border-t border-border"
+              className="flex flex-wrap justify-center gap-8 pt-8 border-t-3 border-border"
             >
               {[
                 { label: "Colleges", value: "1500+" },

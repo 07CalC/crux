@@ -56,7 +56,7 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
     };
 
     return (
-        <div id="add-review" className="bg-white dark:bg-[#1a1a1a] p-6 rounded-xl shadow-lg border-2 border-black dark:border-white">
+        <div id="add-review" className="bg-white dark:bg-[#1a1a1a] p-6 rounded-lg shadow-lg border-3 border-black dark:border-white">
             <h2 className="text-2xl font-bold text-black dark:text-white mb-4">Share Your Experience</h2>
 
             {isReviewed ? (
@@ -76,7 +76,7 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
                             value={review.comment}
                             onChange={(e) => setReview({ ...review, comment: e.target.value })}
                             placeholder="Share your honest experience with this college..."
-                            className="w-full p-3 bg-white dark:bg-gray-700 border-2 border-black dark:border-gray-600 rounded-lg shadow-sm text-black dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            className="w-full p-3 bg-white dark:bg-gray-700 border-3 border-black dark:border-gray-600 rounded-lg shadow-sm text-black dark:text-white focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
                             rows={4}
                             disabled={isSubmitting}
                         />
@@ -124,7 +124,7 @@ export const AddReview = ({ clgId }: { clgId: string }) => {
                         <button
                             onClick={handleSubmit}
                             disabled={isSubmitting || review.comment.trim().length < 10}
-                            className={`rounded-xl text-lg items-center justify-center flex text-black border-2 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] hover:shadow-[2px_2px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-4 py-2 ${(isSubmitting || review.comment.trim().length < 10)
+                            className={`rounded-lg text-lg items-center justify-center flex text-black border-3 border-black dark:border-white dark:text-white transition-all ease-in-out duration-200 shadow-[4px_4px_0px_0px] hover:shadow-[2px_2px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 dark:shadow-white shadow-black bg-purple-500 px-4 py-2 ${(isSubmitting || review.comment.trim().length < 10)
                                 ? "opacity-50 cursor-not-allowed"
                                 : "hover:bg-purple-400"
                                 }`}

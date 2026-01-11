@@ -56,7 +56,7 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
   return (
     <div className="card p-6 space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between pb-4 border-b border-border">
+      <div className="flex items-center justify-between pb-4 border-b-3 border-border">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-secondary to-accent flex items-center justify-center">
             <FiFilter className="w-4 h-4 text-white" />
@@ -122,7 +122,7 @@ export default function Filters({ filters, setFilters, filterOptions }: props) {
       </div>
 
       {/* Filter Dropdowns */}
-      <div className="space-y-4 pt-4 border-t border-border">
+      <div className="space-y-4 pt-4 border-t-3 border-border">
         <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide">
           Additional Filters
         </h4>

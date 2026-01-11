@@ -25,7 +25,7 @@ const officialLinks = [
 
 export const Footer = () => {
   return (
-    <footer className="relative bg-gradient-to-br from-muted/50 via-background to-muted/50 border-t border-border overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-muted/50 via-background to-muted/50 border-t-3 border-border overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 bg-pattern-dots opacity-5" />
 
@@ -48,7 +48,7 @@ export const Footer = () => {
             className="space-y-4 text-center md:text-left"
           >
             <div className="flex items-center justify-center md:justify-start gap-3">
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-2xl overflow-hidden">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg border-3 border-border overflow-hidden shadow-[4px_4px_0px_0px] shadow-border">
                 <Image
                   src="/logo.png"
                   alt=""
@@ -65,7 +65,7 @@ export const Footer = () => {
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
               Your trusted platform for exploring colleges across India. We aggregate data from official sources to help you make informed educational decisions.
             </p>
-            <div className="glass rounded-xl p-3 text-xs md:text-sm border border-amber-500/20">
+            <div className="bg-card border-3 border-border rounded-lg p-3 text-xs md:text-sm shadow-[4px_4px_0px_0px] shadow-border">
               <div className="flex items-start gap-2">
                 <FiExternalLink className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
@@ -92,7 +92,7 @@ export const Footer = () => {
                 <Link
                   key={link.title}
                   href={link.link}
-                  className="btn-ghost text-sm group"
+                  className="px-4 py-2 rounded-lg border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm group"
                 >
                   <span>{link.title}</span>
                 </Link>
@@ -119,7 +119,7 @@ export const Footer = () => {
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-ghost text-sm group"
+                  className="px-4 py-2 rounded-lg border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm group flex items-center justify-between"
                   aria-label={`Visit ${link.title} official website (opens in new tab)`}
                 >
                   <span>{link.title}</span>

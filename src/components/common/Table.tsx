@@ -81,7 +81,7 @@ export const Table = ({
                   header.show && (
                     <th
                       key={index}
-                      className={`text-sm font-bold text-left px-4 py-3 border-b border-border bg-muted/50 backdrop-blur-sm ${(header.key === "marks" || header.key === "openRank" || header.key === "closeRank")
+                      className={`text-sm font-bold text-left px-4 py-3 border-b-3 border-border bg-muted/50 backdrop-blur-sm ${(header.key === "marks" || header.key === "openRank" || header.key === "closeRank")
                           ? "cursor-pointer hover:bg-muted/70 transition-colors group"
                           : ""
                         }`}
@@ -108,7 +108,7 @@ export const Table = ({
             {orcr.map((item: Orcr, index: number) => (
               <tr
                 key={index}
-                className="group hover:bg-primary/5 transition-colors border-b border-border last:border-b-0 cursor-pointer"
+                className="group hover:bg-primary/5 transition-colors border-b-3 border-border last:border-b-0 cursor-pointer"
                 onClick={() => router.push(`/explore/${item.collegeId}`)}
               >
                 {view.map(

@@ -94,7 +94,7 @@ export const SidebarButton = () => {
     return (
         <button
             onClick={() => toggleSideBar()}
-            className="rounded-xl lg:hidden text-black border-2 border-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-500 p-2"
+            className="rounded-lg lg:hidden text-black border-3 border-black dark:text-white transition-all ease-in-out duration-200 shadow-[6px_6px_0px_0px] active:shadow-[0px_0px_0px_0px] active:translate-x-2 active:translate-y-2 active:duration-100 shadow-black bg-purple-500 p-2"
             aria-label="Open navigation menu"
         >
             <Menu className="w-5 h-5" />

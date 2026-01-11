@@ -56,7 +56,7 @@ export const ViewToggle = ({ view, setView }: props) => {
                     >
                         <div className="card p-4 sm:p-6 space-y-4 shadow-xl sm:min-w-[320px]">
                             {/* Header */}
-                            <div className="flex items-center justify-between pb-4 border-b border-border">
+                            <div className="flex items-center justify-between pb-4 border-b-3 border-border">
                                 <div className="flex items-center gap-2">
                                     <FiEye className="w-5 h-5 text-primary" />
                                     <h3 className="text-base sm:text-lg font-bold">Visible Columns</h3>
@@ -90,7 +90,7 @@ export const ViewToggle = ({ view, setView }: props) => {
                             </div>
 
                             {/* Footer */}
-                            <div className="flex justify-between items-center pt-4 border-t border-border text-sm text-muted-foreground">
+                            <div className="flex justify-between items-center pt-4 border-t-3 border-border text-sm text-muted-foreground">
                                 <span>{visibleCount} of {view.length} visible</span>
                             </div>
                         </div>

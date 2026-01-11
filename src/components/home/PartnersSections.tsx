@@ -107,7 +107,7 @@ export function PartnersSection() {
               <div className="p-6 relative">
                 {/* Icon Badge */}
                 <div className="absolute -top-8 left-6">
-                  <div className="w-16 h-16 rounded-2xl border-4 border-background overflow-hidden shadow-lg">
+                  <div className="w-16 h-16 rounded-lg border-3 border-background overflow-hidden shadow-lg">
                     <Image
                       width={64}
                       height={64}

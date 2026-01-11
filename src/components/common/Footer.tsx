@@ -39,7 +39,7 @@ export const Footer = () => {
 
       <div className="container-custom relative z-10 py-12 md:py-16">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 md:gap-12 mb-12">
           {/* Branding Section */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -48,7 +48,7 @@ export const Footer = () => {
             className="space-y-4 text-center md:text-left"
           >
             <div className="flex items-center justify-center md:justify-start gap-3">
-              <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg border-3 border-border overflow-hidden shadow-[4px_4px_0px_0px] shadow-border">
+              <div className="w-12 h-12 md:w-16 md:h-16 rounded-lg">
                 <Image
                   src="/logo.png"
                   alt=""
@@ -58,14 +58,14 @@ export const Footer = () => {
                   aria-hidden="true"
                 />
               </div>
-              <h3 className="text-4xl md:text-5xl font-bold text-gradient">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient">
                 CRUX
               </h3>
             </div>
             <p className="text-sm md:text-base text-muted-foreground leading-relaxed max-w-md">
               Your trusted platform for exploring colleges across India. We aggregate data from official sources to help you make informed educational decisions.
             </p>
-            <div className="bg-card border-3 border-border rounded-lg p-3 text-xs md:text-sm shadow-[4px_4px_0px_0px] shadow-border">
+            <div className="bg-card border-2 sm:border-3 border-border rounded-lg p-3 sm:p-4 text-sm md:text-base shadow-[3px_3px_0px_0px] sm:shadow-[4px_4px_0px_0px] shadow-border">
               <div className="flex items-start gap-2">
                 <FiExternalLink className="w-4 h-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
@@ -87,12 +87,12 @@ export const Footer = () => {
             <h4 className="text-xl md:text-2xl font-bold">
               Quick Links
             </h4>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3">
               {quickLinks.map((link) => (
                 <Link
                   key={link.title}
                   href={link.link}
-                  className="px-4 py-2 rounded-lg border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm group"
+                  className="px-3 py-2.5 sm:px-4 sm:py-2 min-h-[44px] flex items-center rounded-lg border-2 sm:border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[3px_3px_0px_0px] sm:hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm sm:text-base group"
                 >
                   <span>{link.title}</span>
                 </Link>
@@ -112,14 +112,14 @@ export const Footer = () => {
               Official Sources
               <FiExternalLink className="w-4 h-4 text-muted-foreground" aria-label="External links" />
             </h4>
-            <div className="grid grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-2 sm:gap-3">
               {officialLinks.map((link) => (
                 <a
                   key={link.title}
                   href={link.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-4 py-2 rounded-lg border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm group flex items-center justify-between"
+                  className="px-3 py-2.5 sm:px-4 sm:py-2 min-h-[44px] rounded-lg border-2 sm:border-3 border-transparent hover:border-border hover:bg-muted hover:shadow-[3px_3px_0px_0px] sm:hover:shadow-[4px_4px_0px_0px] hover:shadow-border transition-all duration-150 text-sm sm:text-base group flex items-center justify-between"
                   aria-label={`Visit ${link.title} official website (opens in new tab)`}
                 >
                   <span>{link.title}</span>

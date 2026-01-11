@@ -18,21 +18,19 @@ export const CollegeTabs = ({ tabs, children }: CollegeTabsProps) => {
 
   return (
     <div className="w-full">
-      {/* Sticky Tab Navigation */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b-3 border-border shadow-sm">
-        <div className="container-custom">
-          <div className="flex overflow-x-auto hide-scrollbar">
-            {tabs.map((tab, index) => (
+      <div className="sticky h-20 top-0 z-40 bg-background/95 backdrop-blur-sm border-b-3 border-border shadow-sm">
+        <div className="container-custom h-full">
+          <div className="flex overflow-x-auto h-full hide-scrollbar">
+            {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
                 className={`
                   flex items-center gap-2 px-6 py-4 text-sm font-semibold whitespace-nowrap
                   transition-all duration-200 border-b-2 hover:bg-primary/5
-                  ${
-                    activeTab === tab.id
-                      ? "border-primary text-primary bg-primary/10"
-                      : "border-transparent text-muted-foreground"
+                  ${activeTab === tab.id
+                    ? "border-primary text-primary bg-primary/10"
+                    : "border-transparent text-muted-foreground"
                   }
                 `}
               >

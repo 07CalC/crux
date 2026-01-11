@@ -47,29 +47,29 @@ export const PaginationNav = ({
           <button
             onClick={() => setCurrPage(1)}
             disabled={currPage === 1}
-            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
+            className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-secondary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed group"
             aria-label="First page"
           >
             <FiChevronsLeft className="w-5 h-5" />
           </button>
-          
+
           <button
             disabled={currPage === 1}
             onClick={() => setCurrPage(prev => prev - 1)}
-            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
+            className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-secondary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed group"
             aria-label="Previous page"
           >
             <FiChevronLeft className="w-5 h-5" />
           </button>
 
-          <div className="px-4 py-2 bg-primary text-primary-foreground border-3 border-border font-bold rounded-lg min-w-[60px] text-center shadow-[4px_4px_0px_0px] shadow-border">
+          <div className="px-3 py-2 sm:px-4 sm:py-2 bg-primary text-primary-foreground border-2 sm:border-3 border-border font-bold rounded-lg min-w-[44px] min-h-[44px] flex items-center justify-center text-sm sm:text-base">
             {currPage}
           </div>
 
           <button
             disabled={currPage === totalPages}
             onClick={() => setCurrPage(prev => prev + 1)}
-            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
+            className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-secondary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed group"
             aria-label="Next page"
           >
             <FiChevronRight className="w-5 h-5" />
@@ -78,7 +78,7 @@ export const PaginationNav = ({
           <button
             disabled={currPage === totalPages}
             onClick={() => setCurrPage(totalPages)}
-            className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150 disabled:opacity-30 disabled:cursor-not-allowed disabled:shadow-[2px_2px_0px_0px] group"
+            className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-2.5 min-h-[44px] min-w-[44px] flex items-center justify-center hover:bg-secondary transition-colors duration-150 disabled:opacity-30 disabled:cursor-not-allowed group"
             aria-label="Last page"
           >
             <FiChevronsRight className="w-5 h-5" />

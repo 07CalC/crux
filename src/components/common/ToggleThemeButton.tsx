@@ -6,9 +6,9 @@ export const ThemeToggleButton = () => {
   const theme = useThemeStore((state) => state.theme);
   const toggleTheme = useThemeStore((state) => state.toggleTheme);
   return (
-    <button 
-      onClick={toggleTheme} 
-      className="bg-primary text-primary-foreground border-3 border-border rounded-lg p-2 shadow-[4px_4px_0px_0px] shadow-border hover:shadow-[6px_6px_0px_0px] hover:shadow-border active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1 transition-all duration-150"
+    <button
+      onClick={toggleTheme}
+      className="bg-primary text-primary-foreground border-2 sm:border-3 border-border rounded-lg p-3 min-h-[44px] min-w-[44px] flex items-center justify-center"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (

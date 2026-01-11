@@ -14,7 +14,7 @@ export async function generateMetadata({
   });
   return {
     title: `${college?.name} | cr#x`,
-    metadataBase: new URL("https://crux.hs.vc"),
+    metadataBase: new URL("https://crux-pied.vercel.app/"),
     description: `Find all the information about ${college?.name} here. | cr#x`,
     openGraph: {
       title: college?.name,

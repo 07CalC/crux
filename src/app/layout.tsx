@@ -10,7 +10,7 @@ import { ThemeInitializer } from "../components/common/ThemeInitializer";
 
 export const metadata: Metadata = {
   title: "Cr#x | Discover & Explore Colleges in India",
-  metadataBase: new URL("https://crux.hs.vc"),
+  metadataBase: new URL("https://crux-pied.vercel.app/"),
   description:
     "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
   icons: [
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     siteName: "Cr#x",
     images: [
       {
-        url: "https://crux.hs.vc/crux.png",
+        url: "/crux.png",
         width: 1200,
         height: 630,
       },
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Cr#x | Discover & Explore Colleges in India",
     description:
       "Your ultimate platform for exploring Indian colleges, comparing options, and making informed educational decisions.",
-    images: ["https://crux.hs.vc/crux.png"],
+    images: ["/crux.png"],
   }
 };
 

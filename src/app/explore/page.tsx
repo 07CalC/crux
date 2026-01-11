@@ -157,7 +157,7 @@ export default async function Explore({ searchParams }: PageProps) {
                   </div>
 
                   {/* Stats & Actions */}
-                  <div className="mt-auto pt-4 border-t border-border flex items-center justify-between">
+                  <div className="mt-auto pt-4 border-t-3 border-border flex items-center justify-between">
                     <div className="flex items-center gap-3 text-sm">
                       {college.nirf && (
                         <div className="flex items-center gap-1">

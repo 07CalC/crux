@@ -13,10 +13,10 @@ export const WarningsSection = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="glass rounded-2xl p-6 md:p-8 border-l-4 border-secondary"
+            className="glass rounded-lg p-6 md:p-8 border-l-3 border-secondary"
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-secondary to-accent flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-secondary to-accent flex items-center justify-center flex-shrink-0">
                 <FiInfo className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1 space-y-2">
@@ -37,10 +37,10 @@ export const WarningsSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="glass rounded-2xl p-6 md:p-8 border-l-4 border-primary"
+            className="glass rounded-lg p-6 md:p-8 border-l-3 border-primary"
           >
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center flex-shrink-0">
                 <FiTool className="w-6 h-6 text-white" />
               </div>
               <div className="flex-1 space-y-2">

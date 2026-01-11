@@ -19,7 +19,7 @@ export const CollegeTabs = ({ tabs, children }: CollegeTabsProps) => {
   return (
     <div className="w-full">
       {/* Sticky Tab Navigation */}
-      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b border-border shadow-sm">
+      <div className="sticky top-0 z-40 bg-background/95 backdrop-blur-sm border-b-3 border-border shadow-sm">
         <div className="container-custom">
           <div className="flex overflow-x-auto hide-scrollbar">
             {tabs.map((tab, index) => (

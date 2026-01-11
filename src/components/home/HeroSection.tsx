@@ -138,7 +138,7 @@ export const HeroSection = () => {
                 className="absolute -bottom-6 -right-6 card backdrop-blur-xl bg-card/90"
               >
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-accent text-white">
+                  <div className="flex items-center justify-center w-12 h-12 rounded-lg bg-gradient-to-br from-primary to-accent text-white">
                     <FiAward className="w-6 h-6" />
                   </div>
                   <div>

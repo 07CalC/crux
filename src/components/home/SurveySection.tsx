@@ -13,9 +13,9 @@ export const SurveySection = () => {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-accent via-primary to-secondary p-1"
+          className="relative overflow-hidden rounded-lg bg-gradient-to-br from-accent via-primary to-secondary p-1"
         >
-          <div className="relative bg-gradient-to-br from-accent/10 via-primary/10 to-secondary/10 backdrop-blur-sm rounded-3xl p-8 md:p-12">
+          <div className="relative bg-gradient-to-br from-accent/10 via-primary/10 to-secondary/10 backdrop-blur-sm rounded-lg p-8 md:p-12">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-pattern-dots opacity-10" />
             
@@ -64,7 +64,7 @@ export const SurveySection = () => {
               >
                 <Link 
                   href="/iit/preference" 
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-xl bg-white text-primary font-semibold hover:bg-white/90 border-2 border-white/20 shadow-xl transition-all duration-200 active:scale-95 group"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-lg bg-white text-primary font-semibold hover:bg-white/90 border-3 border-white/20 shadow-xl transition-all duration-200 active:scale-95 group"
                 >
                   <FiCheckCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
                   <span className="font-semibold">Take the Survey</span>

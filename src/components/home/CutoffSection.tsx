@@ -72,7 +72,7 @@ export const CutoffSection = () => {
           >
             <div className="space-y-4">
               <h3 className="text-2xl md:text-3xl font-bold flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
                   <FiTrendingUp className="w-5 h-5 text-white" />
                 </div>
                 Make Informed Choices
@@ -148,16 +148,16 @@ export const CutoffSection = () => {
                 <table className="min-w-full">
                   <thead className="bg-muted/50">
                     <tr>
-                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b-3 border-border">
                         Program
                       </th>
-                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b-3 border-border">
                         Gender
                       </th>
-                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b-3 border-border">
                         Open
                       </th>
-                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b border-border">
+                      <th className="text-xs md:text-sm text-center text-primary font-bold px-4 py-3 border-b-3 border-border">
                         Close
                       </th>
                     </tr>
@@ -170,7 +170,7 @@ export const CutoffSection = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.7 + idx * 0.05 }}
-                        className="group hover:bg-primary/5 transition-colors border-b border-border last:border-b-0"
+                        className="group hover:bg-primary/5 transition-colors border-b-3 border-border last:border-b-0"
                       >
                         <td className="text-xs md:text-sm text-center font-medium px-4 py-3">
                           {row.program}
@@ -195,7 +195,7 @@ export const CutoffSection = () => {
               </div>
 
               {/* View More Link */}
-              <div className="bg-muted/30 px-6 py-4 text-center border-t border-border">
+              <div className="bg-muted/30 px-6 py-4 text-center border-t-3 border-border">
                 <Link
                   href={`/explore/${cutoffCommon.id}`}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-primary hover:text-secondary transition-colors group"

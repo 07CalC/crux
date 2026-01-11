@@ -69,7 +69,7 @@ export default async function RootLayout({
       </head>
       <body>
         <ThemeInitializer />
-        <NextTopLoader showSpinner={false} color="#6366f1" height={3} />
+        <NextTopLoader showSpinner={false} color="#a855f7" height={3} />
         <Navbar />
         <main className="pt-16">
           <QueryProvider>

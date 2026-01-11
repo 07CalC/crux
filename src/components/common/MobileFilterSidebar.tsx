@@ -57,7 +57,7 @@ export const MobileFilterSidebar = ({ isOpen, onClose, children }: MobileFilterS
             className="fixed top-0 left-0 h-full w-[85vw] max-w-[400px] bg-background z-[71] shadow-2xl lg:hidden overflow-y-auto"
           >
             {/* Header */}
-            <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b border-border p-4 flex items-center justify-between z-10">
+            <div className="sticky top-0 bg-background/95 backdrop-blur-sm border-b-3 border-border p-4 flex items-center justify-between z-10">
               <h2 className="text-xl font-bold">Filters</h2>
               <button
                 onClick={onClose}

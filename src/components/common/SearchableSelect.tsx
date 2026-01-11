@@ -101,7 +101,7 @@ export const SearchableSelect = ({
           >
             <div className="card shadow-xl max-h-[320px] flex flex-col">
               {/* Search Input */}
-              <div className="p-3 border-b border-border bg-card">
+              <div className="p-3 border-b-3 border-border bg-card">
                 <div className="relative">
                   <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                   <input

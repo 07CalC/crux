@@ -11,7 +11,7 @@ export const ComparisionCard = ({ college, handleSelect, branch }: { college: { 
         hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] 
         dark:hover:shadow-[8px_8px_0px_0px_rgba(255,255,255,1)]
         active:shadow-[0px_0px_0px_0px] active:translate-x-1 active:translate-y-1  
-        rounded-2xl transition w-full text-left"
+        rounded-lg transition w-full text-left"
     >
       <div className="h-60 sm:h-72 md:h-80 lg:h-96">
         {college.coverImage ? (

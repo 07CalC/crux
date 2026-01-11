@@ -111,7 +111,7 @@ export default function Orcr() {
                 className={`group block ${!option.done ? "pointer-events-none" : ""}`}
               >
                 <div
-                  className={`relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-300 ${option.done
+                  className={`relative overflow-hidden rounded-lg bg-card border border-border transition-all duration-300 ${option.done
                     ? "hover:shadow-xl hover:-translate-y-1 hover:border-primary/50"
                     : "opacity-60"
                     }`}
@@ -126,7 +126,7 @@ export default function Orcr() {
                         {/* Icon */}
 
                         {/* Logo Image */}
-                        <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden border-2 border-border group-hover:border-primary/30 transition-colors">
+                        <div className="relative w-12 h-12 md:w-14 md:h-14 rounded-lg overflow-hidden border-3 border-border group-hover:border-primary/30 transition-colors">
                           <Image
                             src={option.image}
                             alt={option.name}

@@ -9,7 +9,7 @@ export default async function Nirf() {
             <ComingSoon />
             <div className="flex flex-col items-center">
                 <div className="mb-4 max-w-xs mx-auto z-20 relative">
-                    <div className="text-xl font-bold p-3 bg-gray-300 dark:bg-[#222222] rounded-lg shadow-md border-2 border-purple-500 mb-2 text-black dark:text-white text-center">
+                    <div className="text-xl font-bold p-3 bg-gray-300 dark:bg-[#222222] rounded-lg shadow-md border-3 border-purple-500 mb-2 text-black dark:text-white text-center">
                         literally me working hard to deliver fast
                     </div>
                     <div className="w-0 h-0 border-l-[20px] border-l-transparent border-r-[20px] border-r-transparent border-t-[20px] border-t-purple-500 mx-auto"></div>

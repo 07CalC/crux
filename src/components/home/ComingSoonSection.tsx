@@ -69,9 +69,9 @@ export const ComingSoonSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-              className="glass rounded-2xl p-8 border border-white/20 hover:border-white/40 transition-all hover:scale-[1.02] group"
+              className="glass rounded-lg p-8 border border-white/20 hover:border-white/40 transition-all hover:scale-[1.02] group"
             >
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
+              <div className={`w-14 h-14 rounded-lg bg-gradient-to-br ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
                 <feature.icon className="w-7 h-7 text-white" />
               </div>
 

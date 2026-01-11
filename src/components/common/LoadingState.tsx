@@ -62,7 +62,7 @@ export const CardLoadingState = ({ count = 3 }: { count?: number }) => {
       {[...Array(count)].map((_, i) => (
         <div
           key={i}
-          className="bg-white dark:bg-[#1a1a1a] border-2 border-black dark:border-white rounded-xl p-6 shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white animate-pulse"
+          className="bg-white dark:bg-[#1a1a1a] border-3 border-black dark:border-white rounded-lg p-6 shadow-[4px_4px_0px_0px] shadow-black dark:shadow-white animate-pulse"
         >
           <div className="h-48 bg-gray-300 dark:bg-gray-700 rounded-lg mb-4"></div>
           <div className="h-6 bg-gray-300 dark:bg-gray-700 rounded mb-2"></div>

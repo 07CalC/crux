@@ -14,15 +14,8 @@ import { useQuery } from "@tanstack/react-query";
 import { FiFilter } from "react-icons/fi";
 
 const fetchOrcrData = async (requiredFilters: Record<string, string | number>) => {
-  const res = await fetch("/api/v1/getOrcr", {
-    method: "POST",
-    body: JSON.stringify({
-      exam: "NEET_PG",
-      year: requiredFilters.year,
-      round: requiredFilters.round,
-      type: "NEET_PG",
-    }),
-  });
+  const res = await fetch("https://" + process.env.NEXT_PUBLIC_CLOUDFRONT_URL + "/" + requiredFilters.year + "-" + requiredFilters.round + "-" +
+    "NEET_PG" + "-NEET_PG.json");
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }

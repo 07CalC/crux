@@ -14,19 +14,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FiFilter } from "react-icons/fi";
 
 const fetchOrcrData = async (requiredFilters: Record<string, string | number>) => {
-  const res = await fetch("/api/v1/getOrcr", {
-    method: "POST",
-    body: JSON.stringify({
-      exam: requiredFilters.exam,
-      year: requiredFilters.year,
-      round: requiredFilters.round,
-      type: "WBJEE",
-    }),
-  });
+  const res = await fetch("https://" + process.env.NEXT_PUBLIC_CLOUDFRONT_URL + "/" + requiredFilters.year + "-" + requiredFilters.round + "-" + requiredFilters.exam + "-JOSSA.json");
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
-  return await res.json() as Orcr[];
+  return res.json() as Promise<Orcr[]>;
 };
 
 export default function Wbjee() {

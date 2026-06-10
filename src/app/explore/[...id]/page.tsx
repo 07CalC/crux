@@ -4,17 +4,18 @@ import { ClgOrcr } from "@/components/collegePage/ClgOrcr";
 import { UploadImage } from "@/components/collegePage/UploadImage";
 import { CollegeTabs } from "@/components/collegePage/CollegeTabs";
 import { NotFound } from "@/components/common/NotFound";
-import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { IoWarning, IoInformationCircle, IoLocationSharp } from "react-icons/io5";
 import { LuExternalLink } from "react-icons/lu";
 import { HiChartBar, HiStar, HiPhotograph } from "react-icons/hi";
+import { getDb } from "@/lib/prisma";
 
 export default async function College({
     params,
 }: {
     params: Promise<{ id: string }>;
 }) {
+    const prisma = getDb()
     const { id } = await params
     const college = await prisma.college.findUnique({
         where: {

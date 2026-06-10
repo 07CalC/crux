@@ -29,7 +29,7 @@ export default function ComparePage() {
   useEffect(() => {
     async function init() {
       const res = await fetch("/api/v1/compare/init");
-      const data = await res.json();
+      const data: { comparisons: Comparison[]; sessionId: string } = await res.json();
       setComparisons(data.comparisons);
       setSessionId(data.sessionId);
     }

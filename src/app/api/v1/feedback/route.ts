@@ -1,7 +1,8 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
 
 export async function POST(req: Request) {
-  const data = await req.json();
+  const prisma = getDb()
+  const data: { email: string; feedback: string; imageUrl?: string } = await req.json();
   const { email, feedback, imageUrl } = data;
 
   if (!email || !feedback) {

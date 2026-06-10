@@ -1,4 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+.wrangler/
+.dev.vars
 
 # dependencies
 /node_modules
@@ -54,3 +56,6 @@ scripts/backup.json
 postgres/
 laxci.yml
 neet
+
+# OpenNext
+.open-next

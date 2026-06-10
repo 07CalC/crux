@@ -1,11 +1,12 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 
 
 export async function POST(req: Request) {
-    const data = await req.json();
+    const prisma = getDb()
+    const data: { clgId: string; comment: string; rating: number } = await req.json();
     const { clgId, comment, rating } = data;
     if (!clgId || !comment || !rating) {
         return new NextResponse(JSON.stringify({ error: "clgId, comment, rating are required" }), { status: 400 });

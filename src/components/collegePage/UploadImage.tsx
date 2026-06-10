@@ -66,7 +66,7 @@ export const UploadImage = ({ className = "", clgId }: UploadImageProps) => {
         throw new Error('Failed to upload to Cloudinary');
       }
 
-      const cloudinaryData = await cloudinaryResponse.json();
+      const cloudinaryData: { secure_url: string } = await cloudinaryResponse.json();
       const imageUrl = cloudinaryData.secure_url;
 
       const apiResponse = await fetch('/api/v1/uploadImage', {

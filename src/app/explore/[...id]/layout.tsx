@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { getDbAsync } from "@/lib/prisma";
 import { Metadata } from "next";
 
 export async function generateMetadata({
@@ -6,6 +6,7 @@ export async function generateMetadata({
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
+  const prisma = await getDbAsync()
   const { id } = await params
   const college = await prisma.college.findUnique({
     where: {

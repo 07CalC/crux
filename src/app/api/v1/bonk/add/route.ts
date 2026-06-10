@@ -1,11 +1,12 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 
 
 export async function POST(req: Request) {
-    const data = await req.json();
+    const prisma = getDb()
+    const data: { clgId: string } = await req.json();
     const { clgId } = data;
     if (!clgId) {
         return new NextResponse(JSON.stringify({ message: "College ID is required" }), { status: 400 });

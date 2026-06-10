@@ -78,7 +78,7 @@ export default function FeedbackPage() {
           throw new Error("Failed to upload image");
         }
 
-        const cloudinaryData = await cloudinaryResponse.json();
+        const cloudinaryData: { secure_url: string } = await cloudinaryResponse.json();
         imageUrl = cloudinaryData.secure_url;
       }
 

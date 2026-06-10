@@ -2,7 +2,7 @@ import { LuExternalLink } from "react-icons/lu";
 import Link from "next/link";
 import { FiSearch, FiX, FiMapPin, FiAward, FiHeart, FiExternalLink } from "react-icons/fi";
 import { NotFound } from "../../components/common/NotFound";
-import { prisma } from "@/lib/prisma";
+import { getDb, getDbAsync } from "@/lib/prisma";
 
 type SearchParams = {
   query?: string;
@@ -15,9 +15,10 @@ type PageProps = {
 export default async function Explore({ searchParams }: PageProps) {
   const query = (await searchParams).query?.trim() || "";
 
+  const prisma = getDb()
   const colleges = await prisma.college.findMany({
     where: {
-      name: { contains: query as string, mode: "insensitive" },
+      name: { contains: query },
       OR: [
         { collegeType: { not: "NEET_PG" } },
         { collegeType: null }
@@ -175,11 +176,10 @@ export default async function Explore({ searchParams }: PageProps) {
                       href={college.officialWebsite || "#"}
                       target="_blank"
                       rel="noreferrer"
-                      className={`btn-ghost p-2 group/link ${
-                        !college.officialWebsite
-                          ? "opacity-50 cursor-not-allowed pointer-events-none"
-                          : ""
-                      }`}
+                      className={`btn-ghost p-2 group/link ${!college.officialWebsite
+                        ? "opacity-50 cursor-not-allowed pointer-events-none"
+                        : ""
+                        }`}
                       aria-label="Visit official website"
                     >
                       <FiExternalLink className="w-5 h-5 group-hover/link:scale-110 transition-transform" />

@@ -251,7 +251,7 @@ export const ClgOrcr = ({
         clgId: clgId,
       }),
     });
-    const data = await res.json();
+    const data: Orcr[] = await res.json();
     setFetchedOrcr(data);
     setLoading(false);
     setFilters({

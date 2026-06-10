@@ -1,6 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  serverExternalPackages: ["@prisma/client", ".prisma/client"],
   generateBuildId: async () => {
     return process.env.GITHUB_SHA || process.env.BUILD_ID || new Date().getTime().toString();
   },
@@ -38,3 +39,6 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare"
+initOpenNextCloudflareForDev();

@@ -1,9 +1,10 @@
 generator client {
   provider = "prisma-client-js"
+  runtime = "cloudflare"
+  previewFeatures = ["driverAdapters"]
 }
-
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_URL")
 }
 
@@ -22,10 +23,13 @@ model College {
   nirf            Int?
   moderated       Boolean        @default(false)
   collegeType     CollegeType?
+
   images          CollegeImage[]
   orcrs           Orcr[]
   reviews         Review[]
-  placements      placement[]
+  placements      Placement[]
+
+  @@index([name])
 }
 
 model Orcr {
@@ -42,10 +46,17 @@ model Orcr {
   gender              String
   openRank            Int?
   closeRank           Int?
+  marks               Int?
+
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
-  marks               Int?
-  college             College  @relation(fields: [collegeId], references: [id])
+
+  college             College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([year])
+  @@index([type])
+  @@index([exam])
 }
 
 model Review {
@@ -53,12 +64,16 @@ model Review {
   collegeId String
   rating    Int
   comment   String
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  college   College  @relation(fields: [collegeId], references: [id])
+
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
 }
 
-model placement {
+model Placement {
   id              String   @id @default(uuid())
   year            Int
   collegeId       String
@@ -66,17 +81,62 @@ model placement {
   placed          Int
   median          Int
   higherEducation Int
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
-  college         College  @relation(fields: [collegeId], references: [id])
+
+  college         College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([year])
 }
 
 model CollegeImage {
   id        String   @id @default(uuid())
   collegeId String
   url       String
+
   createdAt DateTime @default(now())
-  college   College  @relation(fields: [collegeId], references: [id])
+
+  college   College  @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+}
+
+model ComparisonSession {
+  id          String       @id @default(uuid())
+  createdAt   DateTime     @default(now())
+
+  comparisons Comparison[]
+}
+
+model Comparison {
+  id         String   @id @default(uuid())
+  sessionId  String
+
+  collegeAId String
+  branchA    String
+
+  collegeBId String
+  branchB    String
+
+  userChoice String?
+
+  createdAt  DateTime @default(now())
+
+  session    ComparisonSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model Feedback {
+  id        String   @id @default(uuid())
+  email     String
+  feedback  String
+  imageUrl  String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum CollegeType {
@@ -106,32 +166,4 @@ enum Exam {
   WBJEE
   NEET_PG
   NEET_UG
-}
-
-model ComparisonSession {
-  id          String       @id @default(uuid())
-  comparisons Comparison[]
-  createdAt   DateTime     @default(now())
-}
-
-model Comparison {
-  id         String   @id @default(uuid())
-  sessionId  String
-  collegeAId String
-  branchA    String
-  collegeBId String
-  branchB    String
-  userChoice String?
-  createdAt  DateTime @default(now())
-
-  session ComparisonSession @relation(fields: [sessionId], references: [id])
-}
-
-model Feedback {
-  id        String   @id @default(uuid())
-  email     String
-  feedback  String
-  imageUrl  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 }

@@ -1,8 +1,9 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-    const data = await req.json();
+    const prisma = getDb()
+    const data: { year: string; round: string; type: string; clgId: string } = await req.json();
     const { year, round, type, clgId } = data
     if (!year || !round || !type || !clgId) {
         return new NextResponse(JSON.stringify({ error: "Year, round, type and college ID are required" }), { status: 400 });
@@ -11,7 +12,7 @@ export async function POST(req: Request) {
         where: {
             year: parseInt(year),
             round: parseInt(round),
-            type: type,
+            type: type as any,
             collegeId: clgId
         }
     });

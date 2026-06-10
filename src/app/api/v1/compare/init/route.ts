@@ -1,8 +1,9 @@
 
+import { getDb } from "@/lib/prisma";
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 
 export async function GET() {
+  const prisma = getDb()
   const session = await prisma.comparisonSession.create({ data: {} });
 
   const iits = await prisma.college.findMany({

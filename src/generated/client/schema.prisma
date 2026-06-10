@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/client"
+  runtime  = "cloudflare"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model College {
+  id              String       @id @default(uuid())
+  name            String       @unique
+  bongs           Int          @default(0)
+  coverImage      String?
+  location        String?
+  officialWebsite String?
+  totalStudents   Int?
+  maleStudents    Int?
+  femaleStudents  Int?
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  nirf            Int?
+  moderated       Boolean      @default(false)
+  collegeType     CollegeType?
+
+  images     CollegeImage[]
+  orcrs      Orcr[]
+  reviews    Review[]
+  placements Placement[]
+
+  @@index([name])
+}
+
+model Orcr {
+  id                  String   @id @default(uuid())
+  year                Int
+  round               Int
+  type                OrcrType
+  exam                Exam
+  collegeId           String
+  institute           String
+  academicProgramName String
+  quota               String
+  seatType            String
+  gender              String
+  openRank            Int?
+  closeRank           Int?
+  marks               Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([year])
+  @@index([type])
+  @@index([exam])
+}
+
+model Review {
+  id        String @id @default(uuid())
+  collegeId String
+  rating    Int
+  comment   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+}
+
+model Placement {
+  id              String @id @default(uuid())
+  year            Int
+  collegeId       String
+  totalGrads      Int
+  placed          Int
+  median          Int
+  higherEducation Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([year])
+}
+
+model CollegeImage {
+  id        String @id @default(uuid())
+  collegeId String
+  url       String
+
+  createdAt DateTime @default(now())
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+}
+
+model ComparisonSession {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+
+  comparisons Comparison[]
+}
+
+model Comparison {
+  id        String @id @default(uuid())
+  sessionId String
+
+  collegeAId String
+  branchA    String
+
+  collegeBId String
+  branchB    String
+
+  userChoice String?
+
+  createdAt DateTime @default(now())
+
+  session ComparisonSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId])
+}
+
+model Feedback {
+  id       String  @id @default(uuid())
+  email    String
+  feedback String
+  imageUrl String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum CollegeType {
+  IIT
+  GFTI
+  BITS
+  JAC
+  WBJEE
+  NEET_PG
+  NEET_UG
+}
+
+enum OrcrType {
+  JOSSA
+  CSAB
+  BITSAT
+  NEET_PG
+  NEET_UG
+  WBJEE
+  OTHER
+}
+
+enum Exam {
+  MAINS
+  ADVANCED
+  BITSAT
+  WBJEE
+  NEET_PG
+  NEET_UG
+}

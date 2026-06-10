@@ -1,9 +1,10 @@
-import { prisma } from "@/lib/prisma";
+import { getDb } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
 
 export async function POST(req: Request) {
-    const data = await req.json();
+    const prisma = getDb()
+    const data: { collegeId: string; imageUrl: string } = await req.json();
     const { collegeId, imageUrl } = data;
 
     if (!collegeId || !imageUrl) {
